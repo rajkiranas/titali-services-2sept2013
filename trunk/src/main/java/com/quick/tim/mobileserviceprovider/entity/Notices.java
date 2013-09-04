@@ -79,7 +79,7 @@ public class Notices  implements java.io.Serializable {
     public void setSub(Sub sub) {
         this.sub = sub;
     }
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name="noticedate", length=13)
     public Date getNoticedate() {
         return this.noticedate;
