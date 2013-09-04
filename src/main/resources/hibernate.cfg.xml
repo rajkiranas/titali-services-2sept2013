@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+<property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+    <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
+    <property name="hibernate.connection.url">jdbc:postgresql://192.168.1.107:5432/postgres</property>
+    <property name="hibernate.default_schema">public</property>
+    <property name="hibernate.connection.username">postgres</property>
+    <property name="hibernate.connection.password">Sateri@123</property>
+<!--    <property name="hibernate.connection.pool_size">1</property>
+    <property name="hibernate.c3p0.acquire_increment">2</property>
+    <property name="hibernate.c3p0.idle_test_period">600</property>
+    <property name="hibernate.c3p0.timeout">900</property>
+    <property name="hibernate.c3p0.max_size">150</property>
+    <property name="hibernate.c3p0.max_statements">100</property>
+    <property name="hibernate.c3p0.min_size">1</property>
+    <property name="connection.autoReconnect"> true</property>
+    <property name="connection.autoReconnectForPools">true</property>-->
+    
+    <!-- <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property> 
+    <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property> 
+    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/cms</property> 
+    <property name="hibernate.connection.username">root</property> 
+    <property name="hibernate.connection.password">root</property> -->
+    
+    <mapping class="com.quick.tim.mobileserviceprovider.entity.Sub"/>
+    <mapping class="com.quick.tim.mobileserviceprovider.entity.TeacherStddivSubId"/>
+    <mapping class="com.quick.tim.mobileserviceprovider.entity.TeacherStddivSub"/>
+    <mapping class="com.quick.tim.mobileserviceprovider.entity.Stddiv"/>
+    <mapping class="com.quick.tim.mobileserviceprovider.entity.UserMaster"/>
+    <mapping class="com.quick.tim.mobileserviceprovider.entity.Std"/>
+    <mapping class="com.quick.tim.mobileserviceprovider.entity.StddivId"/>
+    <mapping class="com.quick.tim.mobileserviceprovider.entity.TeacherMaster"/>
+    <mapping class="com.quick.tim.mobileserviceprovider.entity.Notices"/>
+    <mapping class="com.quick.tim.mobileserviceprovider.entity.UserRoles"/>
+    <mapping class="com.quick.tim.mobileserviceprovider.entity.QualificationMaster"/>
+    <mapping class="com.quick.tim.mobileserviceprovider.entity.Whoisdoingwhat"/>
+    <mapping class="com.quick.tim.mobileserviceprovider.entity.RoleMaster"/>
+    <mapping class="com.quick.tim.mobileserviceprovider.entity.Whatsnew"/>
+    <mapping class="com.quick.tim.mobileserviceprovider.entity.Whoisdoingwhat"/>
+    <mapping class="com.quick.tim.mobileserviceprovider.entity.Whoisdoingwhat"/>
+    <mapping class="com.quick.tim.mobileserviceprovider.entity.UserMaster"/>
+    <mapping class="com.quick.tim.mobileserviceprovider.entity.RoleMaster"/>
+    <mapping class="com.quick.tim.mobileserviceprovider.entity.Notices"/>
+    <mapping class="com.quick.tim.mobileserviceprovider.entity.StudentMaster"/>
+    <mapping class="com.quick.tim.mobileserviceprovider.entity.TeacherStddivSubId"/>
+    <mapping class="com.quick.tim.mobileserviceprovider.entity.Sub"/>
+    <mapping class="com.quick.tim.mobileserviceprovider.entity.Whatsnew"/>
+    <mapping class="com.quick.tim.mobileserviceprovider.entity.Stddiv"/>
+    <mapping class="com.quick.tim.mobileserviceprovider.entity.TeacherMaster"/>
+    <mapping class="com.quick.tim.mobileserviceprovider.entity.Std"/>
+    <mapping class="com.quick.tim.mobileserviceprovider.entity.StddivId"/>
+    <mapping class="com.quick.tim.mobileserviceprovider.entity.QualificationMaster"/>
+    <mapping class="com.quick.tim.mobileserviceprovider.entity.TeacherStddivSub"/>
+    <mapping class="com.quick.tim.mobileserviceprovider.entity.UserRoles"/>
+    <mapping class="com.quick.tim.mobileserviceprovider.entity.Whatsnew"/>
+    <mapping class="com.quick.tim.mobileserviceprovider.entity.StudentMaster"/>
+    <mapping class="com.quick.tim.mobileserviceprovider.entity.RoleMaster"/>
+    <mapping class="com.quick.tim.mobileserviceprovider.entity.QuickLearn"/>
+    <mapping class="com.quick.tim.mobileserviceprovider.entity.Whoisdoingwhat"/>
+    <mapping class="com.quick.tim.mobileserviceprovider.entity.Sub"/>
+    <mapping class="com.quick.tim.mobileserviceprovider.entity.StddivId"/>
+    <mapping class="com.quick.tim.mobileserviceprovider.entity.Stddiv"/>
+    <mapping class="com.quick.tim.mobileserviceprovider.entity.Notices"/>
+    <mapping class="com.quick.tim.mobileserviceprovider.entity.TeacherStddivSub"/>
+    <mapping class="com.quick.tim.mobileserviceprovider.entity.QualificationMaster"/>
+    <mapping class="com.quick.tim.mobileserviceprovider.entity.UserMaster"/>
+    <mapping class="com.quick.tim.mobileserviceprovider.entity.Std"/>
+    <mapping class="com.quick.tim.mobileserviceprovider.entity.TeacherStddivSubId"/>
+    <mapping class="com.quick.tim.mobileserviceprovider.entity.UserRoles"/>
+    <mapping class="com.quick.tim.mobileserviceprovider.entity.TeacherMaster"/>
+    <mapping class="com.quick.tim.mobileserviceprovider.entity.QuickNotes"/>
+    <mapping class="com.quick.tim.mobileserviceprovider.entity.QuickNotesId"/>
+  </session-factory>
+</hibernate-configuration>

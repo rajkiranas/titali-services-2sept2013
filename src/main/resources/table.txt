@@ -1,0 +1,774 @@
+SET search_path = public;
+
+-- Table: user_master
+
+-- DROP TABLE user_master;
+
+CREATE TABLE user_master
+(
+  prn integer NOT NULL, -- to be Autoincremented,...
+  username character varying(250) NOT NULL, -- will be used as mail id as well as userid for login
+  password character varying(200),
+  name character varying(200),
+  creationdate bigint,
+  mobile bigint,
+  CONSTRAINT pk_user_master_prn PRIMARY KEY (username),
+  CONSTRAINT uk_user_master_username UNIQUE (prn)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE user_master
+  OWNER TO postgres;
+COMMENT ON COLUMN user_master.prn IS 'to be Autoincremented,
+can be used for all s,t,a';
+COMMENT ON COLUMN user_master.username IS 'will be used as mail id as well as userid for login';
+
+
+
+---------------
+-- Sequence: seq_user_master_prn
+
+-- DROP SEQUENCE seq_user_master_prn;
+
+CREATE SEQUENCE seq_user_master_prn
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 9223372036854775807
+  START 1
+  CACHE 1;
+ALTER TABLE seq_user_master_prn
+  OWNER TO postgres;
+-----------------------
+-- Table: role_master
+
+-- DROP TABLE role_master;
+
+CREATE TABLE role_master
+(
+
+  role_name character varying(32) NOT NULL,
+  CONSTRAINT pk_role_master_roleid PRIMARY KEY (role_name )
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE role_master
+  OWNER TO postgres;
+COMMENT ON COLUMN role_master.role_id IS 'to be autoincremented';
+
+
+---------------------
+-- Schema: public
+
+-- DROP SCHEMA public;
+
+CREATE SCHEMA public
+  AUTHORIZATION postgres;
+
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO public;
+COMMENT ON SCHEMA public
+  IS 'standard public schema';
+
+--------------------------
+-- Table: user_roles
+
+-- DROP TABLE user_roles;
+
+CREATE TABLE user_roles
+(
+  association_id integer NOT NULL,
+  username character varying(250) NOT NULL,
+  role_name character varying(32) NOT NULL,
+  
+CONSTRAINT pk_user_roles_asso_id PRIMARY KEY (association_id ),
+  CONSTRAINT fk_user_roles_role_name FOREIGN KEY (role_name)
+      REFERENCES role_master (role_name) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT fk_user_roles_username FOREIGN KEY (username)
+      REFERENCES user_master (username) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE user_roles
+  OWNER TO postgres;
+------------------------------------
+-- Sequence: seq_user_roles_association_id
+
+-- DROP SEQUENCE seq_user_roles_association_id;
+
+CREATE SEQUENCE seq_user_roles_association_id
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 9223372036854775807
+  START 1
+  CACHE 1;
+ALTER TABLE seq_user_roles_association_id
+  OWNER TO postgres;
+----------------------------------------------------
+-- Table: teacher_master
+
+-- DROP TABLE teacher_master;
+
+CREATE TABLE teacher_master
+(
+  username character varying(250) NOT NULL,
+  dob date,
+  doj date,
+  gender character(1),
+  address character varying(100),
+  is_class_teacher character(1),
+  ct_class character varying(10),
+  is_deleted character varying(1),
+  CONSTRAINT pk_teacher_master_username PRIMARY KEY (username ),
+  CONSTRAINT fk_teacher_master_username FOREIGN KEY (username)
+      REFERENCES user_master (username) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE CASCADE
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE teacher_master
+  OWNER TO postgres;
+----------------------------------------------------------
+-- Table: qualification_master
+
+-- DROP TABLE qualification_master;
+
+CREATE TABLE qualification_master
+(
+  qualification_name character varying(10) NOT NULL, -- only abrevations allowed
+  CONSTRAINT pk_qualification_master_qualification_name PRIMARY KEY (qualification_name )
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE qualification_master
+  OWNER TO postgres;
+COMMENT ON COLUMN qualification_master.qualification_name IS 'only abrevations allowed';
+
+
+-----------------------------------------------------------------------------------------
+-- Table: teacher_qualification
+
+-- DROP TABLE teacher_qualification;
+
+CREATE TABLE teacher_qualification
+(
+  username character varying(250) NOT NULL,
+  qualification_name character varying(10) NOT NULL,
+  CONSTRAINT pk_teacher_qualification_unm_qnm PRIMARY KEY (username , qualification_name ),
+  CONSTRAINT fk_qualification_master_qname FOREIGN KEY (qualification_name)
+      REFERENCES qualification_master (qualification_name) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT fk_qualification_master_username FOREIGN KEY (username)
+      REFERENCES user_master (username) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE teacher_qualification
+  OWNER TO postgres;
+---------------------------------------------------------------------
+-- Table: std
+
+-- DROP TABLE std;
+
+CREATE TABLE std
+(
+  std character varying(7) NOT NULL,
+  CONSTRAINT pk_std_std PRIMARY KEY (std )
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE std
+  OWNER TO postgres;
+
+--------------------------------------------------------------------------
+
+-- Table: teacher_std
+
+-- DROP TABLE teacher_std;
+
+CREATE TABLE teacher_std
+(
+  username character varying(250) NOT NULL,
+  std character varying(7) NOT NULL,
+  CONSTRAINT pk_teacher_std_unm_std PRIMARY KEY (username , std ),
+  CONSTRAINT fk_teacher_std_std FOREIGN KEY (std)
+      REFERENCES std (std) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE CASCADE,
+  CONSTRAINT fk_teacher_std_unm FOREIGN KEY (username)
+      REFERENCES user_master (username) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE CASCADE
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE teacher_std
+  OWNER TO postgres;
+
+-------------------------------------------------
+
+-- Table: sub
+
+-- DROP TABLE sub;
+
+CREATE TABLE sub
+(
+  sub character varying(30) NOT NULL,
+  CONSTRAINT pk_sub_sub PRIMARY KEY (sub )
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE sub
+  OWNER TO postgres;
+--------------------------------------------------------
+-- Table: teacher_sub
+
+-- DROP TABLE teacher_sub;
+
+CREATE TABLE teacher_sub
+(
+  username character varying(250) NOT NULL,
+  sub character varying(30) NOT NULL,
+  CONSTRAINT pk_teacher_sub_unm_sub PRIMARY KEY (username , sub ),
+  CONSTRAINT fk_teacher_sub_sub FOREIGN KEY (sub)
+      REFERENCES sub (sub) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE CASCADE,
+  CONSTRAINT fk_teacher_sub_unm FOREIGN KEY (username)
+      REFERENCES user_master (username) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE CASCADE
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE teacher_sub
+  OWNER TO postgres;
+---------------------------------------------------
+-- Table: stdsub
+
+-- DROP TABLE stdsub;
+
+CREATE TABLE stdsub
+(
+  std character varying(7) NOT NULL,
+  sub character varying(30) NOT NULL,
+  CONSTRAINT pk_stdsub_stdsub PRIMARY KEY (std , sub ),
+  CONSTRAINT fk_stdsub_std FOREIGN KEY (std)
+      REFERENCES std (std) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE CASCADE,
+  CONSTRAINT fk_stdsub_sub FOREIGN KEY (sub)
+      REFERENCES sub (sub) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE CASCADE
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE stdsub
+  OWNER TO postgres;
+-----------------------------------------------------
+-- Table: stddiv
+
+-- DROP TABLE stddiv;
+
+CREATE TABLE stddiv
+(
+  std character varying(7) NOT NULL,
+  div character varying(3) NOT NULL,
+  CONSTRAINT pk_stddiv_stddiv PRIMARY KEY (std , div ),
+  CONSTRAINT fk_stddiv_std FOREIGN KEY (std)
+      REFERENCES std (std) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE CASCADE
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE stddiv
+  OWNER TO postgres;
+-----------------------------------------------------
+-- Table: teacher_stddiv_sub
+
+-- DROP TABLE teacher_stddiv_sub;
+
+CREATE TABLE teacher_stddiv_sub
+(
+  username character varying(250) NOT NULL,
+  std character varying(7) NOT NULL,
+  div character varying(3) NOT NULL,
+  sub character varying(30) NOT NULL,
+  CONSTRAINT pk_techer_stddiv_sub_all PRIMARY KEY (username , std , div , sub ),
+  CONSTRAINT fk_teacher_stddiv_std FOREIGN KEY (std)
+      REFERENCES std (std) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE CASCADE,
+  CONSTRAINT fk_teacher_stddiv_sub FOREIGN KEY (sub)
+      REFERENCES sub (sub) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE CASCADE,
+  CONSTRAINT fk_teacher_stddiv_username FOREIGN KEY (username)
+      REFERENCES user_master (username) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE CASCADE
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE teacher_stddiv_sub
+  OWNER TO postgres;
+---------------------------------------------------
+-- Table: whatsnew
+
+-- DROP TABLE whatsnew;
+
+CREATE TABLE whatsnew
+(
+  itemid integer NOT NULL, -- autoincrement
+  releasedate date,
+  bywhom character varying(200),
+  forstd character varying(7),
+  fordiv character varying(3),
+  sub character varying(30),
+  topic character varying(30),
+  displaynotification character varying(150), -- Will contain final string to be displayed in the whats new dashboard...
+  CONSTRAINT pk_whatsnew_itemid PRIMARY KEY (itemid ),
+  CONSTRAINT fk_whatsnew_std FOREIGN KEY (forstd)
+      REFERENCES std (std) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE CASCADE,
+  CONSTRAINT fk_whatsnew_sub FOREIGN KEY (sub)
+      REFERENCES sub (sub) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE CASCADE
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE whatsnew
+  OWNER TO postgres;
+COMMENT ON COLUMN whatsnew.itemid IS 'autoincrement';
+COMMENT ON COLUMN whatsnew.displaynotification IS 'Will contain final string to be displayed in the whats new dashboard
+
+It will be populated when some one performs upload video or release notes activity.
+
+Ex. Sudeepta Banerjee has uploaded flipflop video in Digital electronics
+      Sudeepta Banerjee has released flipflop notes in Digital electronics';
+
+
+-----------------------------------------------------------
+
+-- Sequence: seq_whatsnew_itemid
+
+-- DROP SEQUENCE seq_whatsnew_itemid;
+
+CREATE SEQUENCE seq_whatsnew_itemid
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 9223372036854775807
+  START 1
+  CACHE 1;
+ALTER TABLE seq_whatsnew_itemid
+  OWNER TO postgres;
+
+
+
+-----------------------------------------------------------
+-- Table: public.whoisdoingwhat
+
+-- DROP TABLE public.whoisdoingwhat;
+
+CREATE TABLE public.whoisdoingwhat
+(
+  activityid integer NOT NULL, -- autoincrement
+  activitydate date,
+  bywhom character varying(200),
+  doingwhat character varying(150), -- can be ...
+  forstd character varying(7),
+  fordiv character varying(3),
+  sub character varying(30),
+  topic character varying(30),
+  displaynotification character varying(150),
+  uploadid integer,
+  CONSTRAINT pk_whoisdoingwhat_activityid PRIMARY KEY (activityid ),
+  CONSTRAINT pk_whoisdoingwhat_std FOREIGN KEY (forstd)
+      REFERENCES public.std (std) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE CASCADE,
+  CONSTRAINT pk_whoisdoingwhat_sub FOREIGN KEY (sub)
+      REFERENCES public.sub (sub) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE CASCADE
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE public.whoisdoingwhat
+  OWNER TO postgres;
+COMMENT ON COLUMN public.whoisdoingwhat.activityid IS 'autoincrement';
+COMMENT ON COLUMN public.whoisdoingwhat.doingwhat IS 'can be 
+Sudeepta Banerjee is watching flipflop video in Digital electronics
+etc';
+-----------------------------------------------------------------------
+-- Sequence: seq_whoisdoingwhat_activityid
+
+-- DROP SEQUENCE seq_whoisdoingwhat_activityid;
+
+CREATE SEQUENCE seq_whoisdoingwhat_activityid
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 9223372036854775807
+  START 1
+  CACHE 1;
+ALTER TABLE seq_whoisdoingwhat_activityid
+  OWNER TO postgres;
+-----------------------------------------------------------------------------
+
+-- Table: notices
+
+-- DROP TABLE notices;
+
+CREATE TABLE notices
+(
+  noticeid integer NOT NULL,
+  noticedate date,
+  bywhom character varying(200),
+  forstd character varying(7),
+  fordiv character varying(3),
+  subject character varying(30),
+  noticeline character varying(150), -- shall contain one liner of the notice subject
+  noticebody character varying(300), -- actual notice body
+  visibletorole character varying(32), -- shall contain values...
+  CONSTRAINT pk_notices_noticeid PRIMARY KEY (noticeid ),
+  CONSTRAINT fk_notices_forstd FOREIGN KEY (forstd)
+      REFERENCES std (std) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE CASCADE,
+  CONSTRAINT fk_notices_sub FOREIGN KEY (subject)
+      REFERENCES sub (sub) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE CASCADE
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE notices
+  OWNER TO postgres;
+COMMENT ON COLUMN notices.noticeline IS 'shall contain one liner of the notice subject';
+COMMENT ON COLUMN notices.noticebody IS 'actual notice body';
+COMMENT ON COLUMN notices.visibletorole IS 'shall contain values
+student or
+teacher or
+admin or
+any
+';
+
+------------------------------------------------------------------------
+-- Sequence: seq_notices_noticeid
+
+-- DROP SEQUENCE seq_notices_noticeid;
+
+CREATE SEQUENCE seq_notices_noticeid
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 9223372036854775807
+  START 1
+  CACHE 1;
+ALTER TABLE seq_notices_noticeid
+  OWNER TO postgres;
+---------------------------------------------------------------------
+-- Table: student_master
+
+-- DROP TABLE student_master;
+
+CREATE TABLE student_master
+(
+  edu_year character varying(9), -- 2013-2014
+  std character varying(7),
+  div character varying(3),
+  rno smallint,
+  dob date,
+  username character varying(250) NOT NULL,
+  gender character(1),
+  address character varying(100),
+  add_date date,
+  upload_by character varying(200),
+  upload_count smallint,
+  CONSTRAINT pk_student_master_username PRIMARY KEY (username ),
+  CONSTRAINT fk_student_master_std FOREIGN KEY (std)
+      REFERENCES std (std) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE CASCADE,
+  CONSTRAINT fk_student_master_username FOREIGN KEY (username)
+      REFERENCES user_master (username) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE CASCADE
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE student_master
+  OWNER TO postgres;
+COMMENT ON COLUMN student_master.edu_year IS '2013-2014';
+
+
+
+--------------------------------------------------------------------
+-- Table: public.quick_learn
+
+-- DROP TABLE public.quick_learn;
+
+CREATE TABLE public.quick_learn
+(
+  upload_id integer NOT NULL,
+  upload_date timestamp with time zone,
+  forstd character varying(7),
+  fordiv character varying(3),
+  subject character varying(30),
+  topic character varying(30),
+  video_path character varying(200),
+  video_info character varying(150),
+  lecture_notes character varying(10000),
+  lecture_notes_information character varying(150),
+  other_notes character varying(5000),
+  other_notes_information character varying(150),
+  previous_question character varying(5000),
+  previous_question_information character varying(150),
+  topic_tags character varying(50),
+  CONSTRAINT quick_learn_pk_upload_id PRIMARY KEY (upload_id ),
+  CONSTRAINT fk_quick_learn_forstd FOREIGN KEY (forstd)
+      REFERENCES public.std (std) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE CASCADE,
+  CONSTRAINT fk_quick_learn_sub FOREIGN KEY (subject)
+      REFERENCES public.sub (sub) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE CASCADE
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE public.quick_learn
+  OWNER TO postgres;
+
+--------------------------------------------------------------------------------
+-- Sequence: public.seq_quicklearn_uploadid
+
+-- DROP SEQUENCE public.seq_quicklearn_uploadid;
+
+CREATE SEQUENCE public.seq_quicklearn_uploadid
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 9223372036854775807
+  START 8
+  CACHE 1;
+ALTER TABLE public.seq_quicklearn_uploadid
+  OWNER TO postgres;
+
+--------------------------------------------------------------------------------
+-- Table: public.quick_notes
+
+-- DROP TABLE public.quick_notes;
+
+CREATE TABLE public.quick_notes
+(
+  username character varying(250) NOT NULL,
+  upload_id integer NOT NULL,
+  user_notes character varying,
+  CONSTRAINT pk_quick_notes_username_upload_id PRIMARY KEY (username , upload_id ),
+  CONSTRAINT fk_quick_notes_upload_id FOREIGN KEY (upload_id)
+      REFERENCES public.quick_learn (upload_id) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE CASCADE,
+  CONSTRAINT fk_quick_notes_username FOREIGN KEY (username)
+      REFERENCES public.user_master (username) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE CASCADE
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE public.quick_notes
+  OWNER TO postgres;
+---------------------------------------------------------------------------------------------
+-- Table: public.exam_entry
+
+-- DROP TABLE public.exam_entry;
+
+CREATE TABLE public.exam_entry
+(
+  ex_id integer NOT NULL,
+  ex_name character varying(100),
+  ex_type smallint, -- ex_type - ...
+  start_dt date,
+  end_dt date,
+  forstd character varying(7),
+  fordiv character varying(3),
+  sub character varying(30),
+  topic character varying(30),
+  created_by character varying(200),
+  creation_dt date,
+  no_of_questions smallint,
+  total_marks smallint,
+  passing_marks smallint,
+  total_students smallint,
+  appeared_students smallint,
+  passed_students smallint, -- should be updated from a synchronised method
+  failed_students smallint, -- should be updated from a synchronised method
+  contest_line character varying(100), -- ex. First 5 top scorers to get a parker pen each
+  CONSTRAINT pk_exam_entry_ex_id PRIMARY KEY (ex_id ),
+  CONSTRAINT fk_exam_entry_forstd FOREIGN KEY (forstd)
+      REFERENCES public.std (std) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE CASCADE,
+  CONSTRAINT fk_exam_entry_sub FOREIGN KEY (sub)
+      REFERENCES public.sub (sub) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE CASCADE,
+  CONSTRAINT uk_exam_entry_exam_name UNIQUE (ex_name )
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE public.exam_entry
+  OWNER TO postgres;
+COMMENT ON TABLE public.exam_entry
+  IS 'Table populates when teacher creates exam and its questions
+
+synchronised method should update following values
+appeared_students
+passed_students
+failed_students
+';
+COMMENT ON COLUMN public.exam_entry.ex_type IS 'ex_type - 
+Zero - 0 - for objective 
+one - 1- for descriptive 
+two -2 - for or hybrid';
+COMMENT ON COLUMN public.exam_entry.passed_students IS 'should be updated from a synchronised method';
+COMMENT ON COLUMN public.exam_entry.failed_students IS 'should be updated from a synchronised method';
+COMMENT ON COLUMN public.exam_entry.contest_line IS 'ex. First 5 top scorers to get a parker pen each';
+
+
+
+--------------------------------------------------------------------------------------------------
+
+-- Table: public.exam_questions_answers
+
+-- DROP TABLE public.exam_questions_answers;
+
+CREATE TABLE public.exam_questions_answers
+(
+  ex_id integer,
+  question_id smallint NOT NULL, -- sequence generated
+  question_type smallint, -- 0 objective or...
+  question character varying(400),
+  marks_for_question smallint,
+  option1 character varying(200),
+  option2 character varying(200),
+  option3 character varying(200),
+  option4 character varying(200),
+  ans character varying(32), -- for single correct ans...
+  CONSTRAINT pk_exam_questions_answers_question_id PRIMARY KEY (question_id ),
+  CONSTRAINT fk_exam_questions_answers_ex_id FOREIGN KEY (ex_id)
+      REFERENCES public.exam_entry (ex_id) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE CASCADE
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE public.exam_questions_answers
+  OWNER TO postgres;
+COMMENT ON TABLE public.exam_questions_answers
+  IS 'table populates when teacher creates questions in exam';
+COMMENT ON COLUMN public.exam_questions_answers.question_id IS 'sequence generated';
+COMMENT ON COLUMN public.exam_questions_answers.question_type IS '0 objective or
+1 descriptive';
+COMMENT ON COLUMN public.exam_questions_answers.ans IS 'for single correct ans
+option1 
+
+for multiple correct ans
+Option2,Option4';
+
+------------------------------------------------------------------------------------------------------------------------------
+
+-- Table: public.exam_student_response
+
+-- DROP TABLE public.exam_student_response;
+
+CREATE TABLE public.exam_student_response
+(
+  ex_id integer NOT NULL,
+  username character varying(250) NOT NULL,
+  question_id smallint NOT NULL,
+  obj_ans character varying(32),
+  descriptive_ans character varying(1000),
+  obt_marks_for_obj_question smallint,
+  obt_marks_for_desc_question smallint,
+  CONSTRAINT pk_exam_student_response_exid_username_questionid PRIMARY KEY (ex_id , username , question_id ),
+  CONSTRAINT fk_exam_student_response_exid FOREIGN KEY (ex_id)
+      REFERENCES public.exam_entry (ex_id) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE CASCADE,
+  CONSTRAINT fk_exam_student_response_questionid FOREIGN KEY (question_id)
+      REFERENCES public.exam_questions_answers (question_id) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE CASCADE,
+  CONSTRAINT fk_exam_student_response_username FOREIGN KEY (username)
+      REFERENCES public.user_master (username) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE CASCADE
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE public.exam_student_response
+  OWNER TO postgres;
+COMMENT ON TABLE public.exam_student_response
+  IS 'Below table will populate for obj question when student submits the paper from his side, for desc question when teacher reviews it.';
+
+
+-------------------------------------------------------------------------------------------------------------------
+
+-- Table: public.student_exam_summary
+
+-- DROP TABLE public.student_exam_summary;
+
+CREATE TABLE public.student_exam_summary
+(
+  ex_id integer NOT NULL,
+  username character varying(250) NOT NULL,
+  response_dt date,
+  total_marks smallint,
+  total_obt_marks_obj smallint,
+  total_obt_marks_desc smallint,
+  result character varying(4), -- PASS...
+  CONSTRAINT pk_student_exam_summary_username_exid PRIMARY KEY (ex_id , username ),
+  CONSTRAINT fk_student_exam_summary_exid FOREIGN KEY (ex_id)
+      REFERENCES public.exam_entry (ex_id) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE CASCADE,
+  CONSTRAINT fk_student_exam_summary_username FOREIGN KEY (username)
+      REFERENCES public.user_master (username) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE CASCADE
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE public.student_exam_summary
+  OWNER TO postgres;
+COMMENT ON COLUMN public.student_exam_summary.result IS 'PASS
+or 
+FAIL';
+
+-------------------------------------------------------------------------------------------------------------
+-- Sequence: public.seq_exam_que_ans_queid
+
+-- DROP SEQUENCE public.seq_exam_que_ans_queid;
+
+CREATE SEQUENCE public.seq_exam_que_ans_queid
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 9223372036854775807
+  START 2
+  CACHE 1;
+ALTER TABLE public.seq_exam_que_ans_queid
+  OWNER TO postgres;
+
+--------------------------------------------------------------------------------------------------------------
+
+-- Sequence: public.seq_exam_entry_exid
+
+-- DROP SEQUENCE public.seq_exam_entry_exid;
+
+CREATE SEQUENCE public.seq_exam_entry_exid
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 9223372036854775807
+  START 1
+  CACHE 1;
+ALTER TABLE public.seq_exam_entry_exid
+  OWNER TO postgres;
