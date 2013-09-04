@@ -133,7 +133,7 @@ public class ExamEntry  implements java.io.Serializable {
     public void setExType(int exType) {
         this.exType = exType;
     }
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name="start_dt", length=13)
     public Date getStartDt() {
         return this.startDt;
@@ -142,7 +142,7 @@ public class ExamEntry  implements java.io.Serializable {
     public void setStartDt(Date startDt) {
         this.startDt = startDt;
     }
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name="end_dt", length=13)
     public Date getEndDt() {
         return this.endDt;
@@ -178,7 +178,7 @@ public class ExamEntry  implements java.io.Serializable {
     public void setCreatedBy(String createdBy) {
         this.createdBy = createdBy;
     }
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name="creation_dt", length=13)
     public Date getCreationDt() {
         return this.creationDt;

@@ -84,7 +84,7 @@ public class Whoisdoingwhat  implements java.io.Serializable {
     public void setSub(Sub sub) {
         this.sub = sub;
     }
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name="activitydate", length=13)
     public Date getActivitydate() {
         return this.activitydate;

@@ -83,7 +83,7 @@ public class StudentExamSummary  implements java.io.Serializable {
     public void setUserMaster(UserMaster userMaster) {
         this.userMaster = userMaster;
     }
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name="response_dt", length=13)
     public Date getResponseDt() {
         return this.responseDt;
