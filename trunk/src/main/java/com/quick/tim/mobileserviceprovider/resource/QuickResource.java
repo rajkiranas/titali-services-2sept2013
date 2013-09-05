@@ -46,7 +46,7 @@ public class QuickResource {
       
             
             List<MasteParmBean>  uploadList=  quickService.getQuickLearnUploadList();
-            Gson gson=  new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").create();       
+            Gson gson=  new GsonBuilder().setDateFormat(GlobalConstants.gsonTimeFormat).create();       
             String json = gson.toJson(uploadList);             
             response.put(GlobalConstants.QUICKLEARNLIST, json);     
             return response;

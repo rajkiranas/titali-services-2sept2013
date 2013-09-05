@@ -26,4 +26,6 @@ public interface WhatsNewDao {
     public void sendWhatsNewNotificationToStudents(Whatsnew whatsNew);
 
     public void deleteWhatsNewNotification(int uploadId);
+
+    public void deleteWhoIsDoingWhatNotifications(int uploadId);
 }

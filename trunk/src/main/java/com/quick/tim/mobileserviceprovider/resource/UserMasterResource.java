@@ -441,7 +441,7 @@ public class UserMasterResource {
         System.out.println("userTrack="+inputRequest);
         JSONObject response =  new JSONObject();
         List<Userprofile> teacherList=userMasterService.getAllTeacherList();
-        Gson gson=  new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").create();
+        Gson gson=  new GsonBuilder().setDateFormat(GlobalConstants.gsonTimeFormat).create();
         String json = gson.toJson(teacherList);  
         response.put(GlobalConstants.TEACHERLIST, json);     
         return response;       
@@ -457,7 +457,7 @@ public class UserMasterResource {
        
         int prn=Integer.parseInt(inputRequest.getString("prn"));
         List<Userprofile> studentList=userMasterService.getStudentDetailsByPrn(prn);
-        Gson gson=  new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").create();       
+        Gson gson=  new GsonBuilder().setDateFormat(GlobalConstants.gsonTimeFormat).create();       
         String json = gson.toJson(studentList);  
         response.put(GlobalConstants.student, json);     
         return response;       
@@ -473,7 +473,7 @@ public class UserMasterResource {
        
         int prn=Integer.parseInt(inputRequest.getString("prn"));
         List<Userprofile> teacherList=userMasterService.getTeacherDetailsByPrn(prn);
-        Gson gson=  new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").create();   
+        Gson gson=  new GsonBuilder().setDateFormat(GlobalConstants.gsonTimeFormat).create();   
         String json = gson.toJson(teacherList);  
         response.put(GlobalConstants.teacher, json);     
         return response;       
@@ -503,7 +503,7 @@ public class UserMasterResource {
         String searchCriteria=inputRequest.getString("searchCriteria");
         String inputCriteria=inputRequest.getString("searchValue");
         List<Userprofile> studentList=userMasterService.getsearchStudentFilterCriteriaList(searchCriteria,inputCriteria);
-        Gson gson=  new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").create();   
+        Gson gson=  new GsonBuilder().setDateFormat(GlobalConstants.gsonTimeFormat).create();   
         String json = gson.toJson(studentList);  
         response.put(GlobalConstants.STUDENTLIST, json);     
         return response;       
@@ -519,7 +519,7 @@ public class UserMasterResource {
         String searchCriteria=inputRequest.getString("searchCriteria");
         String inputCriteria=inputRequest.getString("searchValue");
         List<Userprofile> teacherList=userMasterService.getsearchTeacherFilterCriteria(searchCriteria,inputCriteria);
-        Gson gson=  new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").create();   
+        Gson gson=  new GsonBuilder().setDateFormat(GlobalConstants.gsonTimeFormat).create();   
         String json = gson.toJson(teacherList);  
         response.put(GlobalConstants.TEACHERLIST, json);     
         return response;       

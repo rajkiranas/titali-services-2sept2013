@@ -76,5 +76,9 @@ public class WhatsNewService
     public void deleteWhatsNewNotification(int uploadId) {
        whatsNewDao.deleteWhatsNewNotification(uploadId);
     }
+
+    public void deleteWhoIsDoingWhatNotifications(int uploadId) {
+        whatsNewDao.deleteWhoIsDoingWhatNotifications(uploadId);
+    }
     
 }

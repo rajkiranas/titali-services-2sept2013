@@ -45,6 +45,7 @@ public class QuickLearnResource {
     private static final String getquickLearnByUploadId="getquickLearnByUploadId";
     private static final String deleteTopicByUploadId="deleteTopicByUploadId";
     
+    
     @Context
     private ResourceContext resourceContext;
 
@@ -64,7 +65,7 @@ public class QuickLearnResource {
         //org.apache.shiro.mgt.SecurityManager securityManager = factory.getInstance();
         List<MasteParmBean> list = quickLearnService.getWhatsNewForMe(inputRequest.getString("subject"));
         
-        Gson gson=  new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").create();       
+        Gson gson=  new GsonBuilder().setDateFormat(GlobalConstants.gsonTimeFormat).create();       
         String json = gson.toJson(list);
         response.put(GlobalConstants.WHATSNEW, json);
         
@@ -85,7 +86,7 @@ public class QuickLearnResource {
         JSONObject response = new JSONObject();
         //org.apache.shiro.mgt.SecurityManager securityManager = factory.getInstance();
         List<QuickLearn> list = quickLearnService.getQuickLearnByID(inputRequest.getInt("uploadId"));
-        Gson gson=  new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").create();       
+        Gson gson=  new GsonBuilder().setDateFormat(GlobalConstants.gsonTimeFormat).create();       
         String json = gson.toJson(list);  
         response.put(GlobalConstants.QUICKLEARNLIST, json);
         response.put(GlobalConstants.MYQUICKNOTEs, getMyQuickNotes(inputRequest.getInt("uploadId")));
@@ -213,7 +214,7 @@ public class QuickLearnResource {
         JSONObject response = new JSONObject();
         //org.apache.shiro.mgt.SecurityManager securityManager = factory.getInstance();
         List<MasteParmBean> list = quickLearnService.getquickLearnByUploadId(inputRequest.getInt("uploadId"));
-        Gson gson=  new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").create();       
+        Gson gson=  new GsonBuilder().setDateFormat(GlobalConstants.gsonTimeFormat).create();       
         String json = gson.toJson(list);  
         response.put(GlobalConstants.QUICKLEARNLIST, json);
        // response.put(GlobalConstants.MYQUICKNOTEs, getMyQuickNotes(inputRequest.getInt("uploadId")));
@@ -245,6 +246,7 @@ public class QuickLearnResource {
              response.put(GlobalConstants.STATUS,GlobalConstants.YES);
              
              deleteWhatsNewNotification(quickLearn.getUploadId());
+             deleteWhoIsDoingWhatNotifications(quickLearn.getUploadId());
         }
         // cannot delete topic
         else{
@@ -268,6 +270,21 @@ public class QuickLearnResource {
         }
          
         
+    }
+    
+    private void deleteWhoIsDoingWhatNotifications(int uploadId) 
+    {
+        try 
+        {
+            //fetch dashboard of the user
+         WhatsNewResource resource = resourceContext.getResource(WhatsNewResource.class);
+         resource.deleteWhoIsDoingWhatNotifications(uploadId);
+            
+        } 
+        catch (Exception e) 
+        {
+            e.printStackTrace();
+        }
     }
     
 //    @Path(getVideo)
@@ -326,6 +343,8 @@ public class QuickLearnResource {
 //
 //        return response;
 //    }
+
+    
 
    
 

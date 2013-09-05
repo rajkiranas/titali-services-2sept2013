@@ -12,6 +12,7 @@ import com.quick.tim.mobileserviceprovider.services.WhoseDoingWhatService;
 import java.util.List;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.ProjectionList;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
@@ -42,9 +43,11 @@ public class NoticeBoardDaoImpl implements NoticeBoardDao{
             DetachedCriteria detCri = DetachedCriteria.forClass(Notices.class);
             ProjectionList proList = Projections.projectionList();
             proList.add(Projections.property("noticeline"),"noticeline");
+            proList.add(Projections.property("noticedate"),"noticedate");
             detCri.add(Restrictions.eq("std.std", forStd));
             detCri.add(Restrictions.eq("fordiv", forDiv));
             detCri.setProjection(proList);
+            detCri.addOrder(Order.desc("noticedate"));
             detCri.setResultTransformer(Transformers.aliasToBean(Notices.class));
             noticeses = hibernateTemplate.findByCriteria(detCri);
 

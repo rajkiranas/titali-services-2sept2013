@@ -49,7 +49,7 @@ public class WhosDoingWhatResource {
 
             whoseDoingWhatService.sendWhosDoingWhatNotificationToStudents(inputRequest);
                 response.put(GlobalConstants.STATUS, GlobalConstants.YES);
-    //     Gson gson=  new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").create();       
+    //     Gson gson=  new GsonBuilder().setDateFormat(GlobalConstants.gsonTimeFormat).create();       
     //     String json = gson.toJson(uploadList);             
     //     
     //     JSONObject response =  new JSONObject();

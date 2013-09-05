@@ -8,6 +8,7 @@ import com.quick.tim.mobileserviceprovider.entity.Whatsnew;
 
 import com.quick.tim.mobileserviceprovider.DAO.WhatsNewDao;
 import com.quick.tim.mobileserviceprovider.bean.MasteParmBean;
+import com.quick.tim.mobileserviceprovider.entity.Whoisdoingwhat;
 
 
 import java.util.List;
@@ -134,6 +135,14 @@ public class WhatsNewDaoImpl implements WhatsNewDao {
         
         Whatsnew whatsnew = new Whatsnew(uploadId);
         hibernateTemplate.delete(whatsnew);
+        
+    }
+    
+    @Override
+    public void deleteWhoIsDoingWhatNotifications(int uploadId) {
+        
+        Whoisdoingwhat w = new Whoisdoingwhat(uploadId);
+        hibernateTemplate.delete(w);
         
     }
 }

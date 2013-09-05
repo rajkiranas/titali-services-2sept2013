@@ -46,8 +46,8 @@ public class DashboardResource {
         JSONObject response = new JSONObject();
         
         List<Whatsnew> list = whatsNewService.getWhatsNewForMe(userProfile.getString("standard"), userProfile.getString("division"));
-        //Gson gson=  new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").create();       
-        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").create();       
+        //Gson gson=  new GsonBuilder().setDateFormat(GlobalConstants.gsonTimeFormat).create();       
+        Gson gson = new GsonBuilder().setDateFormat(GlobalConstants.gsonTimeFormat).create();       
         String json = gson.toJson(list);
         response.put(GlobalConstants.WHATSNEW, json);
 
@@ -57,7 +57,7 @@ public class DashboardResource {
 
         
         List<MasteParmBean> whoisdoingwhats = whoseDoingWhatService.getWhoIsDoingWhat(userProfile.getString("standard"), userProfile.getString("division"));
-        Gson Whoisdoingwhat_gson = new Gson();
+        Gson Whoisdoingwhat_gson = new GsonBuilder().setDateFormat(GlobalConstants.gsonTimeFormat).create();
 
         String Whoisdoingwhat_json = Whoisdoingwhat_gson.toJson(whoisdoingwhats);
         response.put(GlobalConstants.WHOSEDOINGWHAT, Whoisdoingwhat_json);
@@ -65,7 +65,7 @@ public class DashboardResource {
 
       
         List<Notices> noticeses = noticeBoardService.getNotices(userProfile.getString("standard"), userProfile.getString("division"));
-        Gson Notices_gson = new Gson();
+        Gson Notices_gson = new GsonBuilder().setDateFormat(GlobalConstants.gsonTimeFormat).create();
         String Notices_json = Notices_gson.toJson(noticeses);
         response.put(GlobalConstants.NOTICES, Notices_json);
 
