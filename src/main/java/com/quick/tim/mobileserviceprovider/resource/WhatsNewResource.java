@@ -45,7 +45,7 @@ public class WhatsNewResource {
 
         whatsNewService.sendWhatsNewNotificationToStudents(inputRequest);
             
-//     Gson gson=  new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").create();       
+//     Gson gson=  new GsonBuilder().setDateFormat(GlobalConstants.gsonTimeFormat).create();       
 //     String json = gson.toJson(uploadList);             
 //     
 //     JSONObject response =  new JSONObject();
@@ -55,6 +55,10 @@ public class WhatsNewResource {
 
     void deleteWhatsNewNotification(int uploadId) {
         whatsNewService.deleteWhatsNewNotification(uploadId);
+    }
+
+    void deleteWhoIsDoingWhatNotifications(int uploadId) {
+        whatsNewService.deleteWhoIsDoingWhatNotifications(uploadId);
     }
     
 }

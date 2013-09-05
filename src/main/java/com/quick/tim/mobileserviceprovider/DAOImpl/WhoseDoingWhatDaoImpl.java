@@ -10,6 +10,7 @@ import com.quick.tim.mobileserviceprovider.bean.MasteParmBean;
 import java.util.List;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.ProjectionList;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
@@ -45,9 +46,11 @@ public class WhoseDoingWhatDaoImpl implements WhoseDoingWhatDao{
             proList.add(Projections.property("bywhom"),"byWhom");
             proList.add(Projections.property("displaynotification"),"displaynotification");
             proList.add(Projections.property("uploadId"),"uploadId");
+            proList.add(Projections.property("activitydate"),"uploadDate");
             
             detCri.setProjection(proList);            
             detCri.add(Restrictions.eq("std.std", forStd));
+            detCri.addOrder(Order.desc("activitydate"));
             //intentionally removed
             //detCri.add(Restrictions.eq("fordiv", forDiv));
             detCri.setResultTransformer(Transformers.aliasToBean(MasteParmBean.class));

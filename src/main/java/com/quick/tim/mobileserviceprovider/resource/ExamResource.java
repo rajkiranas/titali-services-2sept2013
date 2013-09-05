@@ -58,7 +58,7 @@ public class ExamResource {
         System.out.println("userTrack=" + inputRequest);
         JSONObject response = new JSONObject();
         List<ExamBean> examList = examService.getExamList(inputRequest.getString("std"),inputRequest.getString("div"));
-        Gson gson=  new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").create();       
+        Gson gson=  new GsonBuilder().setDateFormat(GlobalConstants.gsonTimeFormat).create();       
         String json = gson.toJson(examList);  
         response.put(GlobalConstants.EXAMLIST, json);     
         return response;       
@@ -76,7 +76,7 @@ public class ExamResource {
         System.out.println("userTrack=" + inputRequest);
         JSONObject response = new JSONObject();
         List<ExamBean> examList = examService.getExamDetailsById(inputRequest.getInt("exmId"));
-        Gson gson=  new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").create();       
+        Gson gson=  new GsonBuilder().setDateFormat(GlobalConstants.gsonTimeFormat).create();       
         String json = gson.toJson(examList);  
         response.put(GlobalConstants.EXAMLIST, json);     
         return response;       
@@ -95,7 +95,7 @@ public class ExamResource {
         System.out.println("userTrack=" + inputRequest);
         JSONObject response = new JSONObject();
         List<ExamQueAnsBean> queList = examService.getExamQuestionById(inputRequest.getInt("exmId"));
-        Gson gson=  new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").create();       
+        Gson gson=  new GsonBuilder().setDateFormat(GlobalConstants.gsonTimeFormat).create();       
         String json = gson.toJson(queList);  
         response.put(GlobalConstants.EXAMLIST, json);     
         return response;       
@@ -115,7 +115,7 @@ public class ExamResource {
         examService.createExam(inputRequest);
         
 //        List<ExamQueAnsBean> queList = examService.getExamQuestionById(inputRequest.getInt("exmId"));
-//        Gson gson=  new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").create();       
+//        Gson gson=  new GsonBuilder().setDateFormat(GlobalConstants.gsonTimeFormat).create();       
 //        String json = gson.toJson(queList);  
 //        response.put(GlobalConstants.EXAMLIST, json);     
         return response;       
