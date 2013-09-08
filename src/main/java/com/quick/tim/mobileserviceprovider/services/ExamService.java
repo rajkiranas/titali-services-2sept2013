@@ -140,5 +140,14 @@ public class ExamService {
             examDao.deleteExam(entry);
         
     }
+
+    public List<ExamBean> getPresentStudentsForExam(int examId) 
+    {
+        return examDao.getPresentStudentsForExam(examId);
+    }
+
+    public List<ExamBean> getAbsentStudentsForExam(int examId,String std,String div) {
+        return examDao.getAbsentStudentsForExam(examId,std,div);
+    }
     
 }

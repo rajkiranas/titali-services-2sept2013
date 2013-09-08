@@ -20,4 +20,8 @@ public interface ExamDao {
     public void createExam(ExamEntry entry);
 
     public void deleteExam(ExamEntry entry);
+
+    public List<ExamBean> getPresentStudentsForExam(int examId);
+
+    public List<ExamBean> getAbsentStudentsForExam(int examId,String std,String div);
 }
