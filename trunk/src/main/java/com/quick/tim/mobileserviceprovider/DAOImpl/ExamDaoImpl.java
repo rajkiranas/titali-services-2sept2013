@@ -8,6 +8,8 @@ import com.quick.tim.mobileserviceprovider.DAO.ExamDao;
 import com.quick.tim.mobileserviceprovider.bean.ExamBean;
 import com.quick.tim.mobileserviceprovider.bean.ExamQueAnsBean;
 import com.quick.tim.mobileserviceprovider.entity.ExamEntry;
+import com.quick.tim.mobileserviceprovider.entity.StudentExamSummary;
+import com.quick.tim.mobileserviceprovider.entity.StudentMaster;
 import java.util.Date;
 import java.util.List;
 import org.hibernate.FetchMode;
@@ -16,6 +18,7 @@ import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.ProjectionList;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.criterion.Subqueries;
 import org.hibernate.transform.Transformers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.HibernateTemplate;
@@ -73,6 +76,7 @@ public class ExamDaoImpl implements ExamDao {
         pl.add(Projections.property("appearedStudents"), "appearedStudents");
         pl.add(Projections.property("passedStudents"), "passedStudents");
         pl.add(Projections.property("failedStudents"), "failedStudents");
+        pl.add(Projections.property("totalStudents"), "totalStudents");
         
         criteria.setProjection(pl);
        
@@ -85,7 +89,51 @@ public class ExamDaoImpl implements ExamDao {
         
         return hibernateTemplate.findByCriteria(criteria);
     }
+    
+    public List<ExamBean> getPresentStudentsForExam(int examId)
+    {
+        DetachedCriteria criteria = DetachedCriteria.forClass(StudentExamSummary.class);
+        ProjectionList pl = Projections.projectionList();
+        pl.add(Projections.property("id.exId"), "examId");
+        pl.add(Projections.property("id.username"), "username");
+        pl.add(Projections.property("responseDt"), "responseDt");
+        pl.add(Projections.property("totalMarks"), "totalMarks");
+        pl.add(Projections.property("result"), "result");
+                
+        criteria.setProjection(pl);
+        criteria.add(Restrictions.eq("id.exId",examId));
+        criteria.setResultTransformer(Transformers.aliasToBean(ExamBean.class));
+        
+        return hibernateTemplate.findByCriteria(criteria);
+        
+    }
 
+    
+    
+    @Override
+    public List<ExamBean> getAbsentStudentsForExam(int examId,String forstd,String forDiv)
+    {
+        DetachedCriteria subcriteria = DetachedCriteria.forClass(StudentExamSummary.class);
+         
+        ProjectionList pl = Projections.projectionList();
+         pl.add(Projections.property("id.username"), "username");
+         subcriteria.setProjection(pl);
+        
+        
+         subcriteria.add(Restrictions.eq("id.exId",examId));
+         
+         DetachedCriteria mainCriteria =  DetachedCriteria.forClass(StudentMaster.class).createAlias("std", "std");
+         mainCriteria.add(Restrictions.eq("std.std", forstd));
+        // mainCriteria.add(Restrictions.eq("div", forDiv));
+         mainCriteria.add(Subqueries.propertyNotIn("username", subcriteria));
+         ProjectionList pl1 = Projections.projectionList();
+         pl1.add(Projections.property("username"), "username");
+         mainCriteria.setProjection(pl1);
+         mainCriteria.setResultTransformer(Transformers.aliasToBean(ExamBean.class));
+        
+        return hibernateTemplate.findByCriteria(mainCriteria);
+         
+    }
 
     public List<ExamQueAnsBean> getExamQuestionById(int exmId) {
         DetachedCriteria criteria = DetachedCriteria.forClass(ExamEntry.class).createAlias("examQuestionsAnswerses", "que");
@@ -114,4 +162,6 @@ public class ExamDaoImpl implements ExamDao {
     public void deleteExam(ExamEntry entry) {
         hibernateTemplate.delete(entry);
     }
+
+    
 }
