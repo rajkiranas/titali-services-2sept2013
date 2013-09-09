@@ -113,9 +113,19 @@ public class ExamResource {
     @Produces(MediaType.APPLICATION_JSON)
     public JSONObject createExam(JSONObject inputRequest) throws JSONException {
 
-        System.out.println("userTrack=" + inputRequest);
         JSONObject response = new JSONObject();
-        examService.createExam(inputRequest);
+
+        try 
+        {
+            System.out.println("userTrack=" + inputRequest);
+            examService.createExam(inputRequest);
+            response.put(GlobalConstants.STATUS, GlobalConstants.YES);
+            
+        } catch (Exception e) 
+        {
+            response.put(GlobalConstants.STATUS, GlobalConstants.NO);
+            e.printStackTrace();
+        }
         
 //        List<ExamQueAnsBean> queList = examService.getExamQuestionById(inputRequest.getInt("exmId"));
 //        Gson gson=  new GsonBuilder().setDateFormat(GlobalConstants.gsonTimeFormat).create();       
