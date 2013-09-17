@@ -40,6 +40,7 @@ public class ExamResource {
     private static final String deleteExam = "deleteExam";
     private static final String getPresentStudentsForExam="getPresentStudentsForExam";
     private static final String  getAbsentStudentsForExam ="getAbsentStudentsForExam";
+    private static final String submitQuestionAnsResponse = "submitQuestionAnsResponse";
       
     @Context
     private ResourceContext resourceContext;
@@ -76,13 +77,25 @@ public class ExamResource {
     @Produces(MediaType.APPLICATION_JSON)
     public JSONObject getExamDetailsById(JSONObject inputRequest) throws JSONException {
 
-        System.out.println("userTrack=" + inputRequest);
-        JSONObject response = new JSONObject();
-        List<ExamBean> examList = examService.getExamDetailsById(inputRequest.getInt("exmId"));
-        Gson gson=  new GsonBuilder().setDateFormat(GlobalConstants.gsonTimeFormat).create();       
-        String json = gson.toJson(examList);  
-        response.put(GlobalConstants.EXAMLIST, json);     
-        return response;       
+       System.out.println("userTrack=" + inputRequest);
+       
+       JSONObject response = new JSONObject();
+
+        try 
+        {
+            List<ExamBean> examList = examService.getExamDetailsById(inputRequest.getInt("exmId"));
+            Gson gson=  new GsonBuilder().setDateFormat(GlobalConstants.gsonTimeFormat).create();
+            String json = gson.toJson(examList);
+            response.put(GlobalConstants.EXAMLIST, json);
+            response.put(GlobalConstants.STATUS, GlobalConstants.YES);
+        } 
+        catch (Exception e) 
+        {
+            response.put(GlobalConstants.STATUS, GlobalConstants.NO);
+            e.printStackTrace();
+        }
+         
+        return response;
 
       
     }
@@ -97,7 +110,7 @@ public class ExamResource {
 
         System.out.println("userTrack=" + inputRequest);
         JSONObject response = new JSONObject();
-        List<ExamQueAnsBean> queList = examService.getExamQuestionById(inputRequest.getInt("exmId"));
+        List<ExamQueAnsBean> queList = examService.getExamQuestionById(inputRequest.getInt("exmId"),inputRequest.getBoolean("isSendAns"));
         Gson gson=  new GsonBuilder().setDateFormat(GlobalConstants.gsonTimeFormat).create();       
         String json = gson.toJson(queList);  
         response.put(GlobalConstants.EXAMLIST, json);     
@@ -214,6 +227,35 @@ public class ExamResource {
 
 
     }    
+
+
+@Path(submitQuestionAnsResponse)
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public JSONObject submitQuestionAnsResponse(JSONObject inputRequest) throws JSONException {
+
+        JSONObject response = new JSONObject();
+
+        try 
+        {
+            System.out.println("userTrack=" + inputRequest);
+            examService.submitQuestionAnsResponse(inputRequest);
+            response.put(GlobalConstants.STATUS, GlobalConstants.YES);
+            
+        } catch (Exception e) 
+        {
+            response.put(GlobalConstants.STATUS, GlobalConstants.NO);
+            e.printStackTrace();
+        }
+        
+//        List<ExamQueAnsBean> queList = examService.getExamQuestionById(inputRequest.getInt("exmId"));
+//        Gson gson=  new GsonBuilder().setDateFormat(GlobalConstants.gsonTimeFormat).create();       
+//        String json = gson.toJson(queList);  
+//        response.put(GlobalConstants.EXAMLIST, json);     
+        return response;       
+
+    }
     
    
     

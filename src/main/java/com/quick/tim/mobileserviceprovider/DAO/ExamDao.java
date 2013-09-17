@@ -7,7 +7,9 @@ package com.quick.tim.mobileserviceprovider.DAO;
 import com.quick.tim.mobileserviceprovider.bean.ExamBean;
 import com.quick.tim.mobileserviceprovider.bean.ExamQueAnsBean;
 import com.quick.tim.mobileserviceprovider.entity.ExamEntry;
+import com.quick.tim.mobileserviceprovider.entity.ExamStudentResponse;
 import java.util.List;
+import java.util.Set;
 
 /**
  *
@@ -16,7 +18,7 @@ import java.util.List;
 public interface ExamDao {
     public List<ExamBean> getExamList(String std,String div);
     public List<ExamBean> getExamDetailsById(int exmId);
-    public List<ExamQueAnsBean> getExamQuestionById(int exmId);
+    public List<ExamQueAnsBean> getExamQuestionById(int exmId, boolean isSendAns);
     public void createExam(ExamEntry entry);
 
     public void deleteExam(ExamEntry entry);
@@ -24,4 +26,11 @@ public interface ExamDao {
     public List<ExamBean> getPresentStudentsForExam(int examId);
 
     public List<ExamBean> getAbsentStudentsForExam(int examId,String std,String div);
+    /**
+     *
+     * @param entry
+     * @return
+     */
+    public List<ExamEntry> getExamEntryById(int entry);
+    public void sumbmitStudExamResponse(Set<ExamStudentResponse> questionsAnswerses);
 }

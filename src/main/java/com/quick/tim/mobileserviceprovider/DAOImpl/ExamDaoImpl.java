@@ -8,10 +8,12 @@ import com.quick.tim.mobileserviceprovider.DAO.ExamDao;
 import com.quick.tim.mobileserviceprovider.bean.ExamBean;
 import com.quick.tim.mobileserviceprovider.bean.ExamQueAnsBean;
 import com.quick.tim.mobileserviceprovider.entity.ExamEntry;
+import com.quick.tim.mobileserviceprovider.entity.ExamStudentResponse;
 import com.quick.tim.mobileserviceprovider.entity.StudentExamSummary;
 import com.quick.tim.mobileserviceprovider.entity.StudentMaster;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 import org.hibernate.FetchMode;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.DetachedCriteria;
@@ -56,6 +58,7 @@ public class ExamDaoImpl implements ExamDao {
         
     }
 
+    @Override
     public List<ExamBean> getExamDetailsById(int exmId) {
         DetachedCriteria criteria = DetachedCriteria.forClass(ExamEntry.class);
         ProjectionList pl = Projections.projectionList();
@@ -135,12 +138,16 @@ public class ExamDaoImpl implements ExamDao {
          
     }
 
-    public List<ExamQueAnsBean> getExamQuestionById(int exmId) {
+    @Override
+    public List<ExamQueAnsBean> getExamQuestionById(int exmId, boolean isSendAns) {
         DetachedCriteria criteria = DetachedCriteria.forClass(ExamEntry.class).createAlias("examQuestionsAnswerses", "que");
         ProjectionList pl = Projections.projectionList();
         pl.add(Projections.property("exId"), "examId");
         pl.add(Projections.property("exType"), "exType");
-        pl.add(Projections.property("que.ans"), "ans");
+        if(isSendAns)
+        {
+            pl.add(Projections.property("que.ans"), "ans");
+        }
         pl.add(Projections.property("que.questionId"), "questionId");
         pl.add(Projections.property("que.questionType"), "questionType");
         pl.add(Projections.property("que.question"), "question");
@@ -161,6 +168,19 @@ public class ExamDaoImpl implements ExamDao {
     
     public void deleteExam(ExamEntry entry) {
         hibernateTemplate.delete(entry);
+    }
+
+    private static final String findExamEntryByIdQry="from ExamEntry as model where model.exId=?";
+    @Override
+    public List<ExamEntry> getExamEntryById(int examId) 
+    {
+        return hibernateTemplate.find(findExamEntryByIdQry, examId);        
+    }
+    
+    @Override
+    public void sumbmitStudExamResponse(Set<ExamStudentResponse> questionsAnswerses) 
+    {
+        hibernateTemplate.saveOrUpdateAll(questionsAnswerses);
     }
 
     
