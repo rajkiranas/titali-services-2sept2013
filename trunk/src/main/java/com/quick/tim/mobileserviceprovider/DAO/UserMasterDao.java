@@ -28,4 +28,5 @@ public interface UserMasterDao  {
     public List<TeacherStddivSubIdBean> getTeacherStdDivSubListByUsername(String username);
 
     public void deleteUserFromDB(UserMaster userMaster);
+    public List<UserMaster> getUserMasterById(String userName);
 }

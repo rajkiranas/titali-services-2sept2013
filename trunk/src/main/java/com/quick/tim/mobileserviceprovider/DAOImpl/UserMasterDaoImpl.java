@@ -8,6 +8,7 @@ import com.quick.tim.mobileserviceprovider.bean.Userprofile;
 import com.quick.tim.mobileserviceprovider.entity.UserMaster;
 import com.quick.tim.mobileserviceprovider.DAO.UserMasterDao;
 import com.quick.tim.mobileserviceprovider.bean.TeacherStddivSubIdBean;
+import com.quick.tim.mobileserviceprovider.entity.ExamEntry;
 import com.quick.tim.mobileserviceprovider.entity.TeacherStddivSub;
 import com.quick.tim.mobileserviceprovider.entity.UserRoles;
 import java.util.ArrayList;
@@ -282,5 +283,11 @@ public class UserMasterDaoImpl implements  UserMasterDao {
         
         hibernateTemplate.delete(userMaster);
     }
-
+    
+    private static final String findUserMasterByIdQry="from UserMaster as model where model.username=?";
+    @Override
+    public List<UserMaster> getUserMasterById(String userName) 
+    {
+        return hibernateTemplate.find(findUserMasterByIdQry, userName);
+    }
 }
