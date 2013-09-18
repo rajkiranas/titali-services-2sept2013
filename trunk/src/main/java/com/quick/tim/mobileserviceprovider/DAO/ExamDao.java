@@ -8,6 +8,7 @@ import com.quick.tim.mobileserviceprovider.bean.ExamBean;
 import com.quick.tim.mobileserviceprovider.bean.ExamQueAnsBean;
 import com.quick.tim.mobileserviceprovider.entity.ExamEntry;
 import com.quick.tim.mobileserviceprovider.entity.ExamStudentResponse;
+import com.quick.tim.mobileserviceprovider.entity.StudentExamSummary;
 import java.util.List;
 import java.util.Set;
 
@@ -33,4 +34,6 @@ public interface ExamDao {
      */
     public List<ExamEntry> getExamEntryById(int entry);
     public void sumbmitStudExamResponse(Set<ExamStudentResponse> questionsAnswerses);
+    public void sumbmitStudExamSummary(StudentExamSummary summary);
+    public void saveOrUpdateExamEntry(ExamEntry entry);
 }

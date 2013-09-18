@@ -183,5 +183,13 @@ public class ExamDaoImpl implements ExamDao {
         hibernateTemplate.saveOrUpdateAll(questionsAnswerses);
     }
 
-    
+    @Override
+    public void sumbmitStudExamSummary(StudentExamSummary summary) {
+        hibernateTemplate.saveOrUpdate(summary);
+    }
+
+    @Override
+    public void saveOrUpdateExamEntry(ExamEntry entry) {
+        hibernateTemplate.saveOrUpdate(entry);
+    }
 }

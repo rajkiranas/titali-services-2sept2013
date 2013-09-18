@@ -15,6 +15,8 @@ import com.quick.tim.mobileserviceprovider.entity.ExamQuestionsAnswers;
 import com.quick.tim.mobileserviceprovider.entity.ExamStudentResponse;
 import com.quick.tim.mobileserviceprovider.entity.ExamStudentResponseId;
 import com.quick.tim.mobileserviceprovider.entity.Std;
+import com.quick.tim.mobileserviceprovider.entity.StudentExamSummary;
+import com.quick.tim.mobileserviceprovider.entity.StudentExamSummaryId;
 import com.quick.tim.mobileserviceprovider.entity.Sub;
 import com.quick.tim.mobileserviceprovider.entity.UserMaster;
 import com.quick.tim.mobileserviceprovider.global.GlobalConstants;
@@ -161,28 +163,24 @@ public class ExamService {
         return examDao.getAbsentStudentsForExam(examId,std,div);
     }
 
-    public void submitQuestionAnsResponse(JSONObject inputRequest) 
+    public void recordStudentExamResponse(JSONObject inputRequest) 
     {
-         Set examStudentResponseSet = getQuestionAnsResponse(inputRequest);
-         examDao.sumbmitStudExamResponse(examStudentResponseSet);
+         sumbmitStudExamResponse(inputRequest);         
+         
     }
     
-    private Set<ExamStudentResponse> getQuestionAnsResponse(JSONObject inputRequest) {
-        Set<ExamStudentResponse> questionsAnswerses =new HashSet<ExamStudentResponse>();
+    private void sumbmitStudExamResponse(JSONObject inputRequest) 
+    {
+        Set<ExamStudentResponse> examStudentResponseSet =new HashSet<ExamStudentResponse>();
         
         List<ExamEntry> examEntryList=null;
         ExamEntry examEntry=null;
         List<UserMaster> userMasterList=null;
         UserMaster userMaster=null;
+        int markesObtained=0;
+        int examTotalMarks=0;
         
-        HashMap<Integer,ExamQuestionsAnswers> questionAnswersMap =null;
-        
-//        try {
-//            Type listType = new TypeToken<Set<ExamQuestionsAnswers>>() {}.getType();
-//            questionsAnswerses = new Gson().fromJson(inputRequest.getString(GlobalConstants.EXAMQUESTIONLIST), listType);
-//        } catch (JSONException ex) {
-//            ex.printStackTrace();
-//        }
+        HashMap<Integer,ExamQuestionsAnswers> questionAnswersMap =null;        
         
       List<ExamBean>  examBeansList = null;
         try 
@@ -211,15 +209,13 @@ public class ExamService {
             examStudResponse.setUserMaster(userMaster);
             examStudResponse.setId(new ExamStudentResponseId(examEntry.getExId(), userMaster.getUsername(), eb.getQuestionId()));
             examStudResponse.setObjAns(eb.getAns());
-            
-            //handling objective type question answers
-//            if(eb.getQueType()==1)
-//            {
+            examTotalMarks=examTotalMarks + questionAnswersMap.get(eb.getQuestionId()).getMarksForQuestion();
                 if(questionAnswersMap.containsKey(eb.getQuestionId()))
                 {
                     if(eb.getAns().equals(questionAnswersMap.get(eb.getQuestionId()).getAns()))
                     {
                         examStudResponse.setObtMarksForObjQuestion(questionAnswersMap.get(eb.getQuestionId()).getMarksForQuestion());
+                        markesObtained=markesObtained+examStudResponse.getObtMarksForObjQuestion();
                     }
                     else
                     {
@@ -227,11 +223,18 @@ public class ExamService {
                     }
                 }
                 
-          ////  }
-            
-            questionsAnswerses.add(examStudResponse);
+            examStudentResponseSet.add(examStudResponse);
         }
-        return questionsAnswerses;
+        
+        //inserting vlaues in exam_student_response table
+        examDao.sumbmitStudExamResponse(examStudentResponseSet);
+        
+        //inserting vlaues in student_exam_summary table
+        String passFailResult = submitStudentExamSummary(examEntry,userMaster,markesObtained,examTotalMarks);
+        
+        //updating vlaues in exam_entry table
+        updateExamEntry(examEntry,userMaster,markesObtained,examTotalMarks,passFailResult);
+        
     }
     
 //    private Set<ExamQuestionsAnswers> getStudentResposePerQuestion(JSONObject inputRequest) 
@@ -285,5 +288,66 @@ public class ExamService {
         
         return questionAnswersMap;
     }
+
+    private String submitStudentExamSummary(ExamEntry examEntry, UserMaster userMaster, Integer markesObtained, Integer examTotalMarks) 
+    {
+        StudentExamSummary summary = new StudentExamSummary();
+        summary.setExamEntry(examEntry);
+        summary.setUserMaster(userMaster);
+        summary.setId(new StudentExamSummaryId(examEntry.getExId(), userMaster.getUsername()));
+        summary.setResponseDt(new Date());
+        summary.setTotalMarks(examTotalMarks.shortValue());
+        summary.setTotalObtMarksObj(markesObtained.shortValue());
+        int temp=markesObtained*100;
+        double percentage = temp/examTotalMarks;
+        
+        if(percentage>35) {
+            summary.setResult(GlobalConstants.PASS);
+        }
+        else {
+            summary.setResult(GlobalConstants.FAIL);
+        }
+        examDao.sumbmitStudExamSummary(summary);
+        
+        return summary.getResult();
+    }
     
+    /**
+     * method is synchronised because it incremnets count of appeared students
+     * because of this it again fetches exam entry object for taking new updates
+     */
+    
+    private synchronized void updateExamEntry(ExamEntry examEntry, UserMaster userMaster, Integer markesObtained, Integer examTotalMarks,String passFailResult) 
+    {
+        //fetching exam entry intentionally
+        List<ExamEntry> examEntryList=examDao.getExamEntryById(examEntry.getExId());                
+        ExamEntry entry = examEntryList.get(0);
+        
+        if(passFailResult.equals(GlobalConstants.PASS))
+        {
+            entry.setPassedStudents(entry.getPassedStudents() + 1);
+        }
+        else
+        {
+            entry.setFailedStudents(entry.getFailedStudents() + 1);
+        }
+        
+        if(markesObtained>entry.getExamTopScore())
+        {
+            entry.setExamTopScore(markesObtained);
+        }
+        
+        
+        float totalAvgScore = entry.getAppearedStudents() * entry.getExamAvgScore();
+        totalAvgScore=totalAvgScore+markesObtained;
+        
+               
+        //setting appread students after calculating exam avg score
+        entry.setAppearedStudents(entry.getAppearedStudents() + 1);
+        
+        //calculating exam avg score
+        entry.setExamAvgScore((totalAvgScore/entry.getAppearedStudents()));
+        
+        examDao.saveOrUpdateExamEntry(entry);
+    }
 }
