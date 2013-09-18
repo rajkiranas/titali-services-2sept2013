@@ -240,7 +240,7 @@ public class ExamResource {
         try 
         {
             System.out.println("userTrack=" + inputRequest);
-            examService.submitQuestionAnsResponse(inputRequest);
+            examService.recordStudentExamResponse(inputRequest);
             response.put(GlobalConstants.STATUS, GlobalConstants.YES);
             
         } catch (Exception e) 

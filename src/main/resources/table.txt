@@ -590,14 +590,14 @@ CREATE TABLE public.exam_entry
   ex_id integer NOT NULL,
   ex_name character varying(100),
   ex_type smallint, -- ex_type - ...
-  start_dt date,
-  end_dt date,
+  start_dt timestamp with time zone,
+  end_dt timestamp with time zone,
   forstd character varying(7),
   fordiv character varying(3),
   sub character varying(30),
   topic character varying(30),
   created_by character varying(200),
-  creation_dt date,
+  creation_dt timestamp with time zone,
   no_of_questions smallint,
   total_marks smallint,
   passing_marks smallint,
@@ -606,6 +606,8 @@ CREATE TABLE public.exam_entry
   passed_students smallint, -- should be updated from a synchronised method
   failed_students smallint, -- should be updated from a synchronised method
   contest_line character varying(100), -- ex. First 5 top scorers to get a parker pen each
+  exam_top_score double precision DEFAULT 0, -- column will get updated when any student submits his exam response
+  exam_avg_score double precision DEFAULT 0, -- will be updated when students submit their exam response
   CONSTRAINT pk_exam_entry_ex_id PRIMARY KEY (ex_id ),
   CONSTRAINT fk_exam_entry_forstd FOREIGN KEY (forstd)
       REFERENCES public.std (std) MATCH SIMPLE
@@ -635,6 +637,10 @@ two -2 - for or hybrid';
 COMMENT ON COLUMN public.exam_entry.passed_students IS 'should be updated from a synchronised method';
 COMMENT ON COLUMN public.exam_entry.failed_students IS 'should be updated from a synchronised method';
 COMMENT ON COLUMN public.exam_entry.contest_line IS 'ex. First 5 top scorers to get a parker pen each';
+COMMENT ON COLUMN public.exam_entry.exam_top_score IS 'column will get updated when any student submits his exam response';
+COMMENT ON COLUMN public.exam_entry.exam_avg_score IS 'will be updated when students submit their exam response';
+
+
 
 
 
