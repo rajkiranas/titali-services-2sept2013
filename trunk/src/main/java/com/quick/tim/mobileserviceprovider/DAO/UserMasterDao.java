@@ -29,4 +29,6 @@ public interface UserMasterDao  {
 
     public void deleteUserFromDB(UserMaster userMaster);
     public List<UserMaster> getUserMasterById(String userName);
+
+    public int getStudentCountForClass(String std, String fordiv);
 }

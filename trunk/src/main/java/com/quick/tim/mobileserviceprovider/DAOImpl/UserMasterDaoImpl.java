@@ -43,6 +43,7 @@ public class UserMasterDaoImpl implements  UserMasterDao {
     }
     private static final String getRollNoDetailsByQry="select model.rno from StudentMaster as model where model.rno=?";
     private static final String getUsernameDetailsByQry="select model.username from UserMaster as model where model.username=?";
+    private static final String getStudentsOfClassQry="select model.rno from StudentMaster as model where model.std.std=? and model.div=?";
     
     
     public List<Userprofile> getUserProfile(String userName){
@@ -289,5 +290,10 @@ public class UserMasterDaoImpl implements  UserMasterDao {
     public List<UserMaster> getUserMasterById(String userName) 
     {
         return hibernateTemplate.find(findUserMasterByIdQry, userName);
+    }
+
+    @Override
+    public int getStudentCountForClass(String std, String fordiv) {
+        return hibernateTemplate.find(getStudentsOfClassQry,std,fordiv).size();
     }
 }

@@ -778,3 +778,54 @@ CREATE SEQUENCE public.seq_exam_entry_exid
   CACHE 1;
 ALTER TABLE public.seq_exam_entry_exid
   OWNER TO postgres;
+------------------------------------------------------------------------------------------------------------------
+-- Table: public.upcoming_technology
+
+-- DROP TABLE public.upcoming_technology;
+
+CREATE TABLE public.upcoming_technology
+(
+  technologyid integer NOT NULL,
+  technologydate timestamp with time zone,
+  bywhom character varying(200),
+  forstd character varying(7),
+  fordiv character varying(3),
+  subject character varying(30),
+  technologyline character varying(150), -- shall contain one liner of the technology subject
+  technologybody character varying(300), -- actual technologybody
+  visibletorole character varying(32), -- shall contain values...
+  CONSTRAINT pk_upcoming_technology_technologyid PRIMARY KEY (technologyid ),
+  CONSTRAINT fk_upcoming_technology_forstd FOREIGN KEY (forstd)
+      REFERENCES public.std (std) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE CASCADE,
+  CONSTRAINT fk_upcoming_technology_sub FOREIGN KEY (subject)
+      REFERENCES public.sub (sub) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE CASCADE
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE public.upcoming_technology
+  OWNER TO postgres;
+COMMENT ON COLUMN public.upcoming_technology.technologyline IS 'shall contain one liner of the technology subject';
+COMMENT ON COLUMN public.upcoming_technology.technologybody IS 'actual technologybody';
+COMMENT ON COLUMN public.upcoming_technology.visibletorole IS 'shall contain values
+student or
+teacher or
+admin or
+any
+';
+
+--------------------------------------------------------------------------------------------------------------------------
+-- Sequence: public.seq_upcoming_technology_technologyid
+
+-- DROP SEQUENCE public.seq_upcoming_technology_technologyid;
+
+CREATE SEQUENCE public.seq_upcoming_technology_technologyid
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 9223372036854775807
+  START 1
+  CACHE 1;
+ALTER TABLE public.seq_upcoming_technology_technologyid
+  OWNER TO postgres;
