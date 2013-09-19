@@ -74,6 +74,7 @@ public class GlobalConstants {
     public static final String role="role";
     public static final String WHATSNEW = "whatsNew";
     public static final String NOTICES = "notices";
+    public static final String Technologies = "Technologies";
     public static final String WHOSEDOINGWHAT = "Whodwht";
     public static final String auth_resource = "/auth";
     public static final String dashborad_resource = "/dashboard";
@@ -118,6 +119,8 @@ public class GlobalConstants {
      public static final String gsonTimeFormat="yyyy-MM-dd'T'HH:mm:ss'Z'";
      public static final String PASS="PASS";
      public static final String FAIL="FAIL";
+     public static final String noticeBoardResource = "noticeResource";
+     public static final String technologyResource = "technologyResource";
      
      
 }

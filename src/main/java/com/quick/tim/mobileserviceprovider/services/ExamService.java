@@ -86,9 +86,11 @@ public class ExamService {
            entry.setSub(new Sub(inputRequest.getString("sub")));
            entry.setTopic(inputRequest.getString("topic"));//
            entry.setTotalMarks(entry.getNoOfQuestions()*Integer.parseInt(inputRequest.getString("marksForQuestion")));
+        
            
            entry.setExamQuestionsAnswerses(getExamQuestions(inputRequest,entry));
            entry.setStd(getStandard(inputRequest));
+           entry.setTotalStudents(getTotalStudentForClass(entry.getStd().getStd(),entry.getFordiv()));
            
         } catch (ParseException ex) {
             ex.printStackTrace();
@@ -349,5 +351,9 @@ public class ExamService {
         entry.setExamAvgScore((totalAvgScore/entry.getAppearedStudents()));
         
         examDao.saveOrUpdateExamEntry(entry);
+    }
+
+    private int getTotalStudentForClass(String std, String fordiv) {
+        return userDao.getStudentCountForClass(std,fordiv);
     }
 }

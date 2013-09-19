@@ -6,7 +6,9 @@ package com.quick.tim.mobileserviceprovider.DAO;
 
 import com.quick.tim.mobileserviceprovider.DAOImpl.GenericDaoImpl;
 import com.quick.tim.mobileserviceprovider.bean.NoticeBean;
+import com.quick.tim.mobileserviceprovider.bean.UpcomingTechnologyBean;
 import com.quick.tim.mobileserviceprovider.entity.Notices;
+import com.quick.tim.mobileserviceprovider.entity.UpcomingTechnology;
 import java.util.List;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.ProjectionList;
@@ -18,14 +20,14 @@ import org.hibernate.transform.Transformers;
  *
  * @author suyogn
  */
-public interface NoticeBoardDao {
-    public List<Notices> getNotices(String forStd, String forDiv);
+public interface TechnologyDao {
+    public List<UpcomingTechnology> getTechnologies(String forStd, String forDiv);
 
-    public List<NoticeBean> getAllNotices();
+    public List<UpcomingTechnologyBean> getAllTechnologies();
 
-    public void saveNotice(Notices notices);
+    public void saveTechnology(UpcomingTechnology technology);
 
-    public void deleteNotice(Notices notices);
+    public void deleteTechnology(UpcomingTechnology technology);
 
-    public List<Notices> getNoticeById(int noticeId);
+    public List<UpcomingTechnology> getTechnologyById(int technologyId);
 }
