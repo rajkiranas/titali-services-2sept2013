@@ -794,6 +794,7 @@ CREATE TABLE public.upcoming_technology
   technologyline character varying(150), -- shall contain one liner of the technology subject
   technologybody character varying(300), -- actual technologybody
   visibletorole character varying(32), -- shall contain values...
+  category character varying(50), -- will contain category of the topic like...
   CONSTRAINT pk_upcoming_technology_technologyid PRIMARY KEY (technologyid ),
   CONSTRAINT fk_upcoming_technology_forstd FOREIGN KEY (forstd)
       REFERENCES public.std (std) MATCH SIMPLE
@@ -815,6 +816,9 @@ teacher or
 admin or
 any
 ';
+COMMENT ON COLUMN public.upcoming_technology.category IS 'will contain category of the topic like
+topic java has category programming';
+
 
 --------------------------------------------------------------------------------------------------------------------------
 -- Sequence: public.seq_upcoming_technology_technologyid
