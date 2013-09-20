@@ -75,6 +75,7 @@ public class GlobalConstants {
     public static final String WHATSNEW = "whatsNew";
     public static final String NOTICES = "notices";
     public static final String Technologies = "Technologies";
+    public static final String category_distribution = "category_distribution";
     public static final String WHOSEDOINGWHAT = "Whodwht";
     public static final String auth_resource = "/auth";
     public static final String dashborad_resource = "/dashboard";

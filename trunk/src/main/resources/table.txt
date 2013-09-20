@@ -833,3 +833,22 @@ CREATE SEQUENCE public.seq_upcoming_technology_technologyid
   CACHE 1;
 ALTER TABLE public.seq_upcoming_technology_technologyid
   OWNER TO postgres;
+-------------------------------------------------------------------------------------------------------------------------
+-- Table: public.category_distribution
+
+-- DROP TABLE public.category_distribution;
+
+CREATE TABLE public.category_distribution
+(
+  category character varying(50) NOT NULL,
+  technology_name character varying(50) NOT NULL,
+  per double precision, -- will hold percentage value for the given technology in that category
+  CONSTRAINT pk_category_distribution_category_technology PRIMARY KEY (category , technology_name )
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE public.category_distribution
+  OWNER TO postgres;
+COMMENT ON COLUMN public.category_distribution.per IS 'will hold percentage value for the given technology in that category';
+

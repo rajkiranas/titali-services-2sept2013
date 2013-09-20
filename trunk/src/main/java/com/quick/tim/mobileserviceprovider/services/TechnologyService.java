@@ -5,6 +5,7 @@
 package com.quick.tim.mobileserviceprovider.services;
 
 import com.quick.tim.mobileserviceprovider.DAO.TechnologyDao;
+import com.quick.tim.mobileserviceprovider.bean.CategoryDistributionBean;
 import com.quick.tim.mobileserviceprovider.bean.UpcomingTechnologyBean;
 import com.quick.tim.mobileserviceprovider.entity.UpcomingTechnology;
 import java.util.Date;
@@ -60,5 +61,11 @@ public class TechnologyService {
     public void deleteTechnology(JSONObject inputRequest) throws JSONException {
         UpcomingTechnology technology = new UpcomingTechnology(inputRequest.getInt("technologyId"));
         technologyDao.deleteTechnology(technology);
+    }
+
+    public List<CategoryDistributionBean> getTechnologyByCategory(JSONObject inputRequest) throws JSONException 
+    {
+        String category = inputRequest.getString("category");
+        return technologyDao.getTechnologyByCategory(category);
     }
 }
