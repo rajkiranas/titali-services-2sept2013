@@ -6,6 +6,7 @@ package com.quick.tim.mobileserviceprovider.resource;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.quick.tim.mobileserviceprovider.bean.CategoryDistributionBean;
 import com.quick.tim.mobileserviceprovider.bean.MasteParmBean;
 import com.quick.tim.mobileserviceprovider.bean.NoticeBean;
 import com.quick.tim.mobileserviceprovider.bean.UpcomingTechnologyBean;
@@ -14,6 +15,8 @@ import com.quick.tim.mobileserviceprovider.services.NoticeBoardService;
 import com.quick.tim.mobileserviceprovider.services.QuickService;
 import com.quick.tim.mobileserviceprovider.services.TechnologyService;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -33,6 +36,7 @@ import org.springframework.stereotype.Component;
 public class TechnologyResource {
     
     private static final String getAllTechnology="getAllTechnology";
+    private static final String getTechnologyByCategory="getTechnologyByCategory";
     private static final String saveTechnology="saveTechnology";
     private static final String deleteTechnology ="deleteTechnology";
     
@@ -98,6 +102,33 @@ public class TechnologyResource {
 
         }
         return response;
+    }
+    
+    
+    @Path(getTechnologyByCategory)
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public JSONObject getTechnologyByCategory(JSONObject inputRequest){
+    JSONObject response =  new JSONObject();
+        try 
+        {
+            List<CategoryDistributionBean>  relatedTechnologyList=  technologyService.getTechnologyByCategory(inputRequest);
+            Gson gson=  new GsonBuilder().setDateFormat(GlobalConstants.gsonTimeFormat).create();       
+            String json = gson.toJson(relatedTechnologyList);             
+            response.put(GlobalConstants.category_distribution, json);
+            response.put(GlobalConstants.STATUS, GlobalConstants.YES);
+        }
+        catch(Exception e)
+        {
+            try {
+                response.put(GlobalConstants.STATUS, GlobalConstants.NO);
+            } catch (JSONException ex) {
+                ex.printStackTrace();
+            }
+            e.printStackTrace();
+        }
+            return response;
     }
     
 }

@@ -5,6 +5,7 @@
 package com.quick.tim.mobileserviceprovider.DAO;
 
 import com.quick.tim.mobileserviceprovider.DAOImpl.GenericDaoImpl;
+import com.quick.tim.mobileserviceprovider.bean.CategoryDistributionBean;
 import com.quick.tim.mobileserviceprovider.bean.NoticeBean;
 import com.quick.tim.mobileserviceprovider.bean.UpcomingTechnologyBean;
 import com.quick.tim.mobileserviceprovider.entity.Notices;
@@ -30,4 +31,6 @@ public interface TechnologyDao {
     public void deleteTechnology(UpcomingTechnology technology);
 
     public List<UpcomingTechnology> getTechnologyById(int technologyId);
+
+    public List<CategoryDistributionBean> getTechnologyByCategory(String category);
 }

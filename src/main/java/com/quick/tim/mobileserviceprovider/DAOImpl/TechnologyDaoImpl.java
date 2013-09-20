@@ -7,7 +7,9 @@ package com.quick.tim.mobileserviceprovider.DAOImpl;
 
 
 import com.quick.tim.mobileserviceprovider.DAO.TechnologyDao;
+import com.quick.tim.mobileserviceprovider.bean.CategoryDistributionBean;
 import com.quick.tim.mobileserviceprovider.bean.UpcomingTechnologyBean;
+import com.quick.tim.mobileserviceprovider.entity.CategoryDistribution;
 import com.quick.tim.mobileserviceprovider.entity.UpcomingTechnology;
 import java.util.Date;
 import java.util.List;
@@ -104,5 +106,31 @@ public class TechnologyDaoImpl implements TechnologyDao{
     @Override
     public List<UpcomingTechnology> getTechnologyById(int technologyId ){
         return hibernateTemplate.find(findTechnologyByIdQry, technologyId);        
+    }
+
+    @Override
+    public List<CategoryDistributionBean> getTechnologyByCategory(String category) 
+    {
+        List<CategoryDistributionBean> technologies = null;
+        try 
+        {
+            //.createAlias("Whatsnew", "Whatsnew")
+            DetachedCriteria criteria = DetachedCriteria.forClass(CategoryDistribution.class);
+            ProjectionList projection = Projections.projectionList();
+            projection.add(Projections.property("id.category"),"category");
+            projection.add(Projections.property("id.technologyName"),"technologyName");
+            projection.add(Projections.property("percentage"),"percentage");
+            
+            criteria.add(Restrictions.eq("id.category", category));
+            
+            criteria.setProjection(projection);
+            //detCri.addOrder(Order.desc("technologydate"));
+            criteria.setResultTransformer(Transformers.aliasToBean(CategoryDistributionBean.class));
+            technologies = hibernateTemplate.findByCriteria(criteria);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return technologies;
     }
 }
