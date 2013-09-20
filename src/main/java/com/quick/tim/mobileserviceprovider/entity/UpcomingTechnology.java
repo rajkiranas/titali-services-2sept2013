@@ -36,6 +36,7 @@ public class UpcomingTechnology  implements java.io.Serializable {
      private String technologyline;
      private String technologybody;
      private String visibletorole;
+     private String category;
 
     public UpcomingTechnology() {
     }
@@ -136,6 +137,21 @@ public class UpcomingTechnology  implements java.io.Serializable {
     
     public void setVisibletorole(String visibletorole) {
         this.visibletorole = visibletorole;
+    }
+
+    /**
+     * @return the category
+     */
+    @Column(name="category", length=32)
+    public String getCategory() {
+        return category;
+    }
+
+    /**
+     * @param category the category to set
+     */
+    public void setCategory(String category) {
+        this.category = category;
     }
 }
 

@@ -76,6 +76,7 @@ public class TechnologyDaoImpl implements TechnologyDao{
             proList.add(Projections.property("bywhom"), "bywhom");
             proList.add(Projections.property("fordiv"), "fordiv");
             proList.add(Projections.property("technologybody"), "technologybody");
+            proList.add(Projections.property("category"), "category");
 
             detCri.setProjection(proList);
             detCri.addOrder(Order.desc("technologydate"));

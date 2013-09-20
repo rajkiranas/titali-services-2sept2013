@@ -36,12 +36,14 @@ public class TechnologyService {
     public void saveTechnology(JSONObject inputRequest) throws JSONException {
         UpcomingTechnology technology =null;
         int technologyId=inputRequest.getInt("technologyId");
+        // new technology
         if(technologyId==0)
         {
             technology = new UpcomingTechnology();
         }
         else
         {
+            //edit existing technology
             List<UpcomingTechnology> technologyList = technologyDao.getTechnologyById(technologyId);
             technology=technologyList.get(0);
         }
@@ -50,6 +52,7 @@ public class TechnologyService {
         technology.setTechnologybody(inputRequest.getString("technologybody"));
         technology.setTechnologyline(inputRequest.getString("technologyline"));
         technology.setTechnologydate(new Date(inputRequest.getLong("technologydate")));
+        technology.setCategory(inputRequest.getString("category"));
         
         technologyDao.saveTechnology(technology);
     }
