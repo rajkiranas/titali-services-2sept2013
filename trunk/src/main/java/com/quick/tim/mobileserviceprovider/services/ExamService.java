@@ -339,6 +339,11 @@ public class ExamService {
             entry.setExamTopScore(markesObtained);
         }
         
+        if(markesObtained<entry.getExamLowScore())
+        {
+            entry.setExamLowScore(markesObtained);
+        }
+        
         
         float totalAvgScore = entry.getAppearedStudents() * entry.getExamAvgScore();
         totalAvgScore=totalAvgScore+markesObtained;

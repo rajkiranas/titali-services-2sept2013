@@ -54,6 +54,7 @@ public class ExamEntry  implements java.io.Serializable {
      private String contestLine;
      private float examTopScore;
      private float examAvgScore;
+     private float examLowScore;
      private Set<ExamQuestionsAnswers> examQuestionsAnswerses = new HashSet<ExamQuestionsAnswers>(0);
      private Set<ExamStudentResponse> examStudentResponses = new HashSet<ExamStudentResponse>(0);
      private Set<StudentExamSummary> studentExamSummaries = new HashSet<StudentExamSummary>(0);
@@ -308,6 +309,21 @@ public class ExamEntry  implements java.io.Serializable {
 
     public void setExamAvgScore(float examAvgScore) {
         this.examAvgScore = examAvgScore;
+    }
+
+    /**
+     * @return the examLowScore
+     */
+    @Column(name="exam_low_score")
+    public float getExamLowScore() {
+        return examLowScore;
+    }
+
+    /**
+     * @param examLowScore the examLowScore to set
+     */
+    public void setExamLowScore(float examLowScore) {
+        this.examLowScore = examLowScore;
     }
 }
 

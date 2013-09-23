@@ -48,6 +48,10 @@ public class ExamBean {
      private Date responseDt;
      private String result;
      private int questionId;
+     
+     private float examTopScore;
+     private float examAvgScore;
+     private float examLowScore;
 
     public int getQuestionId() {
         return questionId;
@@ -300,6 +304,30 @@ public class ExamBean {
 
     public void setMarksPerQuestion(int marksPerQuestion) {
         this.marksPerQuestion = marksPerQuestion;
+    }
+
+    public float getExamTopScore() {
+        return examTopScore;
+    }
+
+    public void setExamTopScore(float examTopScore) {
+        this.examTopScore = examTopScore;
+    }
+
+    public float getExamAvgScore() {
+        return examAvgScore;
+    }
+
+    public void setExamAvgScore(float examAvgScore) {
+        this.examAvgScore = examAvgScore;
+    }
+
+    public float getExamLowScore() {
+        return examLowScore;
+    }
+
+    public void setExamLowScore(float examLowScore) {
+        this.examLowScore = examLowScore;
     }
 
  
