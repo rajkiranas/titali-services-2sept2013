@@ -84,10 +84,12 @@ public class ExamDaoImpl implements ExamDao {
         pl.add(Projections.property("examTopScore"), "examTopScore");
         pl.add(Projections.property("examAvgScore"), "examAvgScore");
         pl.add(Projections.property("examLowScore"), "examLowScore");        
+        pl.add(Projections.property("summary.totalObtMarksObj"), "totalObtMarksObj");        
         
         criteria.setProjection(pl);
        
         criteria.add(Restrictions.eq("exId",exmId));
+        criteria.createAlias("studentExamSummaries", "summary");
         criteria.createAlias("sub", "sub");
         criteria.createAlias("std", "std");
         criteria.createAlias("examQuestionsAnswerses", "examque");
