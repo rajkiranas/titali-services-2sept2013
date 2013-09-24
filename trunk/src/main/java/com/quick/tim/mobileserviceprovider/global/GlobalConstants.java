@@ -108,6 +108,8 @@ public class GlobalConstants {
     
     public static final String EXAMRESOURCE = "examResource";
     public static final String EXAMLIST="examList";
+    public static final String subjectWiseAvgPerformance="subjectWiseAvgPerformance";
+    public static final String subwiseAvgScoreForStud="subwiseAvgScoreForStud";
      public static final String EXAMQUESTIONLIST ="examQuestionList";
      public static final String space =" ";
      public static final String has ="has";

@@ -9,6 +9,7 @@ import com.quick.tim.mobileserviceprovider.bean.ExamBean;
 import com.quick.tim.mobileserviceprovider.bean.ExamQueAnsBean;
 import com.quick.tim.mobileserviceprovider.entity.ExamEntry;
 import com.quick.tim.mobileserviceprovider.entity.ExamStudentResponse;
+import com.quick.tim.mobileserviceprovider.entity.Std;
 import com.quick.tim.mobileserviceprovider.entity.StudentExamSummary;
 import com.quick.tim.mobileserviceprovider.entity.StudentMaster;
 import java.util.Date;
@@ -60,6 +61,10 @@ public class ExamDaoImpl implements ExamDao {
 
     @Override
     public List<ExamBean> getExamDetailsById(int exmId) {
+        DetachedCriteria summaryCriteria = DetachedCriteria.forClass(StudentExamSummary.class);
+        summaryCriteria.add(Restrictions.eq("id.exId", exmId));
+        List exsummaryList = hibernateTemplate.findByCriteria(summaryCriteria);
+        
         DetachedCriteria criteria = DetachedCriteria.forClass(ExamEntry.class);
         ProjectionList pl = Projections.projectionList();
         pl.add(Projections.property("exId"), "examId");
@@ -83,13 +88,18 @@ public class ExamDaoImpl implements ExamDao {
         
         pl.add(Projections.property("examTopScore"), "examTopScore");
         pl.add(Projections.property("examAvgScore"), "examAvgScore");
-        pl.add(Projections.property("examLowScore"), "examLowScore");        
-        pl.add(Projections.property("summary.totalObtMarksObj"), "totalObtMarksObj");        
+        pl.add(Projections.property("examLowScore"), "examLowScore");
+        if(!exsummaryList.isEmpty()){
+            pl.add(Projections.property("summary.totalObtMarksObj"), "totalObtMarksObj");
+        }
+        
         
         criteria.setProjection(pl);
        
         criteria.add(Restrictions.eq("exId",exmId));
-        criteria.createAlias("studentExamSummaries", "summary");
+        if(!exsummaryList.isEmpty()){
+            criteria.createAlias("studentExamSummaries", "summary");
+        }
         criteria.createAlias("sub", "sub");
         criteria.createAlias("std", "std");
         criteria.createAlias("examQuestionsAnswerses", "examque");
@@ -127,7 +137,6 @@ public class ExamDaoImpl implements ExamDao {
         ProjectionList pl = Projections.projectionList();
          pl.add(Projections.property("id.username"), "username");
          subcriteria.setProjection(pl);
-        
         
          subcriteria.add(Restrictions.eq("id.exId",examId));
          
@@ -197,5 +206,84 @@ public class ExamDaoImpl implements ExamDao {
     @Override
     public void saveOrUpdateExamEntry(ExamEntry entry) {
         hibernateTemplate.saveOrUpdate(entry);
+    }
+    
+    @Override
+    public List<ExamBean> getAverageScoresForAllSubjects(String forStd, String forDiv) {
+        
+        // to avoid referring summary table is values are nor present
+        DetachedCriteria summaryCriteria = DetachedCriteria.forClass(StudentExamSummary.class).createAlias("examEntry", "examEntry");
+        summaryCriteria.add(Restrictions.eq("examEntry.std.std", forStd));
+        summaryCriteria.add(Restrictions.eq("examEntry.fordiv", forDiv));
+        List exsummaryList = hibernateTemplate.findByCriteria(summaryCriteria);
+        
+        
+        DetachedCriteria criteria = DetachedCriteria.forClass(ExamEntry.class);
+        ProjectionList pl = Projections.projectionList();
+        
+        pl.add(Projections.property("sub.sub"), "sub");
+        if(!exsummaryList.isEmpty())
+        {
+            pl.add(Projections.avg("summary.totalObtMarksObj"),"subjectWiseAvgPerformance");
+
+        }
+        pl.add(Projections.groupProperty(("sub.sub")));
+        
+        criteria.add(Restrictions.eq("std.std",forStd));
+        criteria.add(Restrictions.eq("fordiv",forDiv));
+        
+        criteria.setProjection(pl);
+        
+        if(!exsummaryList.isEmpty())
+        {
+            criteria.createAlias("studentExamSummaries", "summary");
+        }
+        criteria.createAlias("sub", "sub");
+        criteria.createAlias("std", "std");
+        criteria.createAlias("examQuestionsAnswerses", "examque");
+        // criteria.setResultTransformer(DetachedCriteria.DISTINCT_ROOT_ENTITY);
+        criteria.setResultTransformer(Transformers.aliasToBean(ExamBean.class));
+        
+        return hibernateTemplate.findByCriteria(criteria);
+    }
+    
+    @Override
+    public List<ExamBean> getSubjectswiseAverageScoresForStudent(String userName) {
+        
+        DetachedCriteria summaryCriteria = DetachedCriteria.forClass(StudentExamSummary.class);
+        summaryCriteria.add(Restrictions.eq("id.username", userName));
+        List exsummaryList = hibernateTemplate.findByCriteria(summaryCriteria);
+        
+        
+        DetachedCriteria criteria = DetachedCriteria.forClass(ExamEntry.class);
+        ProjectionList pl = Projections.projectionList();
+        
+        pl.add(Projections.property("sub.sub"), "sub");
+        if(!exsummaryList.isEmpty())
+        {
+            pl.add(Projections.avg("summary.totalObtMarksObj"),"subjectWiseAvgPerformance");
+            criteria.add(Restrictions.eq("summary.userMaster.username",userName));
+
+        }
+        pl.add(Projections.groupProperty(("sub.sub")));
+        
+        
+//        criteria.add(Restrictions.eq("std.std",forStd));
+//        criteria.add(Restrictions.eq("fordiv",forDiv));
+        
+        criteria.setProjection(pl);
+        
+        if(!exsummaryList.isEmpty())
+        {
+            criteria.createAlias("studentExamSummaries", "summary");
+
+        }
+        criteria.createAlias("sub", "sub");
+        criteria.createAlias("std", "std");
+        criteria.createAlias("examQuestionsAnswerses", "examque");
+        // criteria.setResultTransformer(DetachedCriteria.DISTINCT_ROOT_ENTITY);
+        criteria.setResultTransformer(Transformers.aliasToBean(ExamBean.class));
+        
+        return hibernateTemplate.findByCriteria(criteria);
     }
 }

@@ -63,11 +63,22 @@ public class ExamResource {
         JSONObject response = new JSONObject();
         List<ExamBean> examList = examService.getExamList(inputRequest.getString("std"),inputRequest.getString("div"));
         Gson gson=  new GsonBuilder().setDateFormat(GlobalConstants.gsonTimeFormat).create();       
-        String json = gson.toJson(examList);  
-        response.put(GlobalConstants.EXAMLIST, json);     
-        return response;       
+        String examListJson = gson.toJson(examList);  
+        response.put(GlobalConstants.EXAMLIST, examListJson);     
 
-      
+        //only in case of student login
+        if (inputRequest.has("username")) 
+        {
+            List<ExamBean> subjectWiseAvgPerformance = examService.getAverageScoresForAllSubjects(inputRequest.getString("std"), inputRequest.getString("div"));
+            List<ExamBean> subwiseAvgScoreForStud = examService.getSubjectswiseAverageScoresForStudent(inputRequest.getString("username"));
+            String subjectWiseAvgPerformanceJson = gson.toJson(subjectWiseAvgPerformance);
+            String subwiseAvgScoreForStudJson = gson.toJson(subwiseAvgScoreForStud);
+
+            response.put(GlobalConstants.subjectWiseAvgPerformance, subjectWiseAvgPerformanceJson);
+            response.put(GlobalConstants.subwiseAvgScoreForStud, subwiseAvgScoreForStudJson);
+        }
+        
+        return response;       
     }
     
     
