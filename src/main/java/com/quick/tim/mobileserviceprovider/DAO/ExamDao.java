@@ -36,4 +36,6 @@ public interface ExamDao {
     public void sumbmitStudExamResponse(Set<ExamStudentResponse> questionsAnswerses);
     public void sumbmitStudExamSummary(StudentExamSummary summary);
     public void saveOrUpdateExamEntry(ExamEntry entry);
+    public List<ExamBean> getAverageScoresForAllSubjects(String forStd, String forDiv);
+    public List<ExamBean> getSubjectswiseAverageScoresForStudent(String userName);
 }

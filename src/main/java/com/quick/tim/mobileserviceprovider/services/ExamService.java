@@ -361,4 +361,11 @@ public class ExamService {
     private int getTotalStudentForClass(String std, String fordiv) {
         return userDao.getStudentCountForClass(std,fordiv);
     }
+    public List<ExamBean> getAverageScoresForAllSubjects(String forStd, String forDiv) {
+        return examDao.getAverageScoresForAllSubjects(forStd, forDiv);
+    }
+    
+        public List<ExamBean> getSubjectswiseAverageScoresForStudent(String userName) {
+        return examDao.getSubjectswiseAverageScoresForStudent(userName);
+    }
 }
