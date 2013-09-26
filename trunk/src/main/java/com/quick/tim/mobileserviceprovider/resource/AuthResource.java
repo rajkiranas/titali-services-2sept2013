@@ -112,7 +112,8 @@ public class AuthResource {
     }
 
     //authorization of the currently logged in shiro user
-    private void authorize(Subject currentUser, JSONObject inputRequest, JSONObject response) throws JSONException {
+    private void authorize(Subject currentUser, JSONObject inputRequest, JSONObject response) throws JSONException 
+    {
         if (currentUser.hasRole(GlobalConstants.student)) {
             response.put(GlobalConstants.role, GlobalConstants.student);
             //fetch and set student profile
