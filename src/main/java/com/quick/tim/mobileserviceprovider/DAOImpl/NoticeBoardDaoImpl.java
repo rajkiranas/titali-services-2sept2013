@@ -47,8 +47,8 @@ public class NoticeBoardDaoImpl implements NoticeBoardDao{
             ProjectionList proList = Projections.projectionList();
             proList.add(Projections.property("noticeline"),"noticeline");
             proList.add(Projections.property("noticedate"),"noticedate");
-            detCri.add(Restrictions.eq("std.std", forStd));
-            detCri.add(Restrictions.eq("fordiv", forDiv));
+            /* detCri.add(Restrictions.eq("std.std", forStd));
+            detCri.add(Restrictions.eq("fordiv", forDiv)); */
             detCri.setProjection(proList);
             detCri.addOrder(Order.desc("noticedate"));
             detCri.setResultTransformer(Transformers.aliasToBean(Notices.class));
