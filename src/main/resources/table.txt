@@ -795,7 +795,7 @@ CREATE TABLE public.upcoming_technology
   fordiv character varying(3),
   subject character varying(30),
   technologyline character varying(150), -- shall contain one liner of the technology subject
-  technologybody character varying(300), -- actual technologybody
+  technologybody character varying(2000), -- actual technologybody
   visibletorole character varying(32), -- shall contain values...
   category character varying(50), -- will contain category of the topic like...
   CONSTRAINT pk_upcoming_technology_technologyid PRIMARY KEY (technologyid ),

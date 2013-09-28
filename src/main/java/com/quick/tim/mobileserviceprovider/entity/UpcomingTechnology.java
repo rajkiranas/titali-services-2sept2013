@@ -121,7 +121,7 @@ public class UpcomingTechnology  implements java.io.Serializable {
         this.technologyline = technologyline;
     }
     
-    @Column(name="technologybody", length=300)
+    @Column(name="technologybody", length=2000)
     public String getTechnologybody() {
         return this.technologybody;
     }
