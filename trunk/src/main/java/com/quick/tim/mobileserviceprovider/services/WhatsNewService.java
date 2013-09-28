@@ -52,11 +52,13 @@ public class WhatsNewService
            
            if(isNewQuickUpload)
            {
-               displayNotification=inputRequest.getString("uploadedBy") + GlobalConstants.space +GlobalConstants.has + GlobalConstants.space + GlobalConstants.released + GlobalConstants.space + inputRequest.getString("topic") + GlobalConstants.space + GlobalConstants.topicInformation;
+               //displayNotification=inputRequest.getString("uploadedBy").toUpperCase() + GlobalConstants.space +GlobalConstants.has + GlobalConstants.space + GlobalConstants.released + GlobalConstants.space + inputRequest.getString("topic") + GlobalConstants.space + GlobalConstants.topicInformation;
+               displayNotification=inputRequest.getString("uploadedBy").toUpperCase() + GlobalConstants.space +GlobalConstants.has + GlobalConstants.space + GlobalConstants.released + GlobalConstants.space + inputRequest.getString("topic");
            }
            else
            {
-               displayNotification=inputRequest.getString("uploadedBy") + GlobalConstants.space +GlobalConstants.has + GlobalConstants.space + GlobalConstants.updated + GlobalConstants.space + inputRequest.getString("topic") + GlobalConstants.space + GlobalConstants.topicInformation;
+               //displayNotification=inputRequest.getString("uploadedBy").toUpperCase() + GlobalConstants.space +GlobalConstants.has + GlobalConstants.space + GlobalConstants.updated + GlobalConstants.space + inputRequest.getString("topic") + GlobalConstants.space + GlobalConstants.topicInformation;
+               displayNotification=inputRequest.getString("uploadedBy").toUpperCase() + GlobalConstants.space +GlobalConstants.has + GlobalConstants.space + GlobalConstants.updated + GlobalConstants.space + inputRequest.getString("topic");
            }
            
            Whatsnew wn = new Whatsnew();
