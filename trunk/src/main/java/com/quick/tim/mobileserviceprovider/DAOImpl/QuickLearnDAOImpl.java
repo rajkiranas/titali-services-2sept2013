@@ -121,7 +121,8 @@ public class QuickLearnDAOImpl implements QuickLearnDAO {
             
             proList.add(Projections.property("uploadDate"),"uploadDate");
             detCri.setProjection(proList);
-            detCri.add(Restrictions.eq("sub.sub", subject));
+            //commented after changeing quick learn ui with pop up window
+            //detCri.add(Restrictions.eq("sub.sub", subject));
             detCri.setResultTransformer(Transformers.aliasToBean(MasteParmBean.class));
             whatsNewList = hibernateTemplate.findByCriteria(detCri);
             
