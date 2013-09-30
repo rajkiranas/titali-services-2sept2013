@@ -41,6 +41,7 @@ public class ExamResource {
     private static final String getPresentStudentsForExam="getPresentStudentsForExam";
     private static final String  getAbsentStudentsForExam ="getAbsentStudentsForExam";
     private static final String submitQuestionAnsResponse = "submitQuestionAnsResponse";
+    private static final String getSubjectWiseComparison="getSubjectWiseComparison";
       
     @Context
     private ResourceContext resourceContext;
@@ -267,7 +268,29 @@ public class ExamResource {
         return response;       
 
     }
-    
-   
+
+@Path(getSubjectWiseComparison)
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public JSONObject getSubjectWiseComparison(JSONObject inputRequest) throws JSONException {
+
+
+        System.out.println("userTrack=" + inputRequest);
+        JSONObject response = new JSONObject();
+        
+            List<ExamBean> subjectWiseAvgPerformance = examService.getAverageScoresForAllSubjects(inputRequest.getString("std"), inputRequest.getString("div"));
+            List<ExamBean> subwiseAvgScoreForStud = examService.getSubjectswiseAverageScoresForStudent(inputRequest.getString("username"));
+            
+            Gson gson=  new GsonBuilder().setDateFormat(GlobalConstants.gsonTimeFormat).create();       
+            String subjectWiseAvgPerformanceJson = gson.toJson(subjectWiseAvgPerformance);
+            String subwiseAvgScoreForStudJson = gson.toJson(subwiseAvgScoreForStud);
+
+            response.put(GlobalConstants.subjectWiseAvgPerformance, subjectWiseAvgPerformanceJson);
+            response.put(GlobalConstants.subwiseAvgScoreForStud, subwiseAvgScoreForStudJson);
+       
+        
+        return response;       
+    }   
     
 }
