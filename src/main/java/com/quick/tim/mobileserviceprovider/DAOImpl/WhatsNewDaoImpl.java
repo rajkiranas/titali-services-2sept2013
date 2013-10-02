@@ -98,7 +98,7 @@ public class WhatsNewDaoImpl implements WhatsNewDao {
     @Override
       public void sendWhatsNewNotificationToStudents(Whatsnew whatsnew)
       {
-          hibernateTemplate.save(whatsnew);
+          hibernateTemplate.saveOrUpdate(whatsnew);
       }
 
   /*  public List<Ssconversations> getAllMessages(String userId, List<Ofgroupuser> ofgroupuserList, String view) {
