@@ -92,7 +92,7 @@ public class ExamDaoImpl implements ExamDao {
         if(!exsummaryList.isEmpty()){
             pl.add(Projections.property("summary.totalObtMarksObj"), "totalObtMarksObj");
         }
-        
+        pl.add(Projections.property("responseDt"), "responseDt");
         
         criteria.setProjection(pl);
        

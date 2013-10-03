@@ -529,6 +529,7 @@ CREATE TABLE public.quick_learn
   previous_question character varying(5000),
   previous_question_information character varying(150),
   topic_tags character varying(50),
+  quiz character varying(1000),
   CONSTRAINT quick_learn_pk_upload_id PRIMARY KEY (upload_id ),
   CONSTRAINT fk_quick_learn_forstd FOREIGN KEY (forstd)
       REFERENCES public.std (std) MATCH SIMPLE

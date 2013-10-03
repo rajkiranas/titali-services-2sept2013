@@ -46,6 +46,7 @@ public class QuickLearn  implements java.io.Serializable {
      private String previousQuestionInformation;
      private String topicTags;
      private Set<QuickNotes> quickNoteses = new HashSet<QuickNotes>(0);
+     private String quiz;
 
     public QuickLearn() {
     }
@@ -216,6 +217,21 @@ public class QuickLearn  implements java.io.Serializable {
     
     public void setQuickNoteses(Set<QuickNotes> quickNoteses) {
         this.quickNoteses = quickNoteses;
+    }
+
+    /**
+     * @return the quiz
+     */
+    @Column(name="quiz", length=1000)
+    public String getQuiz() {
+        return quiz;
+    }
+
+    /**
+     * @param quiz the quiz to set
+     */
+    public void setQuiz(String quiz) {
+        this.quiz = quiz;
     }
 
 
