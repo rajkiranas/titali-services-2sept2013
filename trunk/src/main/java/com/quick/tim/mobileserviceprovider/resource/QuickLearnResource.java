@@ -150,6 +150,7 @@ public class QuickLearnResource {
         quickLearn.setOtherNotesInformation(info);
         quickLearn.setPreviousQuestion(inputRequest.getString("pq"));
         quickLearn.setPreviousQuestionInformation(info);
+        quickLearn.setQuiz(inputRequest.getString("quiz"));
         String videoPath= inputRequest.getString("video_path");
         quickLearn.setVideoPath(videoPath);
  

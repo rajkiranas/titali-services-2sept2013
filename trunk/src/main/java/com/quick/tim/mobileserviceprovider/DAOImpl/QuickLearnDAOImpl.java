@@ -60,6 +60,7 @@ public class QuickLearnDAOImpl implements QuickLearnDAO {
         pl.add(Projections.property("previousQuestion"), "previousQuestion");
         pl.add(Projections.property("previousQuestionInformation"), "previousQuestionInformation");
         pl.add(Projections.property("topicTags"), "topicTags");
+        pl.add(Projections.property("quiz"), "quiz");
         criteria.setProjection(pl);
         criteria.setResultTransformer(Transformers.aliasToBean(com.quick.tim.mobileserviceprovider.bean.QuickLearn.class));
         return hibernateTemplate.findByCriteria(criteria);
@@ -180,6 +181,8 @@ public class QuickLearnDAOImpl implements QuickLearnDAO {
         pl.add(Projections.property("previousQuestion"), "previousQuestion");
         pl.add(Projections.property("previousQuestionInformation"), "previousQuestionInformation");
         pl.add(Projections.property("topicTags"), "topicTags");
+        pl.add(Projections.property("quiz"), "quiz");
+        
         criteria.setProjection(pl);
         criteria.setResultTransformer(Transformers.aliasToBean(MasteParmBean.class));
         return hibernateTemplate.findByCriteria(criteria);
