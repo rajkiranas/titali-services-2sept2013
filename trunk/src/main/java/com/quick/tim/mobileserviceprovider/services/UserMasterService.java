@@ -7,6 +7,7 @@ package com.quick.tim.mobileserviceprovider.services;
 import com.quick.tim.mobileserviceprovider.bean.Userprofile;
 import com.quick.tim.mobileserviceprovider.DAO.UserMasterDao;
 import com.quick.tim.mobileserviceprovider.bean.TeacherStddivSubIdBean;
+import com.quick.tim.mobileserviceprovider.entity.QuickLearn;
 import com.quick.tim.mobileserviceprovider.entity.UserMaster;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,5 +86,10 @@ public class UserMasterService
 
     public void deleteUserFromDB(UserMaster userMaster) {
         userMasterDao.deleteUserFromDB(userMaster);
+    }
+    
+    public List<Userprofile> getStudentUserIdsByClass(String std)
+    {
+        return userMasterDao.getStudentUserIdsByClass(std);
     }
 }

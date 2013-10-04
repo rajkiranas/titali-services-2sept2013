@@ -9,7 +9,9 @@ import com.google.gson.GsonBuilder;
 import com.quick.tim.mobileserviceprovider.bean.ExamBean;
 import com.quick.tim.mobileserviceprovider.bean.ExamQueAnsBean;
 import com.quick.tim.mobileserviceprovider.global.GlobalConstants;
+import com.quick.tim.mobileserviceprovider.services.EmailService;
 import com.quick.tim.mobileserviceprovider.services.ExamService;
+import com.quick.tim.mobileserviceprovider.services.UserMasterService;
 import com.sun.jersey.api.core.ResourceContext;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -33,6 +35,9 @@ import org.springframework.stereotype.Component;
 public class ExamResource {
     @Autowired
     private ExamService examService;
+    @Autowired
+    private EmailService emailService;
+    
     private static final String getExamList="getExamList";
     private static final String getExamDetailsById = "getExamDetailsById";
     private static final String GETEXAMQUESTIONBYID = "getExamQuestionById";
@@ -145,6 +150,7 @@ public class ExamResource {
             System.out.println("userTrack=" + inputRequest);
             examService.createExam(inputRequest);
             response.put(GlobalConstants.STATUS, GlobalConstants.YES);
+            emailService.sendNewExamNotificationByMail(inputRequest);
             
         } catch (Exception e) 
         {

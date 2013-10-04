@@ -4,11 +4,53 @@
  */
 package com.quick.tim.mobileserviceprovider.global;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+
 /**
  *
  * @author kishorp
  */
 public class GlobalConstants {
+    private static Properties properties = new Properties();
+    static
+    {
+        try {
+            loadProperties();
+        } catch (IOException ex) {
+          //  logger.debug("Exception occured in loadProperties() method, Exception=", ex);
+            //Logger.getLogger(GlobalConstants.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
+        }
+    }
+    
+    
+    
+    
+    static class PropertyLoader {
+
+        public InputStream getProperty() {
+            InputStream l_objInputStream = getClass().getClassLoader().
+                    getResourceAsStream("Default.properties");
+            return l_objInputStream;
+        }
+    }
+
+    private static void loadProperties() throws IOException {
+            GlobalConstants.PropertyLoader PL = new GlobalConstants.PropertyLoader();
+            InputStream inputStream = PL.getProperty();
+            if (inputStream != null) {
+                properties.load(inputStream);
+            } else {
+             // logger.debug("Properties File not found!");
+            }
+    }
+ 
+     public static String getProperty(String key)
+     {
+         return properties.getProperty(key);
+     }
     
     //public static String SERVER = "SAVILANSecureMessaging";    
     public static String SERVER = "ss00dpcddr0052";
@@ -124,6 +166,16 @@ public class GlobalConstants {
      public static final String FAIL="FAIL";
      public static final String noticeBoardResource = "noticeResource";
      public static final String technologyResource = "technologyResource";
+     
+     
+     //////////////////mail properties//////////////////////
+    public static final String SMTP_HOST="SMTP_HOST";
+    public static final String SMTP_PORT="SMTP_PORT";
+    public static final String SOCKET_FACTORY_PORT="SOCKET_FACTORY_PORT";
+    public static final String FROM_MAIL_ID="FROM_MAIL_ID";
+    public static final String FROM_MAIL_PWD="FROM_MAIL_PWD";
+    public static final String NEW_TOPIC_RELEASE_MSG="NEW_TOPIC_RELEASE_MSG";
+    public static final String NEW_EXAM_RELEASE_MSG="NEW_EXAM_RELEASE_MSG";
      
      
 }

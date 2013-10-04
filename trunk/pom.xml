@@ -68,7 +68,7 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>5.1.9</version>
         </dependency>
-         <!-- Spring -->
+        <!-- Spring -->
         
        
         
@@ -106,17 +106,17 @@
             <artifactId>jersey-servlet</artifactId>
             <version>1.17.1</version>
         </dependency>
-         <dependency>
-                <groupId>com.sun.jersey</groupId>
-                <artifactId>jersey-spring</artifactId>
-                <version>1.0.1-SNAPSHOT</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>org.springframework</groupId>
-                        <artifactId>spring</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
+        <dependency>
+            <groupId>com.sun.jersey</groupId>
+            <artifactId>jersey-spring</artifactId>
+            <version>1.0.1-SNAPSHOT</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
         <dependency>
             <groupId>commons-dbcp</groupId>
             <artifactId>commons-dbcp</artifactId>
@@ -164,10 +164,10 @@
         </dependency>
         
         <dependency> 
-     <groupId>org.springframework</groupId> 
-     <artifactId>spring-aspects</artifactId> 
-     <version>3.1.2.RELEASE</version> 
-</dependency>
+            <groupId>org.springframework</groupId> 
+            <artifactId>spring-aspects</artifactId> 
+            <version>3.1.2.RELEASE</version> 
+        </dependency>
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
@@ -176,10 +176,21 @@
         </dependency>
         
         <dependency>
-    <groupId>org.aspectj</groupId>
-    <artifactId>aspectjrt</artifactId>
-    <version>1.6.12</version>
-</dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjrt</artifactId>
+            <version>1.6.12</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>javax.mail-api</artifactId>
+            <version>1.4.5-SNAPSHOT</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>mail</artifactId>
+            <version>1.4.5</version>
+        </dependency>
     </dependencies>
 
     <build>
