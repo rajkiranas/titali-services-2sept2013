@@ -9,6 +9,7 @@ import com.google.gson.GsonBuilder;
 import com.quick.tim.mobileserviceprovider.bean.MasteParmBean;
 import com.quick.tim.mobileserviceprovider.entity.*;
 import com.quick.tim.mobileserviceprovider.global.GlobalConstants;
+import com.quick.tim.mobileserviceprovider.services.EmailService;
 import com.quick.tim.mobileserviceprovider.services.QuickLearnService;
 import com.sun.jersey.api.core.ResourceContext;
 import java.util.Date;
@@ -34,6 +35,8 @@ import org.springframework.stereotype.Component;
 public class QuickLearnResource {
     @Autowired
     QuickLearnService quickLearnService;
+    @Autowired
+    EmailService emailService;
     private static final String getVideo = "getVideo";
     private static final String getNotes = "getnotes";
     private static final String getOtherNotes = "getOtherNotes";
@@ -162,6 +165,11 @@ public class QuickLearnResource {
         //setting newly sequence generated upload id - so that whats new item id will be same as upload id
         inputRequest.put("uploadId",quickLearn.getUploadId());
         sendWhatsNewNotificationToStudents(inputRequest);
+        
+        //sending mail alert only for new topic releases
+        if(uploadId.equals("null")){
+            sendEmailNotificationToTheClass(quickLearn);
+        }
        
         
         return response;
@@ -345,10 +353,8 @@ public class QuickLearnResource {
 //        return response;
 //    }
 
-    
-
-   
-
-    
-    
+    private void sendEmailNotificationToTheClass(QuickLearn quickLearn) 
+    {
+        emailService.sendNewTopicNotificationByMail(quickLearn);
+    }
 }

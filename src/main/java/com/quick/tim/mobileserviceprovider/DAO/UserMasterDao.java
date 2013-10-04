@@ -6,6 +6,7 @@ package com.quick.tim.mobileserviceprovider.DAO;
 
 import com.quick.tim.mobileserviceprovider.bean.TeacherStddivSubIdBean;
 import com.quick.tim.mobileserviceprovider.bean.Userprofile;
+import com.quick.tim.mobileserviceprovider.entity.QuickLearn;
 import com.quick.tim.mobileserviceprovider.entity.UserMaster;
 
 
@@ -31,4 +32,6 @@ public interface UserMasterDao  {
     public List<UserMaster> getUserMasterById(String userName);
 
     public int getStudentCountForClass(String std, String fordiv);
+
+    public List<Userprofile> getStudentUserIdsByClass(String std);
 }

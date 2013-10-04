@@ -9,6 +9,8 @@ import com.quick.tim.mobileserviceprovider.entity.UserMaster;
 import com.quick.tim.mobileserviceprovider.DAO.UserMasterDao;
 import com.quick.tim.mobileserviceprovider.bean.TeacherStddivSubIdBean;
 import com.quick.tim.mobileserviceprovider.entity.ExamEntry;
+import com.quick.tim.mobileserviceprovider.entity.QuickLearn;
+import com.quick.tim.mobileserviceprovider.entity.Std;
 import com.quick.tim.mobileserviceprovider.entity.TeacherStddivSub;
 import com.quick.tim.mobileserviceprovider.entity.UserRoles;
 import java.util.ArrayList;
@@ -225,7 +227,7 @@ public class UserMasterDaoImpl implements  UserMasterDao {
   public List<Userprofile> getsearchTeacherFilterCriteria(String searchCriteria, String inputCriteria) {
        
       List<Userprofile> searchTeacherList=new ArrayList<Userprofile>();       
-      DetachedCriteria criteria=DetachedCriteria.forClass(UserMaster.class,"um");       
+      DetachedCriteria criteria=DetachedCriteria.forClass(UserMaster.class,"um");
       criteria.createAlias("um.teacherMasters", "teacherMasters");
       criteria.createAlias("um.teacherStddivSubs", "teacherStddivSubs");
       ProjectionList pl = Projections.projectionList();
@@ -295,5 +297,26 @@ public class UserMasterDaoImpl implements  UserMasterDao {
     @Override
     public int getStudentCountForClass(String std, String fordiv) {
         return hibernateTemplate.find(getStudentsOfClassQry,std,fordiv).size();
+    }
+
+    @Override
+    public List<Userprofile> getStudentUserIdsByClass(String std) 
+    {
+        DetachedCriteria criteria=DetachedCriteria.forClass(UserMaster.class,"um");
+        
+         ProjectionList pl = Projections.projectionList();
+            
+         pl.add(Projections.property("um.username"), "username");
+            
+         criteria.setProjection(pl);
+         
+         criteria.createAlias("um.studentMasters", "studentMasters");
+            
+         criteria.add(Restrictions.eq("studentMasters.std",new Std(std)));
+            
+         criteria.setResultTransformer(Transformers.aliasToBean(Userprofile.class));
+            
+         return hibernateTemplate.findByCriteria(criteria);                
+           
     }
 }
