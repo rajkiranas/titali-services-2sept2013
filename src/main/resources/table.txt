@@ -856,3 +856,40 @@ ALTER TABLE public.category_distribution
   OWNER TO postgres;
 COMMENT ON COLUMN public.category_distribution.per IS 'will hold percentage value for the given technology in that category';
 
+--------------------------------------------------------------------------------------------
+-- Table: public.forum_event_details
+
+-- DROP TABLE public.forum_event_details;
+
+CREATE TABLE public.forum_event_details
+(
+  event_detail_id integer NOT NULL,
+  event_date timestamp with time zone,
+  event_desc character varying(100),
+  event_body character varying(1000),
+  event_owner character varying(200), -- Name of the user ...
+  event_image bytea,
+  parent_forum_id integer,
+  CONSTRAINT pk_forum_event_details_id PRIMARY KEY (event_detail_id )
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE public.forum_event_details
+  OWNER TO postgres;
+COMMENT ON COLUMN public.forum_event_details.event_owner IS 'Name of the user 
+not username';
+
+--------------------------------------------------------------------------------------------------------
+-- Sequence: public.seq_forum_event_details_id
+
+-- DROP SEQUENCE public.seq_forum_event_details_id;
+
+CREATE SEQUENCE public.seq_forum_event_details_id
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 9223372036854775807
+  START 1
+  CACHE 1;
+ALTER TABLE public.seq_forum_event_details_id
+  OWNER TO postgres;
