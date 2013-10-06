@@ -32,6 +32,7 @@ import org.springframework.stereotype.Component;
 public class ForumResource {
     
     private static final String getForumEventDetails="getForumEventDetails";
+    private static final String saveEventDetails="saveEventDetails";
     
     @Autowired
     private  ForumService forumService;;
@@ -50,6 +51,28 @@ public class ForumResource {
         
         JSONObject response = new JSONObject();
         response.put(GlobalConstants.eventDetailsList, examListJson);     
+        return response;
+    }
+    
+    @Path(saveEventDetails)
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public JSONObject saveEventDetails(JSONObject inputRequest) throws JSONException 
+    {
+        JSONObject response = new JSONObject();
+        try 
+        {
+            forumService.saveEventDetails(inputRequest);
+        
+            response.put(GlobalConstants.STATUS, "Successfully posted event");     
+            
+        } catch (Exception e) 
+        {
+            e.printStackTrace();
+            response.put(GlobalConstants.STATUS, "Could not post event");
+        }
+        
         return response;
     }
 }

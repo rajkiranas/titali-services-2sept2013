@@ -60,6 +60,10 @@ public class ForumDaoImpl implements ForumDao {
         //return hibernateTemplate.findByCriteria(criteria);
         return hibernateTemplate.findByCriteria(criteria);
     }
-    
-    
+
+    @Override
+    public void saveEventDetails(ForumEventDetails event) 
+    {
+        hibernateTemplate.saveOrUpdate(event);
+    }
 }

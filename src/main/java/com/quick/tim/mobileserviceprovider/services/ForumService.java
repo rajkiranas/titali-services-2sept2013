@@ -36,4 +36,18 @@ public class ForumService
        {
            return forumDao.getForumEventDetails(inputRequest);
        }
+
+    public void saveEventDetails(JSONObject inputRequest) throws JSONException 
+    {
+        ForumEventDetails event = new ForumEventDetails();
+        event.setEventDate(new Date());
+        event.setEventOwner(inputRequest.getString("owner"));
+        event.setEventDesc(inputRequest.getString("event_desc"));
+        event.setEventBody(inputRequest.getString("event_body"));
+        byte[] arr=inputRequest.getString("image").getBytes();
+        event.setEventImage(arr);
+        event.setImageFileName(inputRequest.getString("image_filename"));
+                
+        forumDao.saveEventDetails(event);
+    }
 }
