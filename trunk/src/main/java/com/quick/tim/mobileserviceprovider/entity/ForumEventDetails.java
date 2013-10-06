@@ -31,6 +31,7 @@ public class ForumEventDetails  implements java.io.Serializable {
      private String eventOwner;
      private byte[] eventImage;
      private Integer parentForumId;
+     private String imageFileName;
 
     public ForumEventDetails() {
     }
@@ -112,6 +113,21 @@ public class ForumEventDetails  implements java.io.Serializable {
     
     public void setParentForumId(Integer parentForumId) {
         this.parentForumId = parentForumId;
+    }
+
+    /**
+     * @return the imageFileName
+     */
+    @Column(name="image_filename", length=30)
+    public String getImageFileName() {
+        return imageFileName;
+    }
+
+    /**
+     * @param imageFileName the imageFileName to set
+     */
+    public void setImageFileName(String imageFileName) {
+        this.imageFileName = imageFileName;
     }
 }
 

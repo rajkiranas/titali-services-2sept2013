@@ -870,6 +870,7 @@ CREATE TABLE public.forum_event_details
   event_owner character varying(200), -- Name of the user ...
   event_image bytea,
   parent_forum_id integer,
+  image_filename character varying(30),
   CONSTRAINT pk_forum_event_details_id PRIMARY KEY (event_detail_id )
 )
 WITH (
@@ -879,6 +880,8 @@ ALTER TABLE public.forum_event_details
   OWNER TO postgres;
 COMMENT ON COLUMN public.forum_event_details.event_owner IS 'Name of the user 
 not username';
+
+
 
 --------------------------------------------------------------------------------------------------------
 -- Sequence: public.seq_forum_event_details_id

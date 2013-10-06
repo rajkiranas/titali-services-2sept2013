@@ -24,4 +24,6 @@ import org.hibernate.transform.Transformers;
  */
 public interface ForumDao {
     public List<ForumEventDetails> getForumEventDetails(JSONObject inputRequest);
+
+    public void saveEventDetails(ForumEventDetails event);
 }
