@@ -75,6 +75,34 @@ public class UserMasterDaoImpl implements  UserMasterDao {
         
         return userProfileList;
     }
+    
+    public List<Userprofile> getTeacherProfile(String userName){
+        List<Userprofile> userProfileList=null;
+        try{
+            DetachedCriteria detCri = DetachedCriteria.forClass(UserMaster.class,"um");
+            detCri.createAlias("um.teacherMasters", "teacherMasters");
+            ProjectionList pl = Projections.projectionList();
+            pl.add(Projections.property("prn"), "prn");
+            pl.add(Projections.property("name"), "name");
+            pl.add(Projections.property("username"), "username");
+            pl.add(Projections.property("creationdate"), "creationdate");
+            pl.add(Projections.property("mobile"), "mobile");
+//            pl.add(Projections.property("studentMasters.div"),"div");
+//            pl.add(Projections.property("studentMasters.std.std"),"std");
+            
+            
+            detCri.add(Restrictions.eq("um.username", userName));
+            detCri.setProjection(pl);
+//            detCri.setFetchMode("studentMasters", FetchMode.JOIN);
+            detCri.setResultTransformer(Transformers.aliasToBean(Userprofile.class));
+            userProfileList = hibernateTemplate.findByCriteria(detCri);
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        return userProfileList;
+    }
 
     public List<Userprofile> getAllStudentList() {
       List<Userprofile> studentList=null;

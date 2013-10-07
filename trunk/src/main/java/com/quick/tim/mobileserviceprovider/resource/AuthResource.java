@@ -114,22 +114,29 @@ public class AuthResource {
     //authorization of the currently logged in shiro user
     private void authorize(Subject currentUser, JSONObject inputRequest, JSONObject response) throws JSONException 
     {
-        if (currentUser.hasRole(GlobalConstants.student)) {
+        String jsonStringUserProfile;
+        if (currentUser.hasRole(GlobalConstants.student)) 
+        {
             response.put(GlobalConstants.role, GlobalConstants.student);
             //fetch and set student profile
+            UserMasterResource userResource = resourceContext.getResource(UserMasterResource.class);
+            jsonStringUserProfile = userResource.getUserProfile(inputRequest);
 
-        } else {
+        } 
+        else 
+        {
             response.put(GlobalConstants.role, GlobalConstants.teacher);
             //admin role to be overwritten in response
+            UserMasterResource userResource = resourceContext.getResource(UserMasterResource.class);
+            jsonStringUserProfile = userResource.getTeacherProfile(inputRequest);
+            
             if (currentUser.hasRole(GlobalConstants.admin)) {
                 response.put(GlobalConstants.role, GlobalConstants.admin);
             }
        
         }
 
-        //fetch logged in user profile
-        UserMasterResource userResource = resourceContext.getResource(UserMasterResource.class);
-        String jsonStringUserProfile = userResource.getUserProfile(inputRequest);
+        
         response.put(GlobalConstants.CurrentUserProfile, jsonStringUserProfile);
         
          Type listType = new TypeToken<ArrayList<Userprofile>>() {}.getType();
