@@ -45,6 +45,7 @@ public class UserMasterResource {
     
     private static final String saveStudent="saveStudent";
     private static final String getUserProfile="getUserProfile";
+    private static final String getTeacherProfile="getTeacherProfile";
     private static final String saveTeacher = "saveTeacher";   
     private static final String getAllstudentList="getAllstudentList";
     private static final String getQualificationList="getQualificationList";
@@ -64,6 +65,18 @@ public class UserMasterResource {
     @Produces(MediaType.APPLICATION_JSON)
     public String getUserProfile(JSONObject inputRequest) throws JSONException {
         List<Userprofile> userlist=userMasterService.getUserProfile(inputRequest.getString(GlobalConstants.userName));
+        Gson gson = new Gson();
+        String jsonStringUserProfile = gson.toJson(userlist);  
+        return jsonStringUserProfile;
+        
+    }
+    
+    @Path(getTeacherProfile)
+    @GET
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getTeacherProfile(JSONObject inputRequest) throws JSONException {
+        List<Userprofile> userlist=userMasterService.getTeacherProfile(inputRequest.getString(GlobalConstants.userName));
         Gson gson = new Gson();
         String jsonStringUserProfile = gson.toJson(userlist);  
         return jsonStringUserProfile;

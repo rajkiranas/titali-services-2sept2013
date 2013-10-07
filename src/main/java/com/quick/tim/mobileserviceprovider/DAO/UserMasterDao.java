@@ -18,6 +18,7 @@ import java.util.List;
  */
 public interface UserMasterDao  {
     public List<Userprofile> getUserProfile(String userName);
+    public List<Userprofile> getTeacherProfile(String userName);
     public List<Userprofile> getAllStudentList();      
     public List<Userprofile> IsRollNoAlreadyExist(String rollNo);
     public List<Userprofile> getAllTeacherList();

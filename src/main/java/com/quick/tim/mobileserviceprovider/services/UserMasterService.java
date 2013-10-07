@@ -29,6 +29,13 @@ public class UserMasterService
          
         return userProfileList;
     }
+    
+    public List<Userprofile> getTeacherProfile(String userName)
+    {
+         List<Userprofile> userProfileList = userMasterDao.getTeacherProfile(userName);
+         
+        return userProfileList;
+    }
 
     public List<Userprofile> getAllStudentList() {
         List<Userprofile> userProfileList = userMasterDao.getAllStudentList();
