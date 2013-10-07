@@ -33,7 +33,7 @@ public class WhoseDoingWhatDaoImpl implements WhoseDoingWhatDao{
     {
         hibernateTemplate = new HibernateTemplate(sessionFactory);
     }
-    public List<MasteParmBean> getWhoIsDoingWhat(String forStd, String forDiv) {
+    public List<MasteParmBean> getWhoIsDoingWhat(String forStd, String forDiv, boolean isAdmin) {
         List<MasteParmBean> doingWhats = null;
         try {
             //.createAlias("Whatsnew", "Whatsnew")
@@ -48,8 +48,12 @@ public class WhoseDoingWhatDaoImpl implements WhoseDoingWhatDao{
             proList.add(Projections.property("uploadId"),"uploadId");
             proList.add(Projections.property("activitydate"),"uploadDate");
             
-            detCri.setProjection(proList);            
-            detCri.add(Restrictions.eq("std.std", forStd));
+            detCri.setProjection(proList);      
+            if(!isAdmin)
+            {
+                detCri.add(Restrictions.eq("std.std", forStd));
+
+            }
             detCri.addOrder(Order.desc("activitydate"));
             //intentionally removed
             //detCri.add(Restrictions.eq("fordiv", forDiv));

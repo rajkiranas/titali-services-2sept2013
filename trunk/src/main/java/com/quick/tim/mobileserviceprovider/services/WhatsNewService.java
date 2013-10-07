@@ -27,10 +27,9 @@ public class WhatsNewService
     @Autowired
     WhatsNewDao whatsNewDao;
     
-    public List<Whatsnew> getWhatsNewForMe(String forStd, String forDiv)
+    public List<Whatsnew> getWhatsNewForMe(String forStd, String forDiv, boolean isAdmin)
     {
-         List<Whatsnew> whatsNewList = whatsNewDao.getWhatsNewForMe(forStd, forDiv);
-         System.out.println("whatsNewList="+whatsNewList.get(0).getTopic());
+         List<Whatsnew> whatsNewList = whatsNewDao.getWhatsNewForMe(forStd, forDiv, isAdmin);
         return whatsNewList;
     }
     

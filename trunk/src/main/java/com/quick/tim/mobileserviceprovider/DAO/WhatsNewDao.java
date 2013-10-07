@@ -21,7 +21,7 @@ import org.hibernate.transform.Transformers;
  * @author suyogn
  */
 public interface WhatsNewDao {
-    public List<Whatsnew> getWhatsNewForMe(String forStd, String forDiv);
+    public List<Whatsnew> getWhatsNewForMe(String forStd, String forDiv, boolean isAdmin);
     public List<MasteParmBean> getWhatsNewForMe(String subject);
     public void sendWhatsNewNotificationToStudents(Whatsnew whatsNew);
 

@@ -44,8 +44,25 @@ public class DashboardResource {
     public JSONObject getStudentDashboard(JSONObject userProfile) throws JSONException {
 
         JSONObject response = new JSONObject();
+        String std=GlobalConstants.EMPTY_STRING;
+        String div=GlobalConstants.EMPTY_STRING;
+        boolean isAdmin=false;
         
-        List<Whatsnew> list = whatsNewService.getWhatsNewForMe(userProfile.getString("standard"), userProfile.getString("division"));
+        if(userProfile.has("standard"))
+        {
+            std=userProfile.getString("standard");
+        }
+        else
+        {
+            isAdmin=true;
+        }
+        
+        if(userProfile.has("division"))
+        {
+            div=userProfile.getString("division");
+        }
+        
+        List<Whatsnew> list = whatsNewService.getWhatsNewForMe(std, div,isAdmin);
         //Gson gson=  new GsonBuilder().setDateFormat(GlobalConstants.gsonTimeFormat).create();       
         Gson gson = new GsonBuilder().setDateFormat(GlobalConstants.gsonTimeFormat).create();       
         String json = gson.toJson(list);
@@ -56,7 +73,7 @@ public class DashboardResource {
          */
 
         
-        List<MasteParmBean> whoisdoingwhats = whoseDoingWhatService.getWhoIsDoingWhat(userProfile.getString("standard"), userProfile.getString("division"));
+        List<MasteParmBean> whoisdoingwhats = whoseDoingWhatService.getWhoIsDoingWhat(std, div,isAdmin);
         Gson Whoisdoingwhat_gson = new GsonBuilder().setDateFormat(GlobalConstants.gsonTimeFormat).create();
 
         String Whoisdoingwhat_json = Whoisdoingwhat_gson.toJson(whoisdoingwhats);
@@ -64,7 +81,7 @@ public class DashboardResource {
 
 
       
-        List<Notices> noticeses = noticeBoardService.getNotices(userProfile.getString("standard"), userProfile.getString("division"));
+        List<Notices> noticeses = noticeBoardService.getNotices(std, div);
         Gson Notices_gson = new GsonBuilder().setDateFormat(GlobalConstants.gsonTimeFormat).create();
         String Notices_json = Notices_gson.toJson(noticeses);
         response.put(GlobalConstants.NOTICES, Notices_json);

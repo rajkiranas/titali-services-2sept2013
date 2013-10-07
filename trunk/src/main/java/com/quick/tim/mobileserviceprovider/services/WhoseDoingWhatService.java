@@ -29,9 +29,9 @@ public class WhoseDoingWhatService {
     @Autowired
     WhoseDoingWhatDao whoseDoingWhatDao;
     
-       public List<MasteParmBean> getWhoIsDoingWhat(String forStd, String forDiv)
+       public List<MasteParmBean> getWhoIsDoingWhat(String forStd, String forDiv, boolean isAdmin)
      {
-         List<MasteParmBean> whoisdoingwhats = whoseDoingWhatDao.getWhoIsDoingWhat(forStd, forDiv);
+         List<MasteParmBean> whoisdoingwhats = whoseDoingWhatDao.getWhoIsDoingWhat(forStd, forDiv,isAdmin);
          
          return whoisdoingwhats;
      }
