@@ -7,11 +7,13 @@ package com.quick.tim.mobileserviceprovider.services;
 import com.quick.tim.mobileserviceprovider.DAO.ForumDao;
 import com.quick.tim.mobileserviceprovider.entity.Whatsnew;
 import com.quick.tim.mobileserviceprovider.DAO.WhatsNewDao;
+import com.quick.tim.mobileserviceprovider.bean.ForumEventDetailsBean;
 import com.quick.tim.mobileserviceprovider.bean.MasteParmBean;
 import com.quick.tim.mobileserviceprovider.entity.ForumEventDetails;
 import com.quick.tim.mobileserviceprovider.entity.Std;
 import com.quick.tim.mobileserviceprovider.entity.Sub;
 import com.quick.tim.mobileserviceprovider.global.GlobalConstants;
+import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 import java.util.Date;
 import java.util.List;
 import org.codehaus.jettison.json.JSONException;
@@ -32,9 +34,14 @@ public class ForumService
       /** 
        * Send whats new notifications for students after save or edit of topic
        */
-       public List<ForumEventDetails> getForumEventDetails(JSONObject inputRequest) throws JSONException
+       public List<ForumEventDetailsBean> getForumEventDetails(JSONObject inputRequest) throws JSONException
        {
-           return forumDao.getForumEventDetails(inputRequest);
+           List<ForumEventDetailsBean> list = forumDao.getForumEventDetails(inputRequest);
+           for(ForumEventDetailsBean bean:list)
+           {
+               bean.setStringImage(new String(Base64.encode(bean.getEventImage())));
+           }
+           return list;
        }
 
     public void saveEventDetails(JSONObject inputRequest) throws JSONException 
@@ -44,7 +51,8 @@ public class ForumService
         event.setEventOwner(inputRequest.getString("owner"));
         event.setEventDesc(inputRequest.getString("event_desc"));
         event.setEventBody(inputRequest.getString("event_body"));
-        byte[] arr=inputRequest.getString("image").getBytes();
+        String imageStr=inputRequest.getString("image");
+        byte[] arr=Base64.decode(imageStr);
         event.setEventImage(arr);
         event.setImageFileName(inputRequest.getString("image_filename"));
                 

@@ -4,6 +4,7 @@
  */
 package com.quick.tim.mobileserviceprovider.DAO;
 
+import com.quick.tim.mobileserviceprovider.bean.ForumEventDetailsBean;
 import com.quick.tim.mobileserviceprovider.bean.MasteParmBean;
 import com.quick.tim.mobileserviceprovider.entity.ForumEventDetails;
 import com.quick.tim.mobileserviceprovider.entity.Std;
@@ -23,7 +24,7 @@ import org.hibernate.transform.Transformers;
  * @author suyogn
  */
 public interface ForumDao {
-    public List<ForumEventDetails> getForumEventDetails(JSONObject inputRequest);
+    public List<ForumEventDetailsBean> getForumEventDetails(JSONObject inputRequest);
 
     public void saveEventDetails(ForumEventDetails event);
 }

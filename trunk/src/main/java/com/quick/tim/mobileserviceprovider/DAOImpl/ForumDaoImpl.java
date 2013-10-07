@@ -9,10 +9,12 @@ import com.quick.tim.mobileserviceprovider.entity.Whatsnew;
 
 import com.quick.tim.mobileserviceprovider.DAO.WhatsNewDao;
 import com.quick.tim.mobileserviceprovider.bean.ExamBean;
+import com.quick.tim.mobileserviceprovider.bean.ForumEventDetailsBean;
 import com.quick.tim.mobileserviceprovider.bean.MasteParmBean;
 import com.quick.tim.mobileserviceprovider.entity.ExamEntry;
 import com.quick.tim.mobileserviceprovider.entity.ForumEventDetails;
 import com.quick.tim.mobileserviceprovider.entity.Whoisdoingwhat;
+import java.util.Date;
 
 
 import java.util.List;
@@ -43,20 +45,26 @@ public class ForumDaoImpl implements ForumDao {
     }
 
     @Override
-    public List<ForumEventDetails> getForumEventDetails(JSONObject inputRequest) 
+    public List<ForumEventDetailsBean> getForumEventDetails(JSONObject inputRequest) 
     {
         DetachedCriteria criteria = DetachedCriteria.forClass(ForumEventDetails.class);
 //        criteria.add(Restrictions.eq("std.std",std));
 //        criteria.add(Restrictions.or(Restrictions.eq("fordiv", fordiv),Restrictions.eq("fordiv", null)));
-//        ProjectionList pl = Projections.projectionList();
-//        pl.add(Projections.property("exId"), "examId");
-//        pl.add(Projections.property("sub.sub"), "sub");
-//        pl.add(Projections.property("exName"), "exName");
-//        pl.add(Projections.property("exType"), "exType");
-//        pl.add(Projections.property("startDt"), "startDt");
-//        pl.add(Projections.property("endDt"), "endDt");
-//        criteria.setProjection(pl);
-//        criteria.setResultTransformer(Transformers.aliasToBean(ExamBean.class));
+        
+     
+        ProjectionList pl = Projections.projectionList();
+        pl.add(Projections.property("eventDetailId"), "eventDetailId");
+        pl.add(Projections.property("eventDate"), "eventDate");
+        pl.add(Projections.property("eventDesc"), "eventDesc");
+        pl.add(Projections.property("eventBody"), "eventBody");
+        pl.add(Projections.property("eventImage"), "eventImage");
+        pl.add(Projections.property("eventOwner"), "eventOwner");
+        
+        pl.add(Projections.property("parentForumId"), "parentForumId");
+        pl.add(Projections.property("imageFileName"), "imageFileName");
+        
+        criteria.setProjection(pl);
+        criteria.setResultTransformer(Transformers.aliasToBean(ForumEventDetailsBean.class));
         //return hibernateTemplate.findByCriteria(criteria);
         return hibernateTemplate.findByCriteria(criteria);
     }
