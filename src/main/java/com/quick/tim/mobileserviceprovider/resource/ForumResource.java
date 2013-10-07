@@ -6,6 +6,7 @@ package com.quick.tim.mobileserviceprovider.resource;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.quick.tim.mobileserviceprovider.bean.ForumEventDetailsBean;
 import com.quick.tim.mobileserviceprovider.bean.MasteParmBean;
 import com.quick.tim.mobileserviceprovider.entity.ForumEventDetails;
 import com.quick.tim.mobileserviceprovider.global.GlobalConstants;
@@ -44,7 +45,7 @@ public class ForumResource {
     @Produces(MediaType.APPLICATION_JSON)
     public JSONObject getForumEventDetails(JSONObject inputRequest) throws JSONException {
 
-        List<ForumEventDetails> eventDetailsList = forumService.getForumEventDetails(inputRequest);
+        List<ForumEventDetailsBean> eventDetailsList = forumService.getForumEventDetails(inputRequest);
         
         Gson gson=  new GsonBuilder().setDateFormat(GlobalConstants.gsonTimeFormat).create();       
         String examListJson = gson.toJson(eventDetailsList);  
