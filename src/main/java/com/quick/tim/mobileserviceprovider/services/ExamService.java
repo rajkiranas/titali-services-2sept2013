@@ -51,8 +51,8 @@ public class ExamService {
     private UserMasterDao userDao;
             
             
-    public List<ExamBean> getExamList(String std,String div){
-        return examDao.getExamList(std,div);
+    public List<ExamBean> getExamList(String std,String div, boolean isAdmin){
+        return examDao.getExamList(std,div,isAdmin);
     }
 
     public List<ExamBean> getExamDetailsById(int exmId) {

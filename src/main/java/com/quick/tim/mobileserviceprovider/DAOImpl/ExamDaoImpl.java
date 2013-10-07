@@ -42,10 +42,14 @@ public class ExamDaoImpl implements ExamDao {
     {
         hibernateTemplate = new HibernateTemplate(sessionFactory);
     }
-    public List<ExamBean> getExamList(String std,String fordiv) {
+    public List<ExamBean> getExamList(String std,String fordiv, boolean isAdmin) {
         DetachedCriteria criteria = DetachedCriteria.forClass(ExamEntry.class).createAlias("sub", "sub").createAlias("std", "std");
-        criteria.add(Restrictions.eq("std.std",std));
-        criteria.add(Restrictions.or(Restrictions.eq("fordiv", fordiv),Restrictions.eq("fordiv", null)));
+        if(!isAdmin)
+        {
+            criteria.add(Restrictions.eq("std.std",std));
+            criteria.add(Restrictions.or(Restrictions.eq("fordiv", fordiv),Restrictions.eq("fordiv", null)));
+        }
+        
         ProjectionList pl = Projections.projectionList();
         pl.add(Projections.property("exId"), "examId");
         pl.add(Projections.property("sub.sub"), "sub");

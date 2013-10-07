@@ -305,7 +305,7 @@ public class PersonResource {
         JSONObject response =  new JSONObject();
       
             WhatsNewService ser = new WhatsNewService();
-                    List<Whatsnew>  list=  ser.getWhatsNewForMe("6", "A");
+                    List<Whatsnew>  list=  ser.getWhatsNewForMe("6", "A",true);
                     Gson gson = new Gson();
                     String json = gson.toJson(list);  
                     response.put(GlobalConstants.WHATSNEW, json);

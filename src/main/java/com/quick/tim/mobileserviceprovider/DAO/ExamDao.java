@@ -17,7 +17,7 @@ import java.util.Set;
  * @author rajkiran
  */
 public interface ExamDao {
-    public List<ExamBean> getExamList(String std,String div);
+    public List<ExamBean> getExamList(String std,String div, boolean isAdmin);
     public List<ExamBean> getExamDetailsById(int exmId);
     public List<ExamQueAnsBean> getExamQuestionById(int exmId, boolean isSendAns);
     public void createExam(ExamEntry entry);

@@ -67,7 +67,26 @@ public class ExamResource {
 
         System.out.println("userTrack=" + inputRequest);
         JSONObject response = new JSONObject();
-        List<ExamBean> examList = examService.getExamList(inputRequest.getString("std"),inputRequest.getString("div"));
+        
+        String std=GlobalConstants.EMPTY_STRING;
+        String div=GlobalConstants.EMPTY_STRING;
+        boolean isAdmin=false;
+        
+        if(inputRequest.has("standard"))
+        {
+            std=inputRequest.getString("standard");
+        }
+        else
+        {
+            isAdmin=true;
+        }
+        
+        if(inputRequest.has("division"))
+        {
+            div=inputRequest.getString("division");
+        }
+        
+        List<ExamBean> examList = examService.getExamList(std,div,isAdmin);
         Gson gson=  new GsonBuilder().setDateFormat(GlobalConstants.gsonTimeFormat).create();       
         String examListJson = gson.toJson(examList);  
         response.put(GlobalConstants.EXAMLIST, examListJson);     
@@ -75,7 +94,7 @@ public class ExamResource {
         //only in case of student login
         if (inputRequest.has("username")) 
         {
-            List<ExamBean> subjectWiseAvgPerformance = examService.getAverageScoresForAllSubjects(inputRequest.getString("std"), inputRequest.getString("div"));
+            List<ExamBean> subjectWiseAvgPerformance = examService.getAverageScoresForAllSubjects(std, div);
             List<ExamBean> subwiseAvgScoreForStud = examService.getSubjectswiseAverageScoresForStudent(inputRequest.getString("username"));
             String subjectWiseAvgPerformanceJson = gson.toJson(subjectWiseAvgPerformance);
             String subwiseAvgScoreForStudJson = gson.toJson(subwiseAvgScoreForStud);

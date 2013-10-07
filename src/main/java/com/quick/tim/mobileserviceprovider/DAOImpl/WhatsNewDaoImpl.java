@@ -38,7 +38,7 @@ public class WhatsNewDaoImpl implements WhatsNewDao {
         hibernateTemplate = new HibernateTemplate(sessionFactory);
     }
     
-    public List<Whatsnew> getWhatsNewForMe(String forStd, String forDiv)
+    public List<Whatsnew> getWhatsNewForMe(String forStd, String forDiv, boolean isAdmin)
     {
         List<Whatsnew> whatsNewList=null;
         try 
@@ -57,7 +57,11 @@ public class WhatsNewDaoImpl implements WhatsNewDao {
             proList.add(Projections.property("releasedate"),"releasedate");
             
             detCri.setProjection(proList);
-            detCri.add(Restrictions.eq("std.std", forStd));
+            if(!isAdmin)
+            {
+                detCri.add(Restrictions.eq("std.std", forStd));
+            }
+            
             detCri.addOrder(Order.desc("releasedate"));
             //intentionally removed division restriction
             ///detCri.add(Restrictions.eq("fordiv", forDiv));
