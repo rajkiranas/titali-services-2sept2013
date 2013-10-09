@@ -157,7 +157,7 @@ public class QuickLearn  implements java.io.Serializable {
         this.lectureNotes = lectureNotes;
     }
     
-    @Column(name="lecture_notes_information", length=150)
+    @Column(name="lecture_notes_information", length=300)
     public String getLectureNotesInformation() {
         return this.lectureNotesInformation;
     }
@@ -175,7 +175,7 @@ public class QuickLearn  implements java.io.Serializable {
         this.otherNotes = otherNotes;
     }
     
-    @Column(name="other_notes_information", length=150)
+    @Column(name="other_notes_information", length=300)
     public String getOtherNotesInformation() {
         return this.otherNotesInformation;
     }
@@ -193,7 +193,7 @@ public class QuickLearn  implements java.io.Serializable {
         this.previousQuestion = previousQuestion;
     }
     
-    @Column(name="previous_question_information", length=150)
+    @Column(name="previous_question_information", length=300)
     public String getPreviousQuestionInformation() {
         return this.previousQuestionInformation;
     }

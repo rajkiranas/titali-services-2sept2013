@@ -119,7 +119,13 @@ public class QuickLearnDAOImpl implements QuickLearnDAO {
             proList.add(Projections.property("sub.sub"),"sub");
             proList.add(Projections.property("topic"),"topic");
             proList.add(Projections.property("uploadId"),"uploadId");
+            detCri.createAlias("std", "std");
+            proList.add(Projections.property("std.std"),"std");
+            proList.add(Projections.property("lectureNotesInformation"),"lectureNotesInformation");
+            proList.add(Projections.property("otherNotesInformation"),"otherNotesInformation");
+            proList.add(Projections.property("previousQuestionInformation"),"previousQuestionInformation");
             
+     
             proList.add(Projections.property("uploadDate"),"uploadDate");
             detCri.setProjection(proList);
             //commented after changeing quick learn ui with pop up window
