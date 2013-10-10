@@ -34,24 +34,26 @@ public class QuickDaoImpl implements QuickDao{
     }
 
     public List<MasteParmBean> getQuickLearnUploadList() {
-        DetachedCriteria criteria = DetachedCriteria.forClass(QuickLearn.class,"ql");
-        
+        DetachedCriteria criteria = DetachedCriteria.forClass(QuickLearn.class, "ql");
+
         ProjectionList pl = Projections.projectionList();
         pl.add(Projections.property("uploadId"), "uploadId");
         pl.add(Projections.property("uploadDate"), "uploadDate");
         pl.add(Projections.property("ql.std.std"), "std");
-        pl.add(Projections.property("fordiv"), "div"); 
+        pl.add(Projections.property("fordiv"), "div");
         pl.add(Projections.property("ql.sub.sub"), "sub");
-        pl.add(Projections.property("topic"), "topic");        
+        pl.add(Projections.property("topic"), "topic");
         pl.add(Projections.property("lectureNotes"), "notes");
         pl.add(Projections.property("otherNotes"), "othernotes");
         pl.add(Projections.property("previousQuestion"), "previousQuestion");
-       
-        
+
+        pl.add(Projections.property("lectureNotesInformation"), "lectureNotesInformation");
+        pl.add(Projections.property("otherNotesInformation"), "otherNotesInformation");
+        pl.add(Projections.property("previousQuestionInformation"), "previousQuestionInformation");
+
+
         criteria.setProjection(pl);
         criteria.setResultTransformer(Transformers.aliasToBean(MasteParmBean.class));
         return hibernateTemplate.findByCriteria(criteria);
     }
-    
-    
 }
