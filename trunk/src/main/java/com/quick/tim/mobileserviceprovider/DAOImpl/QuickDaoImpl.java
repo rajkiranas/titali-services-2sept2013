@@ -10,6 +10,7 @@ import com.quick.tim.mobileserviceprovider.entity.QuickLearn;
 import java.util.List;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.ProjectionList;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
@@ -50,7 +51,7 @@ public class QuickDaoImpl implements QuickDao{
         pl.add(Projections.property("lectureNotesInformation"), "lectureNotesInformation");
         pl.add(Projections.property("otherNotesInformation"), "otherNotesInformation");
         pl.add(Projections.property("previousQuestionInformation"), "previousQuestionInformation");
-
+        criteria.addOrder(Order.desc("uploadDate"));
 
         criteria.setProjection(pl);
         criteria.setResultTransformer(Transformers.aliasToBean(MasteParmBean.class));

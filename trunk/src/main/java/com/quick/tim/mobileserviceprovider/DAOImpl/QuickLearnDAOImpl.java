@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Set;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.ProjectionList;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
@@ -128,6 +129,7 @@ public class QuickLearnDAOImpl implements QuickLearnDAO {
      
             proList.add(Projections.property("uploadDate"),"uploadDate");
             detCri.setProjection(proList);
+            detCri.addOrder(Order.desc("uploadDate"));
             //commented after changeing quick learn ui with pop up window
             //detCri.add(Restrictions.eq("sub.sub", subject));
             detCri.setResultTransformer(Transformers.aliasToBean(MasteParmBean.class));

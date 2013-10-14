@@ -125,53 +125,64 @@ public class QuickLearnResource {
    @Produces(MediaType.APPLICATION_JSON)
    public JSONObject  saveQuickUploadDetails(JSONObject inputRequest) throws JSONException {
         System.out.println("userTrack saveQuickUploadDetails() ="+inputRequest);
-        
-        //fetching data from input json        
-        QuickLearn quickLearn=new QuickLearn(); 
-        String uploadId=inputRequest.getString("uploadId");
-        
-        //edit upload
-        if(!uploadId.equals("null")){
-             quickLearn.setUploadId(Integer.parseInt(uploadId));
-        }
-//        // new upload - id not need from max as sequence is applied
-//        else{
-//             quickLearn.setUploadId(getMaxUplaodId());
-//        }
-        
-        String uploadedBy=inputRequest.getString("uploadedBy"); 
-        String info=quickLearn.getUploadId()+"-"+uploadedBy;
-        quickLearn.setStd(getuploadStd(inputRequest));
-        quickLearn.setSub(getUploadSub(inputRequest));
-        quickLearn.setTopic(inputRequest.getString("topic"));
-        quickLearn.setTopicTags(inputRequest.getString("tags"));
-          
-        quickLearn.setUploadDate(new Date());
-        quickLearn.setLectureNotes(inputRequest.getString("notes"));
-        quickLearn.setLectureNotesInformation(info);
-        quickLearn.setOtherNotes(inputRequest.getString("othernotes"));
-        quickLearn.setOtherNotesInformation(info);
-        quickLearn.setPreviousQuestion(inputRequest.getString("pq"));
-        quickLearn.setPreviousQuestionInformation(info);
-        quickLearn.setQuiz(inputRequest.getString("quiz"));
-        String videoPath= inputRequest.getString("video_path");
-        quickLearn.setVideoPath(videoPath);
- 
-        //calling service for saving details
-        quickLearnService.saveQuickUploadDetails(quickLearn);        
         JSONObject response =  new JSONObject();
-        response.put(GlobalConstants.STATUS,GlobalConstants.YES);
         
-        //setting newly sequence generated upload id - so that whats new item id will be same as upload id
-        inputRequest.put("uploadId",quickLearn.getUploadId());
-        sendWhatsNewNotificationToStudents(inputRequest);
-        
-        //sending mail alert only for new topic releases
-        if(uploadId.equals("null")){
-            sendEmailNotificationToTheClass(quickLearn);
-        }
-       
-        
+        try 
+        {
+            
+                //fetching data from input json        
+            QuickLearn quickLearn=new QuickLearn(); 
+            String uploadId=inputRequest.getString("uploadId");
+
+            //edit upload
+            if(!uploadId.equals("null")){
+                 quickLearn.setUploadId(Integer.parseInt(uploadId));
+            }
+    //        // new upload - id not need from max as sequence is applied
+    //        else{
+    //             quickLearn.setUploadId(getMaxUplaodId());
+    //        }
+
+            String uploadedBy=inputRequest.getString("uploadedBy"); 
+            String info=quickLearn.getUploadId()+"-"+uploadedBy;
+            quickLearn.setStd(getuploadStd(inputRequest));
+            quickLearn.setSub(getUploadSub(inputRequest));
+            quickLearn.setTopic(inputRequest.getString("topic"));
+            quickLearn.setTopicTags(inputRequest.getString("tags"));
+
+            quickLearn.setUploadDate(new Date());
+            quickLearn.setLectureNotes(inputRequest.getString("notes"));
+            quickLearn.setLectureNotesInformation(inputRequest.getString("topicIntro"));
+            quickLearn.setOtherNotes(inputRequest.getString("othernotes"));
+            quickLearn.setOtherNotesInformation(uploadedBy);
+            quickLearn.setPreviousQuestion(inputRequest.getString("pq"));
+            quickLearn.setPreviousQuestionInformation(info);
+            quickLearn.setQuiz(inputRequest.getString("quiz"));
+            String videoPath= inputRequest.getString("video_path");
+            quickLearn.setVideoPath(videoPath);
+
+
+
+            //calling service for saving details
+            quickLearnService.saveQuickUploadDetails(quickLearn);        
+
+            response.put(GlobalConstants.STATUS,GlobalConstants.YES);
+
+            //setting newly sequence generated upload id - so that whats new item id will be same as upload id
+            inputRequest.put("uploadId",quickLearn.getUploadId());
+            sendWhatsNewNotificationToStudents(inputRequest);
+
+            //sending mail alert only for new topic releases
+            if(uploadId.equals("null")){
+                sendEmailNotificationToTheClass(quickLearn);
+            }
+           
+       } 
+        catch (Exception e) 
+        {
+            e.printStackTrace();
+            response.put(GlobalConstants.STATUS,GlobalConstants.NO);
+       }
         return response;
     }
    
