@@ -70,6 +70,12 @@ public class WhatsNewService
            wn.setSub(new Sub(inputRequest.getString("sub")));
            wn.setTopic(inputRequest.getString("topic"));
            
+           String topicInro= inputRequest.getString("topicIntro");
+           if(topicInro.length()>145) {
+               topicInro=topicInro.substring(0, 145)+"...";
+           }
+           wn.setTopicintro(topicInro);
+           
            whatsNewDao.sendWhatsNewNotificationToStudents(wn);
            
        } 

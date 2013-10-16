@@ -32,6 +32,7 @@ public class MasteParmBean {
     private String byWhom;
     private String displaynotification;
     private String quiz;
+    private String topicintro;
 
     public int getActivityId() {
         return activityId;
@@ -214,6 +215,20 @@ public class MasteParmBean {
      */
     public void setQuiz(String quiz) {
         this.quiz = quiz;
+    }
+
+    /**
+     * @return the topicintro
+     */
+    public String getTopicintro() {
+        return topicintro;
+    }
+
+    /**
+     * @param topicintro the topicintro to set
+     */
+    public void setTopicintro(String topicintro) {
+        this.topicintro = topicintro;
     }
     
     
