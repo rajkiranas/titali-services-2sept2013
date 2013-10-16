@@ -36,6 +36,7 @@ public class Whatsnew  implements java.io.Serializable {
      private String fordiv;
      private String topic;
      private String displaynotification;
+     private String topicintro;
 
     public Whatsnew() {
     }
@@ -127,6 +128,21 @@ public class Whatsnew  implements java.io.Serializable {
     
     public void setDisplaynotification(String displaynotification) {
         this.displaynotification = displaynotification;
+    }
+
+    /**
+     * @return the topicintro
+     */
+    @Column(name="topic_intro", length=150)
+    public String getTopicintro() {
+        return topicintro;
+    }
+
+    /**
+     * @param topicintro the topicintro to set
+     */
+    public void setTopicintro(String topicintro) {
+        this.topicintro = topicintro;
     }
 
 

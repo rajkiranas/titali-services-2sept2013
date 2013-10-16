@@ -55,6 +55,7 @@ public class WhatsNewDaoImpl implements WhatsNewDao {
             proList.add(Projections.property("topic"),"topic");
             proList.add(Projections.property("itemid"),"itemid");
             proList.add(Projections.property("releasedate"),"releasedate");
+            proList.add(Projections.property("topicintro"),"topicintro");
             
             detCri.setProjection(proList);
             if(!isAdmin)

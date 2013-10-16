@@ -36,6 +36,7 @@ public class Whoisdoingwhat  implements java.io.Serializable {
      private String topic;
      private String displaynotification;
      private int uploadId;
+     private String topicintro;
 
     public Whoisdoingwhat() {
     }
@@ -146,6 +147,21 @@ public class Whoisdoingwhat  implements java.io.Serializable {
 
     public void setUploadId(int uploadId) {
         this.uploadId = uploadId;
+    }
+
+    /**
+     * @return the topicintro
+     */
+    @Column(name="topic_intro", length=150)
+    public String getTopicintro() {
+        return topicintro;
+    }
+
+    /**
+     * @param topicintro the topicintro to set
+     */
+    public void setTopicintro(String topicintro) {
+        this.topicintro = topicintro;
     }
 
 

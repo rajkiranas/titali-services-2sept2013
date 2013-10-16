@@ -47,6 +47,7 @@ public class WhoseDoingWhatDaoImpl implements WhoseDoingWhatDao{
             proList.add(Projections.property("displaynotification"),"displaynotification");
             proList.add(Projections.property("uploadId"),"uploadId");
             proList.add(Projections.property("activitydate"),"uploadDate");
+            proList.add(Projections.property("topicintro"),"topicintro");
             
             detCri.setProjection(proList);      
             if(!isAdmin)
