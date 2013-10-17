@@ -167,6 +167,7 @@ public class QuickLearnResource {
             quickLearnService.saveQuickUploadDetails(quickLearn);        
 
             response.put(GlobalConstants.STATUS,GlobalConstants.YES);
+            
 
             //setting newly sequence generated upload id - so that whats new item id will be same as upload id
             inputRequest.put("uploadId",quickLearn.getUploadId());
@@ -175,6 +176,7 @@ public class QuickLearnResource {
             //sending mail alert only for new topic releases
             if(uploadId.equals("null")){
                 sendEmailNotificationToTheClass(quickLearn);
+                response.put("newlyCreatedUploadId",quickLearn.getUploadId());
             }
            
        } 
