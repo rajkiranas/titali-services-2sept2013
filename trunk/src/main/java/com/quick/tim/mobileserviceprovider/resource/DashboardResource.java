@@ -62,11 +62,11 @@ public class DashboardResource {
             div=userProfile.getString("division");
         }
         
-        List<Whatsnew> list = whatsNewService.getWhatsNewForMe(std, div,isAdmin);
+        /* List<Whatsnew> list = whatsNewService.getWhatsNewForMe(std, div,isAdmin);
         //Gson gson=  new GsonBuilder().setDateFormat(GlobalConstants.gsonTimeFormat).create();       
         Gson gson = new GsonBuilder().setDateFormat(GlobalConstants.gsonTimeFormat).create();       
         String json = gson.toJson(list);
-        response.put(GlobalConstants.WHATSNEW, json);
+        response.put(GlobalConstants.WHATSNEW, json); */
 
         /*
          * whose doing what
