@@ -6,9 +6,11 @@ package com.quick.tim.mobileserviceprovider.services;
 
 import com.quick.tim.mobileserviceprovider.entity.Whatsnew;
 import com.quick.tim.mobileserviceprovider.DAO.WhatsNewDao;
+import com.quick.tim.mobileserviceprovider.DAO.WhoseDoingWhatDao;
 import com.quick.tim.mobileserviceprovider.bean.MasteParmBean;
 import com.quick.tim.mobileserviceprovider.entity.Std;
 import com.quick.tim.mobileserviceprovider.entity.Sub;
+import com.quick.tim.mobileserviceprovider.entity.Whoisdoingwhat;
 import com.quick.tim.mobileserviceprovider.global.GlobalConstants;
 import java.util.Date;
 import java.util.List;
@@ -26,6 +28,9 @@ public class WhatsNewService
 {
     @Autowired
     WhatsNewDao whatsNewDao;
+    
+    @Autowired
+    WhoseDoingWhatDao whoseDoingWhatDao;
     
     public List<Whatsnew> getWhatsNewForMe(String forStd, String forDiv, boolean isAdmin)
     {
@@ -60,9 +65,9 @@ public class WhatsNewService
                displayNotification=inputRequest.getString("uploadedBy").toUpperCase() + GlobalConstants.space +GlobalConstants.has + GlobalConstants.space + GlobalConstants.updated + GlobalConstants.space + inputRequest.getString("topic");
            }
            
-           Whatsnew wn = new Whatsnew();
-           wn.setReleasedate(new Date());
-           wn.setItemid(Integer.parseInt(inputRequest.getString("uploadId")));
+           Whoisdoingwhat wn = new Whoisdoingwhat();
+           wn.setActivitydate(new Date());
+           wn.setUploadId(Integer.parseInt(inputRequest.getString("uploadId")));
            wn.setBywhom(inputRequest.getString("uploadedBy"));
            wn.setDisplaynotification(displayNotification);
            
@@ -76,7 +81,8 @@ public class WhatsNewService
            }
            wn.setTopicintro(topicInro);
            
-           whatsNewDao.sendWhatsNewNotificationToStudents(wn);
+           //whatsNewDao.sendWhatsNewNotificationToStudents(wn);
+           whoseDoingWhatDao.sendWhosDoingWhatNotificationToStudents(wn);
            
        } 
 

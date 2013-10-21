@@ -63,6 +63,8 @@ public class ForumDaoImpl implements ForumDao {
         pl.add(Projections.property("parentForumId"), "parentForumId");
         pl.add(Projections.property("imageFileName"), "imageFileName");
         
+        criteria.addOrder(Order.desc("eventDate"));
+        
         criteria.setProjection(pl);
         criteria.setResultTransformer(Transformers.aliasToBean(ForumEventDetailsBean.class));
         //return hibernateTemplate.findByCriteria(criteria);
