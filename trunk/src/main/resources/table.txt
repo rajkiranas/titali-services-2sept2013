@@ -897,3 +897,59 @@ CREATE SEQUENCE public.seq_forum_event_details_id
   CACHE 1;
 ALTER TABLE public.seq_forum_event_details_id
   OWNER TO postgres;
+--------------------------------------------------------------------------------------------------------
+-- Table: forum_event_comments
+
+-- DROP TABLE forum_event_comments;
+
+CREATE TABLE forum_event_comments
+(
+  event_detail_id integer NOT NULL,
+  username character varying(250) NOT NULL,
+  name character varying(200),
+  comment_body character varying(1000),
+  comment_time timestamp with time zone NOT NULL,
+  CONSTRAINT pk_forum_event_comments_id_name_time PRIMARY KEY (event_detail_id , username , comment_time ),
+  CONSTRAINT fk_forum_event_comments_eventid FOREIGN KEY (event_detail_id)
+      REFERENCES forum_event_details (event_detail_id) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE CASCADE
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE forum_event_comments
+  OWNER TO postgres;
+
+---------------------------------------------------------------------------------------------------------------------
+-- Table: forum_event_likes
+
+-- DROP TABLE forum_event_likes;
+
+CREATE TABLE forum_event_likes
+(
+  event_detail_id integer NOT NULL,
+  username character varying(250) NOT NULL,
+  name character varying(200),
+  like_time timestamp without time zone NOT NULL,
+  CONSTRAINT pk_forum_event_likes_id_name_time PRIMARY KEY (event_detail_id , username , like_time ),
+  CONSTRAINT fk_forum_event_likes_event_detail_id FOREIGN KEY (event_detail_id)
+      REFERENCES forum_event_details (event_detail_id) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE CASCADE
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE forum_event_likes
+  OWNER TO postgres;
+
+-- Index: fki_forum_event_likes_event_detail_id
+
+-- DROP INDEX fki_forum_event_likes_event_detail_id;
+
+CREATE INDEX fki_forum_event_likes_event_detail_id
+  ON forum_event_likes
+  USING btree
+  (event_detail_id );
+
+
+---------------------------------------------------------------------------------------------------------------------------------------

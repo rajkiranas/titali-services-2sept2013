@@ -34,6 +34,7 @@ public class ForumResource {
     
     private static final String getForumEventDetails="getForumEventDetails";
     private static final String saveEventDetails="saveEventDetails";
+    private static final String saveEventLike="saveEventLike";
     
     @Autowired
     private  ForumService forumService;;
@@ -72,6 +73,28 @@ public class ForumResource {
         {
             e.printStackTrace();
             response.put(GlobalConstants.STATUS, "Could not post event");
+        }
+        
+        return response;
+    }
+    
+    @Path(saveEventLike)
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public JSONObject saveEventLike(JSONObject inputRequest) throws JSONException 
+    {
+        JSONObject response = new JSONObject();
+        try 
+        {
+            forumService.saveEventLike(inputRequest);
+        
+            response.put(GlobalConstants.STATUS, "Successfully liked event");     
+            
+        } catch (Exception e) 
+        {
+            e.printStackTrace();
+            response.put(GlobalConstants.STATUS, "Could not like event");
         }
         
         return response;

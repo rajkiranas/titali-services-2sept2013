@@ -11,9 +11,7 @@ import com.quick.tim.mobileserviceprovider.DAO.WhatsNewDao;
 import com.quick.tim.mobileserviceprovider.bean.ExamBean;
 import com.quick.tim.mobileserviceprovider.bean.ForumEventDetailsBean;
 import com.quick.tim.mobileserviceprovider.bean.MasteParmBean;
-import com.quick.tim.mobileserviceprovider.entity.ExamEntry;
-import com.quick.tim.mobileserviceprovider.entity.ForumEventDetails;
-import com.quick.tim.mobileserviceprovider.entity.Whoisdoingwhat;
+import com.quick.tim.mobileserviceprovider.entity.*;
 import java.util.Date;
 
 
@@ -61,7 +59,7 @@ public class ForumDaoImpl implements ForumDao {
         pl.add(Projections.property("eventOwner"), "eventOwner");
         
         pl.add(Projections.property("parentForumId"), "parentForumId");
-        pl.add(Projections.property("imageFileName"), "imageFileName");
+        pl.add(Projections.property("imageFilename"), "imageFileName");
         
         criteria.addOrder(Order.desc("eventDate"));
         
@@ -75,5 +73,10 @@ public class ForumDaoImpl implements ForumDao {
     public void saveEventDetails(ForumEventDetails event) 
     {
         hibernateTemplate.saveOrUpdate(event);
+    }
+
+    @Override
+    public void saveEventLike(ForumEventLikes eventLike) {
+        hibernateTemplate.saveOrUpdate(eventLike);
     }
 }
