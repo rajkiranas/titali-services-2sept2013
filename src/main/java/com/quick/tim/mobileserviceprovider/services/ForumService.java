@@ -9,9 +9,7 @@ import com.quick.tim.mobileserviceprovider.entity.Whatsnew;
 import com.quick.tim.mobileserviceprovider.DAO.WhatsNewDao;
 import com.quick.tim.mobileserviceprovider.bean.ForumEventDetailsBean;
 import com.quick.tim.mobileserviceprovider.bean.MasteParmBean;
-import com.quick.tim.mobileserviceprovider.entity.ForumEventDetails;
-import com.quick.tim.mobileserviceprovider.entity.Std;
-import com.quick.tim.mobileserviceprovider.entity.Sub;
+import com.quick.tim.mobileserviceprovider.entity.*;
 import com.quick.tim.mobileserviceprovider.global.GlobalConstants;
 import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 import java.util.Date;
@@ -54,8 +52,18 @@ public class ForumService
         String imageStr=inputRequest.getString("image");
         byte[] arr=Base64.decode(imageStr);
         event.setEventImage(arr);
-        event.setImageFileName(inputRequest.getString("image_filename"));
+        event.setImageFilename(inputRequest.getString("image_filename"));
                 
         forumDao.saveEventDetails(event);
+    }
+    
+    
+    public void saveEventLike(JSONObject inputRequest) throws JSONException 
+    {
+        ForumEventLikes eventLike = new ForumEventLikes();
+        eventLike.setName(inputRequest.getString("name"));
+        eventLike.setId(new ForumEventLikesId(inputRequest.getInt("event_id"), inputRequest.getString("username"), new Date()));
+                
+        forumDao.saveEventLike(eventLike);
     }
 }
