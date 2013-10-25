@@ -4,6 +4,8 @@
  */
 package com.quick.tim.mobileserviceprovider.DAO;
 
+import com.quick.tim.mobileserviceprovider.bean.EventCommentsBean;
+import com.quick.tim.mobileserviceprovider.bean.EventLikeBean;
 import com.quick.tim.mobileserviceprovider.bean.ForumEventDetailsBean;
 import com.quick.tim.mobileserviceprovider.bean.MasteParmBean;
 import com.quick.tim.mobileserviceprovider.entity.ForumEventDetails;
@@ -26,6 +28,9 @@ import org.hibernate.transform.Transformers;
  */
 public interface ForumDao {
     public List<ForumEventDetailsBean> getForumEventDetails(JSONObject inputRequest);
+    public List<EventLikeBean> getEventLikesById(JSONObject inputRequest) throws JSONException;
+    public List<EventCommentsBean> getEventCommentsById(JSONObject inputRequest) throws JSONException;
+    //public List<ForumEventDetails> getForumEventDetails(JSONObject inputRequest);
 
     public void saveEventDetails(ForumEventDetails event);
     public void saveEventLike(ForumEventLikes eventLike);
