@@ -8,14 +8,15 @@ import com.quick.tim.mobileserviceprovider.DAO.ForumDao;
 import com.quick.tim.mobileserviceprovider.entity.Whatsnew;
 
 import com.quick.tim.mobileserviceprovider.DAO.WhatsNewDao;
-import com.quick.tim.mobileserviceprovider.bean.ExamBean;
-import com.quick.tim.mobileserviceprovider.bean.ForumEventDetailsBean;
-import com.quick.tim.mobileserviceprovider.bean.MasteParmBean;
+import com.quick.tim.mobileserviceprovider.bean.*;
 import com.quick.tim.mobileserviceprovider.entity.*;
 import java.util.Date;
 
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.*;
@@ -68,6 +69,13 @@ public class ForumDaoImpl implements ForumDao {
         //return hibernateTemplate.findByCriteria(criteria);
         return hibernateTemplate.findByCriteria(criteria);
     }
+    
+    /* private static final String getlAllForumDetailsQry="from ForumEventDetails as model";
+    @Override
+    public List<ForumEventDetails> getForumEventDetails(JSONObject inputRequest) 
+    {
+        return hibernateTemplate.find(getlAllForumDetailsQry);
+    } */
 
     @Override
     public void saveEventDetails(ForumEventDetails event) 
@@ -78,5 +86,47 @@ public class ForumDaoImpl implements ForumDao {
     @Override
     public void saveEventLike(ForumEventLikes eventLike) {
         hibernateTemplate.saveOrUpdate(eventLike);
+    }
+
+
+    @Override
+    public List<EventLikeBean> getEventLikesById(JSONObject inputRequest) throws JSONException 
+    {
+        DetachedCriteria criteria = DetachedCriteria.forClass(ForumEventLikes.class);
+     
+        ProjectionList pl = Projections.projectionList();
+        pl.add(Projections.property("name"), "name");
+        pl.add(Projections.property("id.eventDetailId"), "eventDetailId");
+                                    
+        pl.add(Projections.property("id.username"), "username");
+        pl.add(Projections.property("likeTime"), "likeTime");
+        
+        criteria.add(Restrictions.eq("id.eventDetailId",inputRequest.getInt("event_id")));        
+        criteria.addOrder(Order.desc("likeTime"));
+        
+        criteria.setProjection(pl);
+        criteria.setResultTransformer(Transformers.aliasToBean(EventLikeBean.class));
+        return hibernateTemplate.findByCriteria(criteria);
+    }
+    
+    @Override
+    public List<EventCommentsBean> getEventCommentsById(JSONObject inputRequest) throws JSONException 
+    {
+        DetachedCriteria criteria = DetachedCriteria.forClass(ForumEventComments.class);
+     
+        ProjectionList pl = Projections.projectionList();
+        pl.add(Projections.property("name"), "name");
+        pl.add(Projections.property("commentBody"), "commentBody");
+        pl.add(Projections.property("id.eventDetailId"), "eventDetailId");
+                                    
+        pl.add(Projections.property("id.username"), "username");
+        pl.add(Projections.property("id.commentTime"), "commentTime");
+        
+        criteria.add(Restrictions.eq("id.eventDetailId",inputRequest.getInt("event_id")));        
+        criteria.addOrder(Order.desc("id.commentTime"));
+        
+        criteria.setProjection(pl);
+        criteria.setResultTransformer(Transformers.aliasToBean(EventCommentsBean.class));
+        return hibernateTemplate.findByCriteria(criteria);
     }
 }

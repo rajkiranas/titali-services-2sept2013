@@ -34,6 +34,9 @@ public class ForumEventDetails  implements java.io.Serializable {
      private String imageFilename;
      private Set<ForumEventComments> forumEventCommentses = new HashSet<ForumEventComments>(0);
      private Set<ForumEventLikes> forumEventLikeses = new HashSet<ForumEventLikes>(0);
+     
+  //   private String stringImage;
+     
 
     public ForumEventDetails() {
     }
@@ -144,6 +147,20 @@ public class ForumEventDetails  implements java.io.Serializable {
     public void setForumEventLikeses(Set<ForumEventLikes> forumEventLikeses) {
         this.forumEventLikeses = forumEventLikeses;
     }
+    /**
+     * @return the stringImage
+     */
+    /* public String getStringImage() {
+        return stringImage;
+    } */
+
+    /**
+     * @param stringImage the stringImage to set
+     */
+   /* public void setStringImage(String stringImage) {
+        this.stringImage = stringImage;
+    } */
+   
 }
 
 

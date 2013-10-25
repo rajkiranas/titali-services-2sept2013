@@ -21,6 +21,7 @@ public class ForumEventDetailsBean
      private String stringImage;
      private Integer parentForumId;
      private String imageFileName;
+     
 
     public int getEventDetailId() {
         return eventDetailId;
@@ -99,7 +100,4 @@ public class ForumEventDetailsBean
     public void setStringImage(String stringImage) {
         this.stringImage = stringImage;
     }
-     
-     
-    
 }

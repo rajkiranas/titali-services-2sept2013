@@ -152,6 +152,8 @@ public class GlobalConstants {
     public static final String EXAMRESOURCE = "examResource";
     public static final String EXAMLIST="examList";
     public static final String eventDetailsList="eventDetailsList";
+    public static final String eventLikes="eventLikes";
+    public static final String eventComments="eventComments";
     public static final String subjectWiseAvgPerformance="subjectWiseAvgPerformance";
     public static final String subwiseAvgScoreForStud="subwiseAvgScoreForStud";
      public static final String EXAMQUESTIONLIST ="examQuestionList";

@@ -6,9 +6,12 @@ package com.quick.tim.mobileserviceprovider.resource;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.quick.tim.mobileserviceprovider.bean.EventCommentsBean;
+import com.quick.tim.mobileserviceprovider.bean.EventLikeBean;
 import com.quick.tim.mobileserviceprovider.bean.ForumEventDetailsBean;
 import com.quick.tim.mobileserviceprovider.bean.MasteParmBean;
 import com.quick.tim.mobileserviceprovider.entity.ForumEventDetails;
+import com.quick.tim.mobileserviceprovider.entity.ForumEventLikes;
 import com.quick.tim.mobileserviceprovider.global.GlobalConstants;
 import com.quick.tim.mobileserviceprovider.services.ForumService;
 import com.quick.tim.mobileserviceprovider.services.QuickService;
@@ -35,6 +38,7 @@ public class ForumResource {
     private static final String getForumEventDetails="getForumEventDetails";
     private static final String saveEventDetails="saveEventDetails";
     private static final String saveEventLike="saveEventLike";
+    private static final String getEventLikesById="getEventLikesById";
     
     @Autowired
     private  ForumService forumService;;
@@ -96,6 +100,33 @@ public class ForumResource {
             e.printStackTrace();
             response.put(GlobalConstants.STATUS, "Could not like event");
         }
+        
+        return response;
+    }
+    
+    @Path(getEventLikesById)
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public JSONObject getEventLikesById(JSONObject inputRequest) throws JSONException {
+
+        //get likes
+        List<EventLikeBean> eventLikesList = forumService.getEventLikesById(inputRequest);
+        
+        Gson gson=  new GsonBuilder().setDateFormat(GlobalConstants.gsonTimeFormat).create();       
+        String eventLikeJson = gson.toJson(eventLikesList);
+        
+        JSONObject response = new JSONObject();
+        response.put(GlobalConstants.eventLikes, eventLikeJson);
+        
+        
+        //get comments
+        List<EventCommentsBean> eventCommentsList = forumService.getEventCommentsById(inputRequest);
+        
+        Gson gson2=  new GsonBuilder().setDateFormat(GlobalConstants.gsonTimeFormat).create();       
+        String eventCommentsJson = gson2.toJson(eventCommentsList);
+        
+        response.put(GlobalConstants.eventComments, eventCommentsJson);
         
         return response;
     }

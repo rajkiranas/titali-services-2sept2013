@@ -15,15 +15,15 @@ public class ForumEventLikesId  implements java.io.Serializable {
 
      private int eventDetailId;
      private String username;
-     private Date likeTime;
+     
 
     public ForumEventLikesId() {
     }
 
-    public ForumEventLikesId(int eventDetailId, String username, Date likeTime) {
+    public ForumEventLikesId(int eventDetailId, String username) {
        this.eventDetailId = eventDetailId;
        this.username = username;
-       this.likeTime = likeTime;
+       
     }
    
 
@@ -45,14 +45,7 @@ public class ForumEventLikesId  implements java.io.Serializable {
         this.username = username;
     }
 
-    @Column(name="like_time", nullable=false, length=29)
-    public Date getLikeTime() {
-        return this.likeTime;
-    }
     
-    public void setLikeTime(Date likeTime) {
-        this.likeTime = likeTime;
-    }
 
 
    public boolean equals(Object other) {
@@ -62,8 +55,7 @@ public class ForumEventLikesId  implements java.io.Serializable {
 		 ForumEventLikesId castOther = ( ForumEventLikesId ) other; 
          
 		 return (this.getEventDetailId()==castOther.getEventDetailId())
- && ( (this.getUsername()==castOther.getUsername()) || ( this.getUsername()!=null && castOther.getUsername()!=null && this.getUsername().equals(castOther.getUsername()) ) )
- && ( (this.getLikeTime()==castOther.getLikeTime()) || ( this.getLikeTime()!=null && castOther.getLikeTime()!=null && this.getLikeTime().equals(castOther.getLikeTime()) ) );
+ && ( (this.getUsername()==castOther.getUsername()) || ( this.getUsername()!=null && castOther.getUsername()!=null && this.getUsername().equals(castOther.getUsername())));
    }
    
    public int hashCode() {
@@ -71,7 +63,7 @@ public class ForumEventLikesId  implements java.io.Serializable {
          
          result = 37 * result + this.getEventDetailId();
          result = 37 * result + ( getUsername() == null ? 0 : this.getUsername().hashCode() );
-         result = 37 * result + ( getLikeTime() == null ? 0 : this.getLikeTime().hashCode() );
+         
          return result;
    }   
 

@@ -7,6 +7,8 @@ package com.quick.tim.mobileserviceprovider.services;
 import com.quick.tim.mobileserviceprovider.DAO.ForumDao;
 import com.quick.tim.mobileserviceprovider.entity.Whatsnew;
 import com.quick.tim.mobileserviceprovider.DAO.WhatsNewDao;
+import com.quick.tim.mobileserviceprovider.bean.EventCommentsBean;
+import com.quick.tim.mobileserviceprovider.bean.EventLikeBean;
 import com.quick.tim.mobileserviceprovider.bean.ForumEventDetailsBean;
 import com.quick.tim.mobileserviceprovider.bean.MasteParmBean;
 import com.quick.tim.mobileserviceprovider.entity.*;
@@ -41,6 +43,20 @@ public class ForumService
            }
            return list;
        }
+       
+       public List<EventLikeBean> getEventLikesById(JSONObject inputRequest) throws JSONException
+       {
+           List<EventLikeBean> list = forumDao.getEventLikesById(inputRequest);
+
+           return list;
+       }
+       
+       public List<EventCommentsBean> getEventCommentsById(JSONObject inputRequest) throws JSONException
+       {
+           List<EventCommentsBean> list = forumDao.getEventCommentsById(inputRequest);
+
+           return list;
+       }
 
     public void saveEventDetails(JSONObject inputRequest) throws JSONException 
     {
@@ -62,7 +78,8 @@ public class ForumService
     {
         ForumEventLikes eventLike = new ForumEventLikes();
         eventLike.setName(inputRequest.getString("name"));
-        eventLike.setId(new ForumEventLikesId(inputRequest.getInt("event_id"), inputRequest.getString("username"), new Date()));
+        eventLike.setLikeTime(new Date());
+        eventLike.setId(new ForumEventLikesId(inputRequest.getInt("event_id"), inputRequest.getString("username")));
                 
         forumDao.saveEventLike(eventLike);
     }

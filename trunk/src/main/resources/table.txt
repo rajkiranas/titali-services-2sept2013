@@ -931,7 +931,7 @@ CREATE TABLE forum_event_likes
   username character varying(250) NOT NULL,
   name character varying(200),
   like_time timestamp without time zone NOT NULL,
-  CONSTRAINT pk_forum_event_likes_id_name_time PRIMARY KEY (event_detail_id , username , like_time ),
+  CONSTRAINT pk_forum_event_likes_id_username PRIMARY KEY (event_detail_id , username ),
   CONSTRAINT fk_forum_event_likes_event_detail_id FOREIGN KEY (event_detail_id)
       REFERENCES forum_event_details (event_detail_id) MATCH SIMPLE
       ON UPDATE CASCADE ON DELETE CASCADE
