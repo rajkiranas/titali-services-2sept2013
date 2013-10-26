@@ -129,4 +129,9 @@ public class ForumDaoImpl implements ForumDao {
         criteria.setResultTransformer(Transformers.aliasToBean(EventCommentsBean.class));
         return hibernateTemplate.findByCriteria(criteria);
     }
+
+    @Override
+    public void saveEventComment(ForumEventComments eventComment) {
+        hibernateTemplate.saveOrUpdate(eventComment);
+    }
 }

@@ -83,4 +83,14 @@ public class ForumService
                 
         forumDao.saveEventLike(eventLike);
     }
+    
+    public void saveEventComment(JSONObject inputRequest) throws JSONException 
+    {
+        ForumEventComments eventComment = new ForumEventComments();
+        eventComment.setName(inputRequest.getString("name"));
+        eventComment.setCommentBody(inputRequest.getString("comment"));
+        eventComment.setId(new ForumEventCommentsId(inputRequest.getInt("event_id"), inputRequest.getString("username"),new Date()));
+                
+        forumDao.saveEventComment(eventComment);
+    }
 }
