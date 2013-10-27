@@ -102,7 +102,7 @@ public class ForumDaoImpl implements ForumDao {
         pl.add(Projections.property("likeTime"), "likeTime");
         
         criteria.add(Restrictions.eq("id.eventDetailId",inputRequest.getInt("event_id")));        
-        criteria.addOrder(Order.desc("likeTime"));
+        criteria.addOrder(Order.asc("likeTime"));
         
         criteria.setProjection(pl);
         criteria.setResultTransformer(Transformers.aliasToBean(EventLikeBean.class));
@@ -123,7 +123,7 @@ public class ForumDaoImpl implements ForumDao {
         pl.add(Projections.property("id.commentTime"), "commentTime");
         
         criteria.add(Restrictions.eq("id.eventDetailId",inputRequest.getInt("event_id")));        
-        criteria.addOrder(Order.desc("id.commentTime"));
+        criteria.addOrder(Order.asc("id.commentTime"));
         
         criteria.setProjection(pl);
         criteria.setResultTransformer(Transformers.aliasToBean(EventCommentsBean.class));
