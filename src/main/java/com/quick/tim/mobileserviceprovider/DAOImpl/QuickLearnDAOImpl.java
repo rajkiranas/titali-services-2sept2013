@@ -7,6 +7,7 @@ package com.quick.tim.mobileserviceprovider.DAOImpl;
 import com.quick.tim.mobileserviceprovider.DAO.QuickLearnDAO;
 import com.quick.tim.mobileserviceprovider.bean.MasteParmBean;
 import com.quick.tim.mobileserviceprovider.entity.*;
+import com.quick.tim.mobileserviceprovider.global.GlobalConstants;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -130,8 +131,12 @@ public class QuickLearnDAOImpl implements QuickLearnDAO {
             proList.add(Projections.property("uploadDate"),"uploadDate");
             detCri.setProjection(proList);
             detCri.addOrder(Order.desc("uploadDate"));
-            //commented after changeing quick learn ui with pop up window
-            //detCri.add(Restrictions.eq("sub.sub", subject));
+            if(subject!=null && !subject.equals(GlobalConstants.EMPTY_STRING))
+            {
+                //commented after changeing quick learn ui with pop up window
+                detCri.add(Restrictions.eq("sub.sub", subject));
+            }
+            
             detCri.setResultTransformer(Transformers.aliasToBean(MasteParmBean.class));
             whatsNewList = hibernateTemplate.findByCriteria(detCri);
             
