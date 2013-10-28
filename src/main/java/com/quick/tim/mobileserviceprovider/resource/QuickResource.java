@@ -45,7 +45,7 @@ public class QuickResource {
         JSONObject response =  new JSONObject();
       
             
-            List<MasteParmBean>  uploadList=  quickService.getQuickLearnUploadList();
+            List<MasteParmBean>  uploadList=  quickService.getQuickLearnUploadList(inputRequest);
             Gson gson=  new GsonBuilder().setDateFormat(GlobalConstants.gsonTimeFormat).create();       
             String json = gson.toJson(uploadList);             
             response.put(GlobalConstants.QUICKLEARNLIST, json);     

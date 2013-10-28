@@ -7,7 +7,10 @@ package com.quick.tim.mobileserviceprovider.DAOImpl;
 import com.quick.tim.mobileserviceprovider.DAO.QuickDao;
 import com.quick.tim.mobileserviceprovider.bean.MasteParmBean;
 import com.quick.tim.mobileserviceprovider.entity.QuickLearn;
+import com.quick.tim.mobileserviceprovider.global.GlobalConstants;
 import java.util.List;
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
@@ -34,7 +37,7 @@ public class QuickDaoImpl implements QuickDao{
         hibernateTemplate = new HibernateTemplate(sessionFactory);
     }
 
-    public List<MasteParmBean> getQuickLearnUploadList() {
+    public List<MasteParmBean> getQuickLearnUploadList(JSONObject inputRequest) throws JSONException {
         DetachedCriteria criteria = DetachedCriteria.forClass(QuickLearn.class, "ql");
 
         ProjectionList pl = Projections.projectionList();
@@ -52,6 +55,14 @@ public class QuickDaoImpl implements QuickDao{
         pl.add(Projections.property("otherNotesInformation"), "otherNotesInformation");
         pl.add(Projections.property("previousQuestionInformation"), "previousQuestionInformation");
         criteria.addOrder(Order.desc("uploadDate"));
+        
+        if(inputRequest.has("subject"))
+        {
+            if (inputRequest.getString("subject") != null && !inputRequest.getString("subject").equals(GlobalConstants.EMPTY_STRING)) {
+                //commented after changeing quick learn ui with pop up window
+                criteria.add(Restrictions.eq("ql.sub.sub", inputRequest.getString("subject")));
+            }
+        }
 
         criteria.setProjection(pl);
         criteria.setResultTransformer(Transformers.aliasToBean(MasteParmBean.class));
