@@ -36,6 +36,7 @@ public class MasterParamResource {
        private static final String getSubjectBystd="getSubjectBystd";
        private static final String standardList="standardList";
        private static final String getDivisionBystd="getDivisionBystd";
+       private static final String stdsub="stdsub";
     
     
     @Autowired
@@ -54,7 +55,7 @@ public class MasterParamResource {
     Request request;
     
     /// ================== SUyog=====================================================
-    @Path("stdsub")
+    @Path(stdsub)
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
