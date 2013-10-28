@@ -6,6 +6,8 @@ package com.quick.tim.mobileserviceprovider.DAO;
 
 import com.quick.tim.mobileserviceprovider.bean.MasteParmBean;
 import java.util.List;
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
 
 /**
  *
@@ -13,6 +15,6 @@ import java.util.List;
  */
 public interface QuickDao {
    
-    public List<MasteParmBean> getQuickLearnUploadList();
+    public List<MasteParmBean> getQuickLearnUploadList(JSONObject inputRequest) throws JSONException;
     
 }
