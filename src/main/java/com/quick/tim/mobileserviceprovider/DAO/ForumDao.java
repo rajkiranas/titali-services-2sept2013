@@ -24,7 +24,7 @@ import org.hibernate.transform.Transformers;
  * @author suyogn
  */
 public interface ForumDao {
-    public List<ForumEventDetailsBean> getForumEventDetails(JSONObject inputRequest);
+    public List<ForumEventDetailsBean> getForumEventDetails(JSONObject inputRequest) throws JSONException;
     public List<EventLikeBean> getEventLikesById(JSONObject inputRequest) throws JSONException;
     public List<EventCommentsBean> getEventCommentsById(JSONObject inputRequest) throws JSONException;
     //public List<ForumEventDetails> getForumEventDetails(JSONObject inputRequest);
