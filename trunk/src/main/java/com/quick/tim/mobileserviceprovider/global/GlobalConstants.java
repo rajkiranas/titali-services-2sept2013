@@ -178,8 +178,12 @@ public class GlobalConstants {
     public static final String SOCKET_FACTORY_PORT="SOCKET_FACTORY_PORT";
     public static final String FROM_MAIL_ID="FROM_MAIL_ID";
     public static final String FROM_MAIL_PWD="FROM_MAIL_PWD";
+    
+    
     public static final String NEW_TOPIC_RELEASE_MSG="NEW_TOPIC_RELEASE_MSG";
     public static final String NEW_EXAM_RELEASE_MSG="NEW_EXAM_RELEASE_MSG";
+    
+    public static final String DASH_ACTIVITY_FETCH_SIZE="DASH_ACTIVITY_FETCH_SIZE";
      
      
 }

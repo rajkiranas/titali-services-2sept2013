@@ -72,8 +72,9 @@ public class DashboardResource {
          * whose doing what
          */
 
-        
-        List<MasteParmBean> whoisdoingwhats = whoseDoingWhatService.getWhoIsDoingWhat(std, div,isAdmin);
+
+        int fetchResultsFrom=userProfile.getInt("fetchResultsFrom");
+        List<MasteParmBean> whoisdoingwhats = whoseDoingWhatService.getWhoIsDoingWhat(std, div,isAdmin,fetchResultsFrom);
         Gson Whoisdoingwhat_gson = new GsonBuilder().setDateFormat(GlobalConstants.gsonTimeFormat).create();
 
         String Whoisdoingwhat_json = Whoisdoingwhat_gson.toJson(whoisdoingwhats);

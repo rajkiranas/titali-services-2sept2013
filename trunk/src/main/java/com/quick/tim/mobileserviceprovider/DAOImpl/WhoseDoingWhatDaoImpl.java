@@ -7,6 +7,7 @@ package com.quick.tim.mobileserviceprovider.DAOImpl;
 import com.quick.tim.mobileserviceprovider.entity.Whoisdoingwhat;
 import com.quick.tim.mobileserviceprovider.DAO.WhoseDoingWhatDao;
 import com.quick.tim.mobileserviceprovider.bean.MasteParmBean;
+import com.quick.tim.mobileserviceprovider.global.GlobalConstants;
 import java.util.List;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.DetachedCriteria;
@@ -33,7 +34,7 @@ public class WhoseDoingWhatDaoImpl implements WhoseDoingWhatDao{
     {
         hibernateTemplate = new HibernateTemplate(sessionFactory);
     }
-    public List<MasteParmBean> getWhoIsDoingWhat(String forStd, String forDiv, boolean isAdmin) {
+    public List<MasteParmBean> getWhoIsDoingWhat(String forStd, String forDiv, boolean isAdmin,int fetchResultsFrom) {
         List<MasteParmBean> doingWhats = null;
         try {
             //.createAlias("Whatsnew", "Whatsnew")
@@ -58,8 +59,10 @@ public class WhoseDoingWhatDaoImpl implements WhoseDoingWhatDao{
             detCri.addOrder(Order.desc("activitydate"));
             //intentionally removed
             //detCri.add(Restrictions.eq("fordiv", forDiv));
+            System.out.println("$$$$fetchResultsFrom="+fetchResultsFrom);
+            
             detCri.setResultTransformer(Transformers.aliasToBean(MasteParmBean.class));
-            doingWhats = hibernateTemplate.findByCriteria(detCri);
+            doingWhats = hibernateTemplate.findByCriteria(detCri,fetchResultsFrom,Integer.parseInt(GlobalConstants.getProperty(GlobalConstants.DASH_ACTIVITY_FETCH_SIZE)));
 
         } catch (Exception e) {
             e.printStackTrace();
