@@ -41,8 +41,8 @@ QuickLearnDAO quickLearnDAO;
         quickLearnDAO.saveMyShortNotes(quickNotes);
     }
 
-    public List<MasteParmBean> getWhatsNewForMe(String subject) {
-        return quickLearnDAO.getWhatsNewForMe(subject);
+    public List<MasteParmBean> getWhatsNewForMe(String subject, int fetchResultsFrom) {
+        return quickLearnDAO.getWhatsNewForMe(subject,fetchResultsFrom);
     }
 
     public String getMyQuickNotesById(int uploadId) {

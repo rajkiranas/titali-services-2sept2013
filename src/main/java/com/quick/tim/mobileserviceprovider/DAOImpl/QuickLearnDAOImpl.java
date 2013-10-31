@@ -111,7 +111,7 @@ public class QuickLearnDAOImpl implements QuickLearnDAO {
         hibernateTemplate.saveOrUpdate(quickNotes);
     }
 
-    public List<MasteParmBean> getWhatsNewForMe(String subject) {
+    public List<MasteParmBean> getWhatsNewForMe(String subject, int fetchResultsFrom) {
           List<MasteParmBean> whatsNewList=null;
         try 
         {
@@ -131,14 +131,20 @@ public class QuickLearnDAOImpl implements QuickLearnDAO {
             proList.add(Projections.property("uploadDate"),"uploadDate");
             detCri.setProjection(proList);
             detCri.addOrder(Order.desc("uploadDate"));
+            detCri.setResultTransformer(Transformers.aliasToBean(MasteParmBean.class));
             if(subject!=null && !subject.equals(GlobalConstants.EMPTY_STRING))
             {
                 //commented after changeing quick learn ui with pop up window
                 detCri.add(Restrictions.eq("sub.sub", subject));
+                whatsNewList = hibernateTemplate.findByCriteria(detCri);
+            }
+            else
+            {
+                whatsNewList = hibernateTemplate.findByCriteria(detCri,fetchResultsFrom,Integer.parseInt(GlobalConstants.getProperty(GlobalConstants.QUICK_LEARN_FETCH_SIZE)));
+                
             }
             
-            detCri.setResultTransformer(Transformers.aliasToBean(MasteParmBean.class));
-            whatsNewList = hibernateTemplate.findByCriteria(detCri);
+            
             
         } catch (Exception e) {
             e.printStackTrace();

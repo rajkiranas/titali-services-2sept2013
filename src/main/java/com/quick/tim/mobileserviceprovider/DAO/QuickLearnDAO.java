@@ -24,7 +24,7 @@ public interface QuickLearnDAO {
     public List<QuickLearn> getgetOtherNotesByID(int aInt);
     public List<QuickLearn> getpreviousQueByID(int aInt);
     public void saveMyShortNotes(QuickNotes quickNotes);
-    public List<MasteParmBean> getWhatsNewForMe(String subject);
+    public List<MasteParmBean> getWhatsNewForMe(String subject,int fetchResultsFrom);
     public List getMyQuickNotesById(int uploadId);
     public void saveQuickUploadDetails(QuickLearn quickLearn);
     public List<MasteParmBean> getquickLearnByUploadId(int uploadId);
