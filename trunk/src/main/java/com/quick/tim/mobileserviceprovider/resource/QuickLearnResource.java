@@ -66,7 +66,7 @@ public class QuickLearnResource {
         System.out.println("userTrack=" + inputRequest);
         JSONObject response = new JSONObject();
         //org.apache.shiro.mgt.SecurityManager securityManager = factory.getInstance();
-        List<MasteParmBean> list = quickLearnService.getWhatsNewForMe(inputRequest.getString("subject"));
+        List<MasteParmBean> list = quickLearnService.getWhatsNewForMe(inputRequest.getString("subject"),inputRequest.getInt("fetchResultsFrom"));
         
         Gson gson=  new GsonBuilder().setDateFormat(GlobalConstants.gsonTimeFormat).create();       
         String json = gson.toJson(list);
