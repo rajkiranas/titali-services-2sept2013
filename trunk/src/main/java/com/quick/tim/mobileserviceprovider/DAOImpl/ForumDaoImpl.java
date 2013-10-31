@@ -10,6 +10,7 @@ import com.quick.tim.mobileserviceprovider.entity.Whatsnew;
 import com.quick.tim.mobileserviceprovider.DAO.WhatsNewDao;
 import com.quick.tim.mobileserviceprovider.bean.*;
 import com.quick.tim.mobileserviceprovider.entity.*;
+import com.quick.tim.mobileserviceprovider.global.GlobalConstants;
 import java.util.Date;
 
 
@@ -44,7 +45,7 @@ public class ForumDaoImpl implements ForumDao {
     }
 
     @Override
-    public List<ForumEventDetailsBean> getForumEventDetails(JSONObject inputRequest) 
+    public List<ForumEventDetailsBean> getForumEventDetails(JSONObject inputRequest) throws JSONException 
     {
         DetachedCriteria criteria = DetachedCriteria.forClass(ForumEventDetails.class);
 //        criteria.add(Restrictions.eq("std.std",std));
@@ -67,7 +68,8 @@ public class ForumDaoImpl implements ForumDao {
         criteria.setProjection(pl);
         criteria.setResultTransformer(Transformers.aliasToBean(ForumEventDetailsBean.class));
         //return hibernateTemplate.findByCriteria(criteria);
-        return hibernateTemplate.findByCriteria(criteria);
+        System.out.println("inputRequest.getInt(*********)="+inputRequest.getInt("fetchResultsFrom"));
+        return hibernateTemplate.findByCriteria(criteria,inputRequest.getInt("fetchResultsFrom"),Integer.parseInt(GlobalConstants.getProperty(GlobalConstants.FORUM_EVENTS_FETCH_SIZE)));
     }
     
     /* private static final String getlAllForumDetailsQry="from ForumEventDetails as model";

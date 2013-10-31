@@ -184,6 +184,7 @@ public class GlobalConstants {
     public static final String NEW_EXAM_RELEASE_MSG="NEW_EXAM_RELEASE_MSG";
     
     public static final String DASH_ACTIVITY_FETCH_SIZE="DASH_ACTIVITY_FETCH_SIZE";
+    public static final String FORUM_EVENTS_FETCH_SIZE="FORUM_EVENTS_FETCH_SIZE";
      
      
 }
