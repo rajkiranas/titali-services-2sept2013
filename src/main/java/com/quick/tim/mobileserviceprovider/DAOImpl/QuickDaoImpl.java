@@ -38,6 +38,7 @@ public class QuickDaoImpl implements QuickDao{
     }
 
     public List<MasteParmBean> getQuickLearnUploadList(JSONObject inputRequest) throws JSONException {
+        List<MasteParmBean> quicklearnUploadList=null;
         DetachedCriteria criteria = DetachedCriteria.forClass(QuickLearn.class, "ql");
 
         ProjectionList pl = Projections.projectionList();
@@ -55,17 +56,28 @@ public class QuickDaoImpl implements QuickDao{
         pl.add(Projections.property("otherNotesInformation"), "otherNotesInformation");
         pl.add(Projections.property("previousQuestionInformation"), "previousQuestionInformation");
         criteria.addOrder(Order.desc("uploadDate"));
+        criteria.setProjection(pl);
+        criteria.setResultTransformer(Transformers.aliasToBean(MasteParmBean.class));
         
         if(inputRequest.has("subject"))
         {
             if (inputRequest.getString("subject") != null && !inputRequest.getString("subject").equals(GlobalConstants.EMPTY_STRING)) {
                 //commented after changeing quick learn ui with pop up window
+                            //subject is selected by user
                 criteria.add(Restrictions.eq("ql.sub.sub", inputRequest.getString("subject")));
+                quicklearnUploadList=hibernateTemplate.findByCriteria(criteria);
+            }
+            else
+            {
+                quicklearnUploadList=hibernateTemplate.findByCriteria(criteria,inputRequest.getInt("fetchResultsFrom"),Integer.parseInt(GlobalConstants.getProperty(GlobalConstants.QUICK_UPLOAD_ADMIN_FETCH_SIZE)));
             }
         }
+        else
+            {
+                quicklearnUploadList=hibernateTemplate.findByCriteria(criteria,inputRequest.getInt("fetchResultsFrom"),Integer.parseInt(GlobalConstants.getProperty(GlobalConstants.QUICK_UPLOAD_ADMIN_FETCH_SIZE)));
+            }
 
-        criteria.setProjection(pl);
-        criteria.setResultTransformer(Transformers.aliasToBean(MasteParmBean.class));
-        return hibernateTemplate.findByCriteria(criteria);
+        
+        return quicklearnUploadList;
     }
 }

@@ -132,6 +132,7 @@ public class QuickLearnDAOImpl implements QuickLearnDAO {
             detCri.setProjection(proList);
             detCri.addOrder(Order.desc("uploadDate"));
             detCri.setResultTransformer(Transformers.aliasToBean(MasteParmBean.class));
+            //subject is selected by user
             if(subject!=null && !subject.equals(GlobalConstants.EMPTY_STRING))
             {
                 //commented after changeing quick learn ui with pop up window
@@ -140,6 +141,7 @@ public class QuickLearnDAOImpl implements QuickLearnDAO {
             }
             else
             {
+                // load earlier data clicked by user
                 whatsNewList = hibernateTemplate.findByCriteria(detCri,fetchResultsFrom,Integer.parseInt(GlobalConstants.getProperty(GlobalConstants.QUICK_LEARN_FETCH_SIZE)));
                 
             }
