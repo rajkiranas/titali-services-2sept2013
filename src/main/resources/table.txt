@@ -953,3 +953,17 @@ CREATE INDEX fki_forum_event_likes_event_detail_id
 
 
 ---------------------------------------------------------------------------------------------------------------------------------------
+1) validations
+2) student teacher exam screens
+3) games addition
+4) saving user notes
+5) reports
+
+notifications - mail + msg
+notifications for all possible - notes upload - forum upload, event like, comment
+
+enter more data and test
+
+login screen
+
+student upload procedure
