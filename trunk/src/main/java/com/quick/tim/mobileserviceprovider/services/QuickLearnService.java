@@ -45,8 +45,8 @@ QuickLearnDAO quickLearnDAO;
         return quickLearnDAO.getWhatsNewForMe(subject,fetchResultsFrom);
     }
 
-    public String getMyQuickNotesById(int uploadId) {
-        List list =quickLearnDAO.getMyQuickNotesById(uploadId);
+    public String getMyQuickNotesById(int uploadId, String userName) {
+        List list =quickLearnDAO.getMyQuickNotesById(uploadId,userName);
         if(!list.isEmpty()){
             return list.get(0).toString();
         }else{

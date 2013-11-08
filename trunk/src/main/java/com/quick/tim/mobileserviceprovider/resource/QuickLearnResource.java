@@ -92,13 +92,13 @@ public class QuickLearnResource {
         Gson gson=  new GsonBuilder().setDateFormat(GlobalConstants.gsonTimeFormat).create();       
         String json = gson.toJson(list);  
         response.put(GlobalConstants.QUICKLEARNLIST, json);
-        response.put(GlobalConstants.MYQUICKNOTEs, getMyQuickNotes(inputRequest.getInt("uploadId")));
+        response.put(GlobalConstants.MYQUICKNOTEs, getMyQuickNotes(inputRequest.getInt("uploadId"),inputRequest.getString("userName")));
         return response;
     }
    
     
-      private String getMyQuickNotes(int uploadId) {
-        return quickLearnService.getMyQuickNotesById(uploadId);
+      private String getMyQuickNotes(int uploadId, String userName) {
+        return quickLearnService.getMyQuickNotesById(uploadId,userName);
        
     }
       

@@ -73,7 +73,7 @@ public class QuickNotes  implements java.io.Serializable {
         this.quickLearn = quickLearn;
     }
     
-    @Column(name="user_notes")
+    @Column(name="user_notes", length=1000)
     public String getUserNotes() {
         return this.userNotes;
     }

@@ -155,7 +155,7 @@ public class QuickLearnDAOImpl implements QuickLearnDAO {
         return whatsNewList;
     }
 
-    public List getMyQuickNotesById(int uploadId) {
+    public List getMyQuickNotesById(int uploadId, String userName) {
            List userNotes=null;
         try 
         {
@@ -163,6 +163,7 @@ public class QuickLearnDAOImpl implements QuickLearnDAO {
             DetachedCriteria detCri = DetachedCriteria.forClass(QuickNotes.class);
             ProjectionList proList = Projections.projectionList();
             proList.add(Projections.property("userNotes"),"userNotes");
+            detCri.add(Restrictions.eq("id.username", userName));
            detCri.setProjection(proList);
            detCri.add(Restrictions.eq("id.uploadId", uploadId));
            userNotes = hibernateTemplate.findByCriteria(detCri);
