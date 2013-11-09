@@ -35,4 +35,5 @@ public interface UserMasterDao  {
     public int getStudentCountForClass(String std, String fordiv);
 
     public List<Userprofile> getStudentUserIdsByClass(String std);
+    public List<Userprofile> getAllStudentUserIds();
 }

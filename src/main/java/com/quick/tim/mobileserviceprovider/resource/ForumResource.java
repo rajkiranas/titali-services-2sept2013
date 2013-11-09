@@ -9,13 +9,9 @@ import com.google.gson.GsonBuilder;
 import com.quick.tim.mobileserviceprovider.bean.EventCommentsBean;
 import com.quick.tim.mobileserviceprovider.bean.EventLikeBean;
 import com.quick.tim.mobileserviceprovider.bean.ForumEventDetailsBean;
-import com.quick.tim.mobileserviceprovider.bean.MasteParmBean;
-import com.quick.tim.mobileserviceprovider.entity.ForumEventDetails;
-import com.quick.tim.mobileserviceprovider.entity.ForumEventLikes;
 import com.quick.tim.mobileserviceprovider.global.GlobalConstants;
+import com.quick.tim.mobileserviceprovider.services.EmailService;
 import com.quick.tim.mobileserviceprovider.services.ForumService;
-import com.quick.tim.mobileserviceprovider.services.QuickService;
-import com.quick.tim.mobileserviceprovider.services.WhatsNewService;
 import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
@@ -43,6 +39,8 @@ public class ForumResource {
     
     @Autowired
     private  ForumService forumService;;
+    @Autowired
+    private EmailService emailService;
     
     
     @Path(getForumEventDetails)
@@ -71,8 +69,8 @@ public class ForumResource {
         try 
         {
             forumService.saveEventDetails(inputRequest);
-        
-            response.put(GlobalConstants.STATUS, "Successfully posted event");     
+            response.put(GlobalConstants.STATUS, "Successfully posted event");
+            emailService.sendNewForumEventNotificationByMailToAll(inputRequest);
             
         } catch (Exception e) 
         {

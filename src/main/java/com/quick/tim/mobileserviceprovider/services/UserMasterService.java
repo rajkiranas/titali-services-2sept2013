@@ -99,4 +99,9 @@ public class UserMasterService
     {
         return userMasterDao.getStudentUserIdsByClass(std);
     }
+    
+    public List<Userprofile> getAllStudentUserIds()
+    {
+        return userMasterDao.getAllStudentUserIds();
+    }
 }

@@ -347,4 +347,19 @@ public class UserMasterDaoImpl implements  UserMasterDao {
          return hibernateTemplate.findByCriteria(criteria);                
            
     }
+
+    @Override
+    public List<Userprofile> getAllStudentUserIds() {
+        DetachedCriteria criteria=DetachedCriteria.forClass(UserMaster.class,"um");
+        
+         ProjectionList pl = Projections.projectionList();
+            
+         pl.add(Projections.property("um.username"), "username");
+            
+         criteria.setProjection(pl);
+         
+         criteria.setResultTransformer(Transformers.aliasToBean(Userprofile.class));
+            
+         return hibernateTemplate.findByCriteria(criteria);     
+    }
 }

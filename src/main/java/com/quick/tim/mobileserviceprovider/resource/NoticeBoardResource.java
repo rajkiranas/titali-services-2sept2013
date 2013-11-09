@@ -6,11 +6,10 @@ package com.quick.tim.mobileserviceprovider.resource;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.quick.tim.mobileserviceprovider.bean.MasteParmBean;
 import com.quick.tim.mobileserviceprovider.bean.NoticeBean;
 import com.quick.tim.mobileserviceprovider.global.GlobalConstants;
+import com.quick.tim.mobileserviceprovider.services.EmailService;
 import com.quick.tim.mobileserviceprovider.services.NoticeBoardService;
-import com.quick.tim.mobileserviceprovider.services.QuickService;
 import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
@@ -35,6 +34,8 @@ public class NoticeBoardResource {
     
     @Autowired
     private  NoticeBoardService noticeBoardService;
+    @Autowired
+    private EmailService emailService;
     
     
     @Path(getAllNotices)
@@ -71,6 +72,11 @@ public class NoticeBoardResource {
             System.out.println("userTrack=" + inputRequest);
             noticeBoardService.saveNotice(inputRequest);
             response.put(GlobalConstants.STATUS, GlobalConstants.YES);
+            int noticeId=inputRequest.getInt("noticeId");
+            if(noticeId==0)
+            {
+                emailService.sendNewNoticeByMailToAll(inputRequest);
+            }
 
 
         } catch (Exception e) {

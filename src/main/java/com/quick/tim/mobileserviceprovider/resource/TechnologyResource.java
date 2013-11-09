@@ -11,6 +11,7 @@ import com.quick.tim.mobileserviceprovider.bean.MasteParmBean;
 import com.quick.tim.mobileserviceprovider.bean.NoticeBean;
 import com.quick.tim.mobileserviceprovider.bean.UpcomingTechnologyBean;
 import com.quick.tim.mobileserviceprovider.global.GlobalConstants;
+import com.quick.tim.mobileserviceprovider.services.EmailService;
 import com.quick.tim.mobileserviceprovider.services.NoticeBoardService;
 import com.quick.tim.mobileserviceprovider.services.QuickService;
 import com.quick.tim.mobileserviceprovider.services.TechnologyService;
@@ -42,6 +43,8 @@ public class TechnologyResource {
     
     @Autowired
     private  TechnologyService technologyService;
+    @Autowired
+    private EmailService emailService;
     
     
     @Path(getAllTechnology)
@@ -71,6 +74,14 @@ public class TechnologyResource {
             System.out.println("userTrack=" + inputRequest);
             technologyService.saveTechnology(inputRequest);
             response.put(GlobalConstants.STATUS, GlobalConstants.YES);
+            
+            int technologyId=inputRequest.getInt("technologyId");
+            // new technology
+            if(technologyId==0)
+            {
+                // send mail to everystudent for technology update
+                emailService.sendNewTechnologyNotificationByMailToAll(inputRequest);
+            }
 
 
         } catch (Exception e) {
