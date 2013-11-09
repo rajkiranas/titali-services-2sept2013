@@ -182,6 +182,9 @@ public class GlobalConstants {
     
     public static final String NEW_TOPIC_RELEASE_MSG="NEW_TOPIC_RELEASE_MSG";
     public static final String NEW_EXAM_RELEASE_MSG="NEW_EXAM_RELEASE_MSG";
+    public static final String NEW_TECHNOLOGY_RELEASE_MSG="NEW_TECHNOLOGY_RELEASE_MSG";
+    public static final String NEW_NOTICE_RELEASE_MSG="NEW_NOTICE_RELEASE_MSG";
+    public static final String NEW_FORUM_EVENT_RELEASE_MSG="NEW_FORUM_EVENT_RELEASE_MSG";
     
     public static final String DASH_ACTIVITY_FETCH_SIZE="DASH_ACTIVITY_FETCH_SIZE";
     public static final String FORUM_EVENTS_FETCH_SIZE="FORUM_EVENTS_FETCH_SIZE";
