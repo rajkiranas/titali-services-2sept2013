@@ -158,6 +158,7 @@ public class GlobalConstants {
     public static final String subwiseAvgScoreForStud="subwiseAvgScoreForStud";
      public static final String EXAMQUESTIONLIST ="examQuestionList";
      public static final String space =" ";
+     public static final String COMMA =",";
      public static final String has ="has";
      public static final String is ="is";
      public static final String in ="in";
@@ -185,6 +186,7 @@ public class GlobalConstants {
     public static final String NEW_TECHNOLOGY_RELEASE_MSG="NEW_TECHNOLOGY_RELEASE_MSG";
     public static final String NEW_NOTICE_RELEASE_MSG="NEW_NOTICE_RELEASE_MSG";
     public static final String NEW_FORUM_EVENT_RELEASE_MSG="NEW_FORUM_EVENT_RELEASE_MSG";
+    public static final String COMMENT_POSTED_MSG="COMMENT_POSTED_MSG";
     
     public static final String DASH_ACTIVITY_FETCH_SIZE="DASH_ACTIVITY_FETCH_SIZE";
     public static final String FORUM_EVENTS_FETCH_SIZE="FORUM_EVENTS_FETCH_SIZE";
