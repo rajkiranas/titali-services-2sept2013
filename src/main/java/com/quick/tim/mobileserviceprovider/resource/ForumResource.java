@@ -9,6 +9,7 @@ import com.google.gson.GsonBuilder;
 import com.quick.tim.mobileserviceprovider.bean.EventCommentsBean;
 import com.quick.tim.mobileserviceprovider.bean.EventLikeBean;
 import com.quick.tim.mobileserviceprovider.bean.ForumEventDetailsBean;
+import com.quick.tim.mobileserviceprovider.entity.ForumEventComments;
 import com.quick.tim.mobileserviceprovider.global.GlobalConstants;
 import com.quick.tim.mobileserviceprovider.services.EmailService;
 import com.quick.tim.mobileserviceprovider.services.ForumService;
@@ -112,14 +113,16 @@ public class ForumResource {
         JSONObject response = new JSONObject();
         try 
         {
-            forumService.saveEventComment(inputRequest);
+            ForumEventComments eventComments= forumService.saveEventComment(inputRequest);
         
-            response.put(GlobalConstants.STATUS, "Successfully liked event");     
+            response.put(GlobalConstants.STATUS, "Successfully posted comment");     
             
+            List<EventCommentsBean> eventCommentsList = forumService.getEventCommentsById(inputRequest);
+            emailService.sendCommentPostedMailToRelatedUsers(eventCommentsList,eventComments);
         } catch (Exception e) 
         {
             e.printStackTrace();
-            response.put(GlobalConstants.STATUS, "Could not like event");
+            response.put(GlobalConstants.STATUS, "Could not post comment");
         }
         
         return response;

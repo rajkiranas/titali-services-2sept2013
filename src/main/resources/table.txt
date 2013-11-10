@@ -960,7 +960,7 @@ CREATE INDEX fki_forum_event_likes_event_detail_id
 4) notifications - mail + msg
    notifications for all possible - notes upload - forum upload, event like, comment, notices, tech news
 5) reports
-6) games addition
 login screen
+6) games addition
 enter more data and test
 student upload procedure
