@@ -12,6 +12,8 @@ import com.quick.tim.mobileserviceprovider.entity.QuickLearn;
 import com.quick.tim.mobileserviceprovider.global.GlobalConstants;
 import com.quick.tim.mobileserviceprovider.utilities.SendMailSSL;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -134,7 +136,7 @@ public class EmailService {
         //SendMailSSL.sendMail(toMailIds.toString(),inputRequest.getString("owner") + " posted new forum event - "+inputRequest.getString("event_desc"),msgBody);
     }
 
-    public void sendCommentPostedMailToRelatedUsers(List<EventCommentsBean> eventCommentsList,ForumEventComments eventComments) 
+    public void sendCommentPostedMailToRelatedUsers(List<EventCommentsBean> eventCommentsList,ForumEventComments eventComments,JSONObject inputRequest) 
     {
         HashMap<String,EventCommentsBean> relatedUsersMap = new HashMap<String,EventCommentsBean>();
         for (EventCommentsBean bean : eventCommentsList) 
@@ -157,7 +159,11 @@ public class EmailService {
         System.out.println("====="+toMailIds.toString());
         String msgBody=GlobalConstants.getProperty(GlobalConstants.COMMENT_POSTED_MSG);
         msgBody=msgBody.replaceAll("<name>", eventComments.getName());
-        msgBody=msgBody.replaceAll("<event_desc>", eventComments.getForumEventDetails().getEventDesc());
+        try {
+            msgBody=msgBody.replaceAll("<event_desc>", inputRequest.getString("event_desc"));
+        } catch (JSONException ex) {
+            ex.printStackTrace();
+        }
         
         
         System.out.println("====="+toMailIds.toString()+" " +eventComments.getName()+ " commented on your post" +" "+msgBody);
