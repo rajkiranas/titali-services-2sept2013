@@ -118,7 +118,7 @@ public class ForumResource {
             response.put(GlobalConstants.STATUS, "Successfully posted comment");     
             
             List<EventCommentsBean> eventCommentsList = forumService.getEventCommentsById(inputRequest);
-            emailService.sendCommentPostedMailToRelatedUsers(eventCommentsList,eventComments);
+            emailService.sendCommentPostedMailToRelatedUsers(eventCommentsList,eventComments,inputRequest);
         } catch (Exception e) 
         {
             e.printStackTrace();
