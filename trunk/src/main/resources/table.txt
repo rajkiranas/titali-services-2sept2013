@@ -954,6 +954,27 @@ CREATE INDEX fki_forum_event_likes_event_detail_id
 
 
 ---------------------------------------------------------------------------------------------------------------------------------------
+-- Table: public.dict_list
+
+-- DROP TABLE public.dict_list;
+
+CREATE TABLE public.dict_list
+(
+  word character varying(50) NOT NULL,
+  meaning character varying(1500),
+  labels character varying(300),
+  add_date timestamp without time zone,
+  owner_username character varying(250),
+  owner_name character varying(200),
+  CONSTRAINT pk_dict_list_word PRIMARY KEY (word )
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE public.dict_list
+  OWNER TO postgres;
+---------------------------------------------------------------------------------------------------------------------------------------
+
 1) validations
 2) student teacher exam screens
 3) saving user notes

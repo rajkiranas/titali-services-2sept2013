@@ -139,6 +139,7 @@ public class GlobalConstants {
     public static final String QuickResource="/QuickMaster";
     public static final String WhatsNewResource="/WhatsNew";
     public static final String ForumResource="/ForumResource";
+    public static final String DictResource="/DictResource";
     public static final String WhosDoingWhatResource="/WhosDoingWhat";
     public static final String QUICKLEARNLIST="quickLearnList";
     public static final String MasterParamResource = "/MasterParam";
@@ -152,6 +153,7 @@ public class GlobalConstants {
     public static final String EXAMRESOURCE = "examResource";
     public static final String EXAMLIST="examList";
     public static final String eventDetailsList="eventDetailsList";
+    public static final String dictWordList="dictWordList";
     public static final String eventLikes="eventLikes";
     public static final String eventComments="eventComments";
     public static final String subjectWiseAvgPerformance="subjectWiseAvgPerformance";
@@ -190,6 +192,7 @@ public class GlobalConstants {
     
     public static final String DASH_ACTIVITY_FETCH_SIZE="DASH_ACTIVITY_FETCH_SIZE";
     public static final String FORUM_EVENTS_FETCH_SIZE="FORUM_EVENTS_FETCH_SIZE";
+    public static final String DICT_FETCH_SIZE="DICT_FETCH_SIZE";
     public static final String QUICK_LEARN_FETCH_SIZE="QUICK_LEARN_FETCH_SIZE";
     public static final String QUICK_UPLOAD_ADMIN_FETCH_SIZE="QUICK_UPLOAD_ADMIN_FETCH_SIZE";
      
