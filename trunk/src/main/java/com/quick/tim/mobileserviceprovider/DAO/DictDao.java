@@ -5,6 +5,7 @@
 package com.quick.tim.mobileserviceprovider.DAO;
 
 import com.quick.tim.mobileserviceprovider.bean.DictWordDetailsBean;
+import com.quick.tim.mobileserviceprovider.entity.DictList;
 
 
 import java.util.List;
@@ -17,4 +18,5 @@ import org.codehaus.jettison.json.JSONObject;
  */
 public interface DictDao {
     public List<DictWordDetailsBean> getDictWordList(JSONObject inputRequest) throws JSONException;    
+    public void saveNewWordDetails(DictList word) throws Exception;    
 }

@@ -29,6 +29,7 @@ import org.springframework.stereotype.Component;
 public class DictResource {
     
     private static final String getDictWordList="getDictWordList";    
+    private static final String saveNewWordDetails="saveNewWordDetails";
     
     @Autowired
     private  DictService dictService;;
@@ -46,6 +47,28 @@ public class DictResource {
         
         JSONObject response = new JSONObject();
         response.put(GlobalConstants.dictWordList, examListJson);     
+        return response;
+    }
+    
+    
+    @Path(saveNewWordDetails)
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public JSONObject saveNewWordDetails(JSONObject inputRequest) throws JSONException 
+    {
+        JSONObject response = new JSONObject();
+        try 
+        {
+            dictService.saveNewWordDetails(inputRequest);
+            response.put(GlobalConstants.STATUS, "Successfully saved word");
+            
+        } catch (Exception e) 
+        {
+            e.printStackTrace();
+            response.put(GlobalConstants.STATUS, "Could not save word");
+        }
+        
         return response;
     }
 }

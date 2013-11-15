@@ -60,4 +60,9 @@ public class DictDaoImpl implements DictDao {
         //System.out.println("inputRequest.getInt(*********)="+inputRequest.getInt("fetchResultsFrom"));
         return hibernateTemplate.findByCriteria(criteria,inputRequest.getInt("fetchResultsFrom"),Integer.parseInt(GlobalConstants.getProperty(GlobalConstants.DICT_FETCH_SIZE)));
     }
+
+    @Override
+    public void saveNewWordDetails(DictList word) throws Exception {
+        hibernateTemplate.saveOrUpdate(word);
+    }
 }
