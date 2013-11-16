@@ -30,6 +30,7 @@ public class DictResource {
     
     private static final String getDictWordList="getDictWordList";    
     private static final String saveNewWordDetails="saveNewWordDetails";
+    private static final String searchWordList="searchWordList";
     
     @Autowired
     private  DictService dictService;;
@@ -69,6 +70,23 @@ public class DictResource {
             response.put(GlobalConstants.STATUS, "Could not save word");
         }
         
+        return response;
+    }
+    
+    
+    @Path(searchWordList)
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public JSONObject searchWordList(JSONObject inputRequest) throws JSONException {
+
+        List<DictWordDetailsBean> eventDetailsList = dictService.searchWordList(inputRequest);
+        
+        Gson gson=  new GsonBuilder().setDateFormat(GlobalConstants.gsonTimeFormat).create();       
+        String examListJson = gson.toJson(eventDetailsList);  
+        
+        JSONObject response = new JSONObject();
+        response.put(GlobalConstants.dictWordList, examListJson);     
         return response;
     }
 }
