@@ -52,4 +52,10 @@ public class DictService
 
         dictDao.saveNewWordDetails(word);
     }
+
+    public List<DictWordDetailsBean> getWordOfTheDay(JSONObject inputRequest) {
+        List<DictWordDetailsBean> list = dictDao.getWordOfTheDay(inputRequest);
+        
+        return list;
+    }
 }
