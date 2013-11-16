@@ -951,7 +951,12 @@ CREATE INDEX fki_forum_event_likes_event_detail_id
   ON forum_event_likes
   USING btree
   (event_detail_id );
-
+---------------------------------------------------------------------------------------------------------------------------------------
+word
+meaning
+labels
+add_date
+added_by
 
 ---------------------------------------------------------------------------------------------------------------------------------------
 -- Table: public.dict_list
@@ -995,8 +1000,3 @@ login screen
 enter more data and test
 student upload procedure
 dictionary
-
-
-
-
-

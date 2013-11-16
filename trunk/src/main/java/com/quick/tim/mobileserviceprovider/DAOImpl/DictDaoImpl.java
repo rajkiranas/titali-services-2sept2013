@@ -65,4 +65,35 @@ public class DictDaoImpl implements DictDao {
     public void saveNewWordDetails(DictList word) throws Exception {
         hibernateTemplate.saveOrUpdate(word);
     }
+
+    @Override
+    public List<DictWordDetailsBean> searchWordList(JSONObject inputRequest) throws JSONException 
+    {
+           DetachedCriteria criteria = DetachedCriteria.forClass(DictList.class,"dictionary");
+           
+        ProjectionList pl = Projections.projectionList();
+        pl.add(Projections.property("word"), "word");
+        pl.add(Projections.property("meaning"), "meaning");
+        pl.add(Projections.property("labels"), "labels");
+        pl.add(Projections.property("addDate"), "addDate");
+        pl.add(Projections.property("ownerUsername"), "ownerUsername");
+        pl.add(Projections.property("ownerName"), "ownerName");
+        
+        if(inputRequest.getString("searchFor").equals("Word"))
+           {
+               criteria.add(Restrictions.ilike("dictionary.word",inputRequest.getString("searchWord"),MatchMode.ANYWHERE));
+           }
+           else
+           {
+               criteria.add(Restrictions.ilike("dictionary.labels",inputRequest.getString("searchWord"),MatchMode.ANYWHERE));
+           }
+        
+        criteria.addOrder(Order.asc("word"));
+        
+        criteria.setProjection(pl);
+        criteria.setResultTransformer(Transformers.aliasToBean(DictWordDetailsBean.class));
+        return hibernateTemplate.findByCriteria(criteria);
+        //System.out.println("inputRequest.getInt(*********)="+inputRequest.getInt("fetchResultsFrom"));
+        //return hibernateTemplate.findByCriteria(criteria,inputRequest.getInt("fetchResultsFrom"),Integer.parseInt(GlobalConstants.getProperty(GlobalConstants.DICT_FETCH_SIZE)));
+    }
 }

@@ -33,6 +33,13 @@ public class DictService
            return list;
        }
        
+       public List<DictWordDetailsBean> searchWordList(JSONObject inputRequest) throws JSONException
+       {
+           List<DictWordDetailsBean> list = dictDao.searchWordList(inputRequest);
+           
+           return list;
+       }
+       
     public void saveNewWordDetails(JSONObject inputRequest) throws Exception {
         DictList word = new DictList();
         
