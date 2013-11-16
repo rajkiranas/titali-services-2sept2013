@@ -116,6 +116,7 @@ public class GlobalConstants {
     public static final String role="role";
     public static final String WHATSNEW = "whatsNew";
     public static final String NOTICES = "notices";
+    public static final String wordOfTheDay = "wordOfTheDay";
     public static final String Technologies = "Technologies";
     public static final String category_distribution = "category_distribution";
     public static final String WHOSEDOINGWHAT = "Whodwht";

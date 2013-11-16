@@ -11,12 +11,14 @@ package com.quick.tim.mobileserviceprovider.resource;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.quick.tim.mobileserviceprovider.bean.DictWordDetailsBean;
 import com.quick.tim.mobileserviceprovider.bean.MasteParmBean;
 import com.quick.tim.mobileserviceprovider.entity.*;
 import com.quick.tim.mobileserviceprovider.services.NoticeBoardService;
 import com.quick.tim.mobileserviceprovider.services.WhatsNewService;
 import com.quick.tim.mobileserviceprovider.services.WhoseDoingWhatService;
 import com.quick.tim.mobileserviceprovider.global.GlobalConstants;
+import com.quick.tim.mobileserviceprovider.services.DictService;
 import java.util.*;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -34,6 +36,10 @@ public class DashboardResource {
     WhoseDoingWhatService whoseDoingWhatService;
     @Autowired
     NoticeBoardService noticeBoardService;
+    @Autowired
+    DictService dictService;
+    
+    
     private static final String getStudentDashboard="getStudentDashboard";
     private static final String getWhatsNewBySub="getWhatsNewBysubject";
     
@@ -86,6 +92,12 @@ public class DashboardResource {
         Gson Notices_gson = new GsonBuilder().setDateFormat(GlobalConstants.gsonTimeFormat).create();
         String Notices_json = Notices_gson.toJson(noticeses);
         response.put(GlobalConstants.NOTICES, Notices_json);
+        
+        
+        List<DictWordDetailsBean> wordOfTheDayList =dictService.getWordOfTheDay(userProfile);
+        Gson wordOfTheDay_gson = new GsonBuilder().setDateFormat(GlobalConstants.gsonTimeFormat).create();
+        String wordOfTheDay_json = wordOfTheDay_gson.toJson(wordOfTheDayList);
+        response.put(GlobalConstants.wordOfTheDay, wordOfTheDay_json);
 
         return response;
     }

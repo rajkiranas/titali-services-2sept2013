@@ -9,12 +9,16 @@ import com.quick.tim.mobileserviceprovider.DAO.ForumDao;
 import com.quick.tim.mobileserviceprovider.bean.*;
 import com.quick.tim.mobileserviceprovider.entity.*;
 import com.quick.tim.mobileserviceprovider.global.GlobalConstants;
+import java.util.ArrayList;
 
 
 import java.util.List;
+import java.util.Random;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
+import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.hibernate.classic.Session;
 import org.hibernate.criterion.*;
 import org.hibernate.transform.Transformers;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -95,5 +99,27 @@ public class DictDaoImpl implements DictDao {
         return hibernateTemplate.findByCriteria(criteria);
         //System.out.println("inputRequest.getInt(*********)="+inputRequest.getInt("fetchResultsFrom"));
         //return hibernateTemplate.findByCriteria(criteria,inputRequest.getInt("fetchResultsFrom"),Integer.parseInt(GlobalConstants.getProperty(GlobalConstants.DICT_FETCH_SIZE)));
+    }
+
+    @Override
+    public List<DictWordDetailsBean> getWordOfTheDay(JSONObject inputRequest) {
+        DetachedCriteria criteria = DetachedCriteria.forClass(DictList.class);
+        ProjectionList pl = Projections.projectionList();
+        pl.add(Projections.property("word"), "word");
+        pl.add(Projections.property("meaning"), "meaning");
+        pl.add(Projections.property("labels"), "labels");
+        criteria.add(Restrictions.sqlRestriction("1=1 order by random()"));
+        criteria.setResultTransformer(Transformers.aliasToBean(DictWordDetailsBean.class));
+        criteria.setProjection(pl);
+        hibernateTemplate.setFetchSize(1);
+        List<Object> list = hibernateTemplate.findByCriteria(criteria);
+        Object obj[] = (Object[]) list.get(0);
+        List<DictWordDetailsBean> abcList = new ArrayList<DictWordDetailsBean>();
+        DictWordDetailsBean wordOfTheDayBean = new DictWordDetailsBean();
+        wordOfTheDayBean.setWord((String)obj[0]);
+        wordOfTheDayBean.setMeaning((String)obj[1]);
+        wordOfTheDayBean.setLabels((String)obj[2]);
+        abcList.add(wordOfTheDayBean);
+        return abcList;
     }
 }
