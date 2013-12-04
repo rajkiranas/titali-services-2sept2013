@@ -12,6 +12,7 @@ import com.quick.tim.mobileserviceprovider.entity.ExamStudentResponse;
 import com.quick.tim.mobileserviceprovider.entity.Std;
 import com.quick.tim.mobileserviceprovider.entity.StudentExamSummary;
 import com.quick.tim.mobileserviceprovider.entity.StudentMaster;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -109,7 +110,6 @@ public class ExamDaoImpl implements ExamDao {
         criteria.createAlias("examQuestionsAnswerses", "examque");
         // criteria.setResultTransformer(DetachedCriteria.DISTINCT_ROOT_ENTITY);
         criteria.setResultTransformer(Transformers.aliasToBean(ExamBean.class));
-        
         return hibernateTemplate.findByCriteria(criteria);
     }
     

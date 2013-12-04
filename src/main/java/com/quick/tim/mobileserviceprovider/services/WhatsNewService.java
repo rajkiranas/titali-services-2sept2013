@@ -80,6 +80,7 @@ public class WhatsNewService
                topicInro=topicInro.substring(0, 145)+"...";
            }
            wn.setTopicintro(topicInro);
+           wn.setClassToInvoke(inputRequest.getString("classToInvoke"));
            
            //whatsNewDao.sendWhatsNewNotificationToStudents(wn);
            whoseDoingWhatDao.sendWhosDoingWhatNotificationToStudents(wn);
