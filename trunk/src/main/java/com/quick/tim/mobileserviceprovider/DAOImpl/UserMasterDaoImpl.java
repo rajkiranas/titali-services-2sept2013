@@ -8,17 +8,12 @@ import com.quick.tim.mobileserviceprovider.bean.Userprofile;
 import com.quick.tim.mobileserviceprovider.entity.UserMaster;
 import com.quick.tim.mobileserviceprovider.DAO.UserMasterDao;
 import com.quick.tim.mobileserviceprovider.bean.TeacherStddivSubIdBean;
-import com.quick.tim.mobileserviceprovider.entity.ExamEntry;
-import com.quick.tim.mobileserviceprovider.entity.QuickLearn;
 import com.quick.tim.mobileserviceprovider.entity.Std;
 import com.quick.tim.mobileserviceprovider.entity.TeacherStddivSub;
-import com.quick.tim.mobileserviceprovider.entity.UserRoles;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 
 import java.util.List;
-import java.util.Set;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.*;
 import org.hibernate.transform.Transformers;

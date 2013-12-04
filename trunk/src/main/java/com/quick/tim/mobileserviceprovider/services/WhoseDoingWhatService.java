@@ -67,7 +67,7 @@ public class WhoseDoingWhatService {
                 topicInro=topicInro.substring(0, 145)+"...";
             }
             w.setTopicintro(topicInro);
-            
+            w.setClassToInvoke(inputRequest.getString("classToInvoke"));
             whoseDoingWhatDao.sendWhosDoingWhatNotificationToStudents(w);
        
     }

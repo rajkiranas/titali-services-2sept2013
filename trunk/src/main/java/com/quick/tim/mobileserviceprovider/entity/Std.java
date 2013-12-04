@@ -67,6 +67,7 @@ public class Std  implements java.io.Serializable {
     public void setStd(String std) {
         this.std = std;
     }
+   
 @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="std")
     public Set<Notices> getNoticeses() {
         return this.noticeses;

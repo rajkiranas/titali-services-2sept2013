@@ -4,16 +4,8 @@
  */
 package com.quick.tim.mobileserviceprovider.resource;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.quick.tim.mobileserviceprovider.bean.MasteParmBean;
 import com.quick.tim.mobileserviceprovider.global.GlobalConstants;
-import com.quick.tim.mobileserviceprovider.services.QuickService;
-import com.quick.tim.mobileserviceprovider.services.WhatsNewService;
 import com.quick.tim.mobileserviceprovider.services.WhoseDoingWhatService;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;

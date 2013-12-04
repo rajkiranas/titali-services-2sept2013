@@ -381,7 +381,7 @@ ALTER TABLE seq_whatsnew_itemid
 CREATE TABLE public.whoisdoingwhat
 (
   activityid integer NOT NULL, -- autoincrement
-  activitydate date,
+  activitydate timestamp with time zone,
   bywhom character varying(200),
   doingwhat character varying(150), -- can be ...
   forstd character varying(7),
@@ -390,6 +390,8 @@ CREATE TABLE public.whoisdoingwhat
   topic character varying(30),
   displaynotification character varying(150),
   uploadid integer,
+  topic_intro character varying(150),
+  class_to_invoke character varying(100),
   CONSTRAINT pk_whoisdoingwhat_activityid PRIMARY KEY (activityid ),
   CONSTRAINT pk_whoisdoingwhat_std FOREIGN KEY (forstd)
       REFERENCES public.std (std) MATCH SIMPLE
@@ -407,6 +409,8 @@ COMMENT ON COLUMN public.whoisdoingwhat.activityid IS 'autoincrement';
 COMMENT ON COLUMN public.whoisdoingwhat.doingwhat IS 'can be 
 Sudeepta Banerjee is watching flipflop video in Digital electronics
 etc';
+
+
 -----------------------------------------------------------------------
 -- Sequence: seq_whoisdoingwhat_activityid
 
