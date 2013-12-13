@@ -7,17 +7,13 @@ package com.quick.tim.mobileserviceprovider.DAO;
 import com.quick.tim.mobileserviceprovider.bean.EventCommentsBean;
 import com.quick.tim.mobileserviceprovider.bean.EventLikeBean;
 import com.quick.tim.mobileserviceprovider.bean.ForumEventDetailsBean;
-import com.quick.tim.mobileserviceprovider.bean.MasteParmBean;
 import com.quick.tim.mobileserviceprovider.entity.*;
 
-import com.quick.tim.mobileserviceprovider.global.GlobalConstants;
 
 
 import java.util.List;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
-import org.hibernate.criterion.*;
-import org.hibernate.transform.Transformers;
 
 /**
  *
@@ -28,6 +24,7 @@ public interface ForumDao {
     public List<EventLikeBean> getEventLikesById(JSONObject inputRequest) throws JSONException;
     public List<EventCommentsBean> getEventCommentsById(JSONObject inputRequest) throws JSONException;
     //public List<ForumEventDetails> getForumEventDetails(JSONObject inputRequest);
+    public List<ForumEventDetailsBean> getForumEventById(JSONObject inputRequest) throws JSONException;
 
     public void saveEventDetails(ForumEventDetails event);
     public void saveEventLike(ForumEventLikes eventLike);
