@@ -168,7 +168,7 @@ public class GlobalConstants {
      public static final String going_through ="going through";
      public static final String shared ="shared";
      public static final String updated ="updated";
-     public static final String topicInformation ="topic information";
+     public static final String topicInformation ="topic";
      public static final String gsonTimeFormat="yyyy-MM-dd'T'HH:mm:ss'Z'";
      public static final String PASS="PASS";
      public static final String FAIL="FAIL";
