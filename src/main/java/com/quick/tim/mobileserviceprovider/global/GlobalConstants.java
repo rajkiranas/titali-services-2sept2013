@@ -166,7 +166,7 @@ public class GlobalConstants {
      public static final String is ="is";
      public static final String in ="in";
      public static final String going_through ="going through";
-     public static final String released ="released";
+     public static final String shared ="shared";
      public static final String updated ="updated";
      public static final String topicInformation ="topic information";
      public static final String gsonTimeFormat="yyyy-MM-dd'T'HH:mm:ss'Z'";
@@ -174,6 +174,7 @@ public class GlobalConstants {
      public static final String FAIL="FAIL";
      public static final String noticeBoardResource = "noticeResource";
      public static final String technologyResource = "technologyResource";
+     public static final String tripple_dots="...";
      
      
      //////////////////mail properties//////////////////////
