@@ -4,13 +4,9 @@
  */
 package com.quick.tim.mobileserviceprovider.resource;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.quick.tim.mobileserviceprovider.bean.MasteParmBean;
+import com.quick.tim.mobileserviceprovider.entity.ForumEventDetails;
 import com.quick.tim.mobileserviceprovider.global.GlobalConstants;
-import com.quick.tim.mobileserviceprovider.services.QuickService;
 import com.quick.tim.mobileserviceprovider.services.WhatsNewService;
-import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -30,6 +26,7 @@ import org.springframework.stereotype.Component;
 public class WhatsNewResource {
     
     private static final String sendWhatsNewNotificationToStudents="sendWhatsNewNotificationToStudents";
+    private static final String sendForumNotificationToStudents="sendForumNotificationToStudents";
     
     @Autowired
     private  WhatsNewService whatsNewService;;
@@ -51,6 +48,16 @@ public class WhatsNewResource {
 //     JSONObject response =  new JSONObject();
 //     response.put(GlobalConstants.QUICKLEARNLIST, json);     
 //     return response;
+    }
+    
+    @Path(sendForumNotificationToStudents)
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public void sendForumNotificationToStudents(ForumEventDetails event,JSONObject inputRequest) throws JSONException {
+
+        whatsNewService.sendForumNotificationToStudents(event,inputRequest);
+            
     }
 
     void deleteWhatsNewNotification(int uploadId) {
