@@ -134,6 +134,7 @@ public class ForumResource {
     @Produces(MediaType.APPLICATION_JSON)
     public JSONObject getEventLikesById(JSONObject inputRequest) throws JSONException {
 
+        System.out.println("hello likes");
         //get likes
         List<EventLikeBean> eventLikesList = forumService.getEventLikesById(inputRequest);
         
