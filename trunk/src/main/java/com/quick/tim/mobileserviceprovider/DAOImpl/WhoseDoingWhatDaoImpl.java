@@ -50,6 +50,7 @@ public class WhoseDoingWhatDaoImpl implements WhoseDoingWhatDao{
             proList.add(Projections.property("activitydate"),"uploadDate");
             proList.add(Projections.property("topicintro"),"topicintro");
             proList.add(Projections.property("classToInvoke"),"classToInvoke");
+            proList.add(Projections.property("topic"),"topic");
             
             detCri.setProjection(proList);      
             if(!isAdmin)

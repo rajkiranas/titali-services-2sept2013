@@ -57,8 +57,19 @@ public class ForumService
 
            return list;
        }
+       
+       public List<ForumEventDetailsBean> getForumEventById(JSONObject inputRequest) throws JSONException
+       {
+           List<ForumEventDetailsBean> list = forumDao.getForumEventById(inputRequest);
+           for(ForumEventDetailsBean bean:list)
+           {
+               bean.setStringImage(new String(Base64.encode(bean.getEventImage())));
+           }
 
-    public void saveEventDetails(JSONObject inputRequest) throws JSONException 
+           return list;
+       }
+
+    public ForumEventDetails saveEventDetails(JSONObject inputRequest) throws JSONException 
     {
         ForumEventDetails event = new ForumEventDetails();
         event.setEventDate(new Date());
@@ -71,6 +82,7 @@ public class ForumService
         event.setImageFilename(inputRequest.getString("image_filename"));
                 
         forumDao.saveEventDetails(event);
+        return event;
     }
     
     

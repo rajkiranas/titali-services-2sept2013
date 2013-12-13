@@ -8,6 +8,7 @@ import com.quick.tim.mobileserviceprovider.entity.Whatsnew;
 import com.quick.tim.mobileserviceprovider.DAO.WhatsNewDao;
 import com.quick.tim.mobileserviceprovider.DAO.WhoseDoingWhatDao;
 import com.quick.tim.mobileserviceprovider.bean.MasteParmBean;
+import com.quick.tim.mobileserviceprovider.entity.ForumEventDetails;
 import com.quick.tim.mobileserviceprovider.entity.Std;
 import com.quick.tim.mobileserviceprovider.entity.Sub;
 import com.quick.tim.mobileserviceprovider.entity.Whoisdoingwhat;
@@ -52,12 +53,12 @@ public class WhatsNewService
            boolean isNewQuickUpload=(Boolean)inputRequest.get("isNewQuickUpload");
             System.out.println("###### chk this="+isNewQuickUpload);
             
-           String displayNotification=GlobalConstants.EMPTY_STRING;
+           String displayNotification;
            
            if(isNewQuickUpload)
            {
                //displayNotification=inputRequest.getString("uploadedBy").toUpperCase() + GlobalConstants.space +GlobalConstants.has + GlobalConstants.space + GlobalConstants.released + GlobalConstants.space + inputRequest.getString("topic") + GlobalConstants.space + GlobalConstants.topicInformation;
-               displayNotification=inputRequest.getString("uploadedBy").toUpperCase() + GlobalConstants.space +GlobalConstants.has + GlobalConstants.space + GlobalConstants.released + GlobalConstants.space + inputRequest.getString("topic");
+               displayNotification=inputRequest.getString("uploadedBy").toUpperCase() + GlobalConstants.space +GlobalConstants.has + GlobalConstants.space + GlobalConstants.shared + GlobalConstants.space + inputRequest.getString("topic");
            }
            else
            {
@@ -83,6 +84,48 @@ public class WhatsNewService
            wn.setClassToInvoke(inputRequest.getString("classToInvoke"));
            
            //whatsNewDao.sendWhatsNewNotificationToStudents(wn);
+           whoseDoingWhatDao.sendWhosDoingWhatNotificationToStudents(wn);
+           
+       } 
+       private static final String Forum="Forum";
+       public void sendForumNotificationToStudents(ForumEventDetails event,JSONObject inputRequest) throws JSONException
+       {
+           
+           //boolean isNewQuickUpload=(Boolean)inputRequest.get("isNewQuickUpload");
+           //System.out.println("###### chk this="+isNewQuickUpload);
+            
+           String displayNotification;
+           
+//           if(isNewQuickUpload)
+//           {
+//               //displayNotification=inputRequest.getString("uploadedBy").toUpperCase() + GlobalConstants.space +GlobalConstants.has + GlobalConstants.space + GlobalConstants.released + GlobalConstants.space + inputRequest.getString("topic") + GlobalConstants.space + GlobalConstants.topicInformation;
+//               displayNotification=event.getEventOwner().toUpperCase() + GlobalConstants.space +GlobalConstants.has + GlobalConstants.space + GlobalConstants.shared + GlobalConstants.space + event.getEventDesc();
+//           }
+//           else
+//           {
+//               //displayNotification=inputRequest.getString("uploadedBy").toUpperCase() + GlobalConstants.space +GlobalConstants.has + GlobalConstants.space + GlobalConstants.updated + GlobalConstants.space + inputRequest.getString("topic") + GlobalConstants.space + GlobalConstants.topicInformation;
+//               displayNotification=event.getEventOwner().toUpperCase() + GlobalConstants.space +GlobalConstants.has + GlobalConstants.space + GlobalConstants.updated + GlobalConstants.space + inputRequest.getString("topic");
+//           }
+           
+           displayNotification=event.getEventOwner().toUpperCase() + GlobalConstants.space +GlobalConstants.has + GlobalConstants.space + GlobalConstants.shared + GlobalConstants.space + event.getEventDesc();
+           
+           Whoisdoingwhat wn = new Whoisdoingwhat();
+           wn.setActivitydate(new Date());
+           wn.setUploadId(event.getEventDetailId());
+           wn.setBywhom(event.getEventOwner());
+           wn.setDisplaynotification(displayNotification);
+           
+//           wn.setStd(new Std(inputRequest.getString("std")));
+//           wn.setSub(new Sub(inputRequest.getString("sub")));
+           wn.setTopic(Forum);
+           
+           String topicInro= event.getEventBody();
+           if(topicInro.length()>145) {
+               topicInro=topicInro.substring(0, 145)+GlobalConstants.tripple_dots;
+           }
+           wn.setTopicintro(topicInro);
+           wn.setClassToInvoke(inputRequest.getString("classToInvoke"));
+           
            whoseDoingWhatDao.sendWhosDoingWhatNotificationToStudents(wn);
            
        } 

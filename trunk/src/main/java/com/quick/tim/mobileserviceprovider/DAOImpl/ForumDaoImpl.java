@@ -136,4 +136,33 @@ public class ForumDaoImpl implements ForumDao {
     public void saveEventComment(ForumEventComments eventComment) {
         hibernateTemplate.saveOrUpdate(eventComment);
     }
+
+    
+    
+    @Override
+    public List<ForumEventDetailsBean> getForumEventById(JSONObject inputRequest) throws JSONException 
+    {
+        DetachedCriteria criteria = DetachedCriteria.forClass(ForumEventDetails.class,"alias");
+//        criteria.add(Restrictions.eq("std.std",std));
+//        criteria.add(Restrictions.or(Restrictions.eq("fordiv", fordiv),Restrictions.eq("fordiv", null)));
+        criteria.add(Restrictions.eq("alias.eventDetailId",Integer.parseInt(inputRequest.getString("eventId"))));
+        
+        ProjectionList pl = Projections.projectionList();
+        pl.add(Projections.property("eventDetailId"), "eventDetailId");
+        pl.add(Projections.property("eventDate"), "eventDate");
+        pl.add(Projections.property("eventDesc"), "eventDesc");
+        pl.add(Projections.property("eventBody"), "eventBody");
+        pl.add(Projections.property("eventImage"), "eventImage");
+            pl.add(Projections.property("eventOwner"), "eventOwner");
+        
+        pl.add(Projections.property("parentForumId"), "parentForumId");
+        pl.add(Projections.property("imageFilename"), "imageFileName");
+        
+        criteria.addOrder(Order.desc("eventDate"));
+        
+        criteria.setProjection(pl);
+        criteria.setResultTransformer(Transformers.aliasToBean(ForumEventDetailsBean.class));
+        //return hibernateTemplate.findByCriteria(criteria);
+        return hibernateTemplate.findByCriteria(criteria);
+    }
 }
