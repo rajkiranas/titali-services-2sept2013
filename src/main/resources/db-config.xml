@@ -41,8 +41,11 @@
         <!-- these are C3P0 properties -->
         <property name="acquireIncrement" value="2" />
         <property name="minPoolSize" value="3" />
-        <property name="maxPoolSize" value="10" />
+        <property name="maxPoolSize" value="50" />
         <property name="maxIdleTime" value="100" />
+        <property name="idleConnectionTestPeriod" value="600"/>
+        <property name="testConnectionOnCheckout" value="true"/>
+        <property name="testConnectionOnCheckin" value="false"/>
     </bean>
  
 	<bean id="sessionFactory"
