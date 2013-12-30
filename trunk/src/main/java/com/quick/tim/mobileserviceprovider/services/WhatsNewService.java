@@ -78,7 +78,7 @@ public class WhatsNewService
            
            String topicInro= inputRequest.getString("topicIntro");
            if(topicInro.length()>145) {
-               topicInro=topicInro.substring(0, 145)+"...";
+               topicInro=topicInro.substring(0, 80)+"...";
            }
            wn.setTopicintro(topicInro);
            wn.setClassToInvoke(inputRequest.getString("classToInvoke"));
