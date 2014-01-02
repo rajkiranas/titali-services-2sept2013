@@ -175,6 +175,7 @@ public class GlobalConstants {
      public static final String noticeBoardResource = "noticeResource";
      public static final String technologyResource = "technologyResource";
      public static final String tripple_dots="...";
+     public static final String TOPIC_INTRO_LENGTH="TOPIC_INTRO_LENGTH";
      
      
      //////////////////mail properties//////////////////////

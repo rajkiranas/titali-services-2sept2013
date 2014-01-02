@@ -77,8 +77,8 @@ public class WhatsNewService
            wn.setTopic(inputRequest.getString("topic"));
            
            String topicInro= inputRequest.getString("topicIntro");
-           if(topicInro.length()>145) {
-               topicInro=topicInro.substring(0, 80)+"...";
+           if(topicInro.length()>Integer.parseInt(GlobalConstants.getProperty(GlobalConstants.TOPIC_INTRO_LENGTH))) {
+               topicInro=topicInro.substring(0, Integer.parseInt(GlobalConstants.getProperty(GlobalConstants.TOPIC_INTRO_LENGTH)))+GlobalConstants.tripple_dots;
            }
            wn.setTopicintro(topicInro);
            wn.setClassToInvoke(inputRequest.getString("classToInvoke"));
@@ -120,8 +120,8 @@ public class WhatsNewService
            wn.setTopic(Forum);
            
            String topicInro= event.getEventBody();
-           if(topicInro.length()>145) {
-               topicInro=topicInro.substring(0, 145)+GlobalConstants.tripple_dots;
+           if(topicInro.length()>Integer.parseInt(GlobalConstants.getProperty(GlobalConstants.TOPIC_INTRO_LENGTH))) {
+               topicInro=topicInro.substring(0, Integer.parseInt(GlobalConstants.getProperty(GlobalConstants.TOPIC_INTRO_LENGTH)))+GlobalConstants.tripple_dots;
            }
            wn.setTopicintro(topicInro);
            wn.setClassToInvoke(inputRequest.getString("classToInvoke"));
