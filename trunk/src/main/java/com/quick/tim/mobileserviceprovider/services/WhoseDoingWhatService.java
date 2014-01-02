@@ -63,8 +63,8 @@ public class WhoseDoingWhatService {
             w.setDisplaynotification(displayNotification);
             
             String topicInro= inputRequest.getString("topicIntro");
-            if(topicInro.length()>145) {
-                topicInro=topicInro.substring(0, 80)+"...";
+            if(topicInro.length()>Integer.parseInt(GlobalConstants.getProperty(GlobalConstants.TOPIC_INTRO_LENGTH))) {
+                topicInro=topicInro.substring(0, Integer.parseInt(GlobalConstants.getProperty(GlobalConstants.TOPIC_INTRO_LENGTH)))+GlobalConstants.tripple_dots;
             }
             w.setTopicintro(topicInro);
             w.setClassToInvoke(inputRequest.getString("classToInvoke"));

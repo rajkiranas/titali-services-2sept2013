@@ -77,6 +77,7 @@ public class ForumResource {
         try 
         {
             ForumEventDetails event = forumService.saveEventDetails(inputRequest);
+            response.put("newlyCreatedEventId", event.getEventDetailId());
             response.put(GlobalConstants.STATUS, "Successfully posted event");
             sendForumNotificationToStudents(event,inputRequest);
             emailService.sendNewForumEventNotificationByMailToAll(inputRequest);
