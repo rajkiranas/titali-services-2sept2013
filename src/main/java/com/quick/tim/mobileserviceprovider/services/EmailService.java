@@ -32,26 +32,41 @@ public class EmailService {
     {
         List<Userprofile> userProfileList = masterService.getStudentUserIdsByClass(quickLearn.getStd().getStd());
         StringBuilder toMailIds=new StringBuilder(GlobalConstants.EMPTY_STRING);
+        StringBuilder toMobileNos=new StringBuilder(GlobalConstants.EMPTY_STRING);
         for(Userprofile profile: userProfileList)
         {
             toMailIds.append(profile.getUsername());
             toMailIds.append(GlobalConstants.COMMA);
+            
+            toMobileNos.append(profile.getMobile());
+            toMobileNos.append(GlobalConstants.COMMA);
         }
         toMailIds.deleteCharAt(toMailIds.length()-1);
         String msgBody=GlobalConstants.getProperty(GlobalConstants.NEW_TOPIC_RELEASE_MSG);
         msgBody=msgBody.replaceAll("<topic>", quickLearn.getTopic());
         System.out.println("====="+toMailIds.toString()+" " +"New topic released-"+quickLearn.getTopic() +" "+msgBody);
         //SendMailSSL.sendMail(toMailIds.toString(),"New topic released-"+quickLearn.getTopic(),msgBody);
+        
+        //
+        if(Boolean.valueOf(GlobalConstants.getProperty(GlobalConstants.ENABLE_MOBILE_ALERTS)))
+        {
+            toMobileNos.deleteCharAt(toMailIds.length()-1);
+            //call gateway api
+        }
     }
     
     public void sendNewExamNotificationByMail(JSONObject inputRequest) throws JSONException
     {
         List<Userprofile> userProfileList = masterService.getStudentUserIdsByClass(inputRequest.getString("std"));
         StringBuilder toMailIds=new StringBuilder(GlobalConstants.EMPTY_STRING);
+        StringBuilder toMobileNos=new StringBuilder(GlobalConstants.EMPTY_STRING);
         for(Userprofile profile: userProfileList)
         {
             toMailIds.append(profile.getUsername());
             toMailIds.append(GlobalConstants.COMMA);
+            
+            toMobileNos.append(profile.getMobile());
+            toMobileNos.append(GlobalConstants.COMMA);
         }
         toMailIds.deleteCharAt(toMailIds.length()-1);
         
@@ -63,16 +78,28 @@ public class EmailService {
         msgBody=msgBody.replaceAll("<enddate>", inputRequest.getString("endDt"));
         System.out.println("====="+toMailIds.toString()+" " +"New exam released-"+inputRequest.getString("topic") +" "+msgBody);
         //SendMailSSL.sendMail(toMailIds.toString(),"New exam released on -"+inputRequest.getString("topic"),msgBody);
+        
+        
+        //mobile alerts
+        if(Boolean.valueOf(GlobalConstants.getProperty(GlobalConstants.ENABLE_MOBILE_ALERTS)))
+        {
+            toMobileNos.deleteCharAt(toMailIds.length()-1);
+            //call gateway api
+        }
     }
     
     public void sendNewTechnologyNotificationByMailToAll(JSONObject inputRequest) throws JSONException
     {
         List<Userprofile> userProfileList = masterService.getAllStudentUserIds();
         StringBuilder toMailIds=new StringBuilder(GlobalConstants.EMPTY_STRING);
+        StringBuilder toMobileNos=new StringBuilder(GlobalConstants.EMPTY_STRING);
         for(Userprofile profile: userProfileList)
         {
             toMailIds.append(profile.getUsername());
             toMailIds.append(GlobalConstants.COMMA);
+            
+            toMobileNos.append(profile.getMobile());
+            toMobileNos.append(GlobalConstants.COMMA);
         }
         toMailIds.deleteCharAt(toMailIds.length()-1);
         
@@ -84,16 +111,29 @@ public class EmailService {
         
         System.out.println("====="+toMailIds.toString()+" " +"New technology released-"+inputRequest.getString("technologyline") +" "+msgBody);
         //SendMailSSL.sendMail(toMailIds.toString(),"New technology released -"+inputRequest.getString("technologyline"),msgBody);
+
+        
+        //mobile alerts
+        if(Boolean.valueOf(GlobalConstants.getProperty(GlobalConstants.ENABLE_MOBILE_ALERTS)))
+        {
+            toMobileNos.deleteCharAt(toMailIds.length()-1);
+            //call gateway api
+        }
     }
     
     public void sendNewNoticeByMailToAll(JSONObject inputRequest) throws JSONException
     {
         List<Userprofile> userProfileList = masterService.getAllStudentUserIds();
         StringBuilder toMailIds=new StringBuilder(GlobalConstants.EMPTY_STRING);
+        StringBuilder toMobileNos=new StringBuilder(GlobalConstants.EMPTY_STRING);
+        
         for(Userprofile profile: userProfileList)
         {
             toMailIds.append(profile.getUsername());
             toMailIds.append(GlobalConstants.COMMA);
+            
+            toMobileNos.append(profile.getMobile());
+            toMobileNos.append(GlobalConstants.COMMA);
         }
         
         toMailIds.deleteCharAt(toMailIds.length()-1);
@@ -114,16 +154,28 @@ public class EmailService {
         
         System.out.println("====="+toMailIds.toString()+" " +"New notice -"+inputRequest.getString("noticeline") +" "+msgBody);
         //SendMailSSL.sendMail(toMailIds.toString(),"New notice -"+inputRequest.getString("noticeline"),msgBody);
+        
+        //mobile alerts
+        if(Boolean.valueOf(GlobalConstants.getProperty(GlobalConstants.ENABLE_MOBILE_ALERTS)))
+        {
+            toMobileNos.deleteCharAt(toMailIds.length()-1);
+            //call gateway api
+        }
     }
     
     public void sendNewForumEventNotificationByMailToAll(JSONObject inputRequest) throws JSONException
     {
         List<Userprofile> userProfileList = masterService.getAllStudentUserIds();
         StringBuilder toMailIds=new StringBuilder(GlobalConstants.EMPTY_STRING);
+        StringBuilder toMobileNos=new StringBuilder(GlobalConstants.EMPTY_STRING);
+        
         for(Userprofile profile: userProfileList)
         {
             toMailIds.append(profile.getUsername());
             toMailIds.append(GlobalConstants.COMMA);
+            
+            toMobileNos.append(profile.getMobile());
+            toMobileNos.append(GlobalConstants.COMMA);
         }
         toMailIds.deleteCharAt(toMailIds.length()-1);
         
@@ -134,6 +186,13 @@ public class EmailService {
         
         System.out.println("====="+toMailIds.toString()+" " +inputRequest.getString("owner") + " has posted new forum event - "+inputRequest.getString("event_desc") +" "+msgBody);
         //SendMailSSL.sendMail(toMailIds.toString(),inputRequest.getString("owner") + " posted new forum event - "+inputRequest.getString("event_desc"),msgBody);
+        
+        //mobile alerts
+        if(Boolean.valueOf(GlobalConstants.getProperty(GlobalConstants.ENABLE_MOBILE_ALERTS)))
+        {
+            toMobileNos.deleteCharAt(toMailIds.length()-1);
+            //call gateway api
+        }
     }
 
     public void sendCommentPostedMailToRelatedUsers(List<EventCommentsBean> eventCommentsList,ForumEventComments eventComments,JSONObject inputRequest) 

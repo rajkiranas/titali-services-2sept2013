@@ -330,6 +330,7 @@ public class UserMasterDaoImpl implements  UserMasterDao {
          ProjectionList pl = Projections.projectionList();
             
          pl.add(Projections.property("um.username"), "username");
+         pl.add(Projections.property("um.mobile"), "mobile");
             
          criteria.setProjection(pl);
          
@@ -350,6 +351,7 @@ public class UserMasterDaoImpl implements  UserMasterDao {
          ProjectionList pl = Projections.projectionList();
             
          pl.add(Projections.property("um.username"), "username");
+         pl.add(Projections.property("um.mobile"), "mobile");
             
          criteria.setProjection(pl);
          
