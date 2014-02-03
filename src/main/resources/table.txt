@@ -983,6 +983,50 @@ WITH (
 ALTER TABLE public.dict_list
   OWNER TO postgres;
 ---------------------------------------------------------------------------------------------------------------------------------------
+-- Table: public.appointment_mst
+
+-- DROP TABLE public.appointment_mst;
+
+CREATE TABLE public.appointment_mst
+(
+  appointment_id bigint NOT NULL,
+  owner_name character varying(200),
+  owner_username character varying(250),
+  startdate date,
+  enddate date,
+  starttime timestamp with time zone,
+  endtime timestamp with time zone,
+  event_description character varying,
+  event_caption character varying,
+  event_style character varying,
+  isallday boolean,
+  for_whom character varying,
+  CONSTRAINT pk_appointmst_appointid PRIMARY KEY (appointment_id ),
+  CONSTRAINT fk_appointmst_owner_username FOREIGN KEY (owner_username)
+      REFERENCES public.user_master (username) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE CASCADE
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE public.appointment_mst
+  OWNER TO postgres;
+
+---------------------------------------------------------------------------------------------------------------------------------------
+-- Sequence: public.seq_appmst_appointment_id
+
+-- DROP SEQUENCE public.seq_appmst_appointment_id;
+
+CREATE SEQUENCE public.seq_appmst_appointment_id
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 9223372036854775807
+  START 1
+  CACHE 1;
+ALTER TABLE public.seq_appmst_appointment_id
+  OWNER TO postgres;
+
+---------------------------------------------------------------------------------------------------------------------------------------
 
 1) validations
 2) student teacher exam screens
