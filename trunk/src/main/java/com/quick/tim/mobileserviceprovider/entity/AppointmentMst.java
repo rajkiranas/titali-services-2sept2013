@@ -13,8 +13,6 @@ import javax.persistence.*;
 )
 @SequenceGenerator(name = "appmst_seq_id", sequenceName = "seq_appmst_appointment_id",allocationSize=1)
 public class AppointmentMst  implements java.io.Serializable {
-
-
      private long appointmentId;     
      private String ownerName;
      private String ownerUsername;
