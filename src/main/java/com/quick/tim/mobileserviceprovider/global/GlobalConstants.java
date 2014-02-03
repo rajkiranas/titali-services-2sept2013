@@ -141,6 +141,7 @@ public class GlobalConstants {
     public static final String WhatsNewResource="/WhatsNew";
     public static final String ForumResource="/ForumResource";
     public static final String DictResource="/DictResource";
+    public static final String PlannerResource="/PlannerResource";
     public static final String WhosDoingWhatResource="/WhosDoingWhat";
     public static final String QUICKLEARNLIST="quickLearnList";
     public static final String MasterParamResource = "/MasterParam";
@@ -155,6 +156,7 @@ public class GlobalConstants {
     public static final String EXAMLIST="examList";
     public static final String eventDetailsList="eventDetailsList";
     public static final String dictWordList="dictWordList";
+    public static final String eventList="eventList";
     public static final String eventLikes="eventLikes";
     public static final String eventComments="eventComments";
     public static final String subjectWiseAvgPerformance="subjectWiseAvgPerformance";

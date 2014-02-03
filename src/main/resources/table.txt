@@ -1001,10 +1001,7 @@ CREATE TABLE public.appointment_mst
   event_style character varying,
   isallday boolean,
   for_whom character varying,
-  CONSTRAINT pk_appointmst_appointid PRIMARY KEY (appointment_id ),
-  CONSTRAINT fk_appointmst_owner_username FOREIGN KEY (owner_username)
-      REFERENCES public.user_master (username) MATCH SIMPLE
-      ON UPDATE CASCADE ON DELETE CASCADE
+  CONSTRAINT pk_appointmst_appointid PRIMARY KEY (appointment_id )
 )
 WITH (
   OIDS=FALSE
