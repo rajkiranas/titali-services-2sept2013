@@ -7,6 +7,7 @@ package com.quick.tim.mobileserviceprovider.services;
 import com.quick.tim.mobileserviceprovider.DAO.PlannerDao;
 import com.quick.tim.mobileserviceprovider.bean.AppointmentMstBean;
 import com.quick.tim.mobileserviceprovider.bean.DictWordDetailsBean;
+import com.quick.tim.mobileserviceprovider.entity.AppointmentMst;
 import com.quick.tim.mobileserviceprovider.entity.DictList;
 import java.util.Date;
 import java.util.List;
@@ -39,17 +40,23 @@ public class PlannerService
            return list;
        }
        
-    public void saveNewWordDetails(JSONObject inputRequest) throws Exception {
-        DictList word = new DictList();
+    public void saveEvent(JSONObject inputRequest) throws Exception {
+        AppointmentMst event = new AppointmentMst();
         
-        word.setWord(inputRequest.getString("word"));
-        word.setMeaning(inputRequest.getString("meaning"));
-        word.setLabels(inputRequest.getString("labels"));
-        word.setAddDate(new Date());
-        word.setOwnerUsername(inputRequest.getString("owner_username"));
-        word.setOwnerName(inputRequest.getString("owner_name"));
+        event.setOwnerName(inputRequest.getString("owner_name"));
+        event.setOwnerUsername(inputRequest.getString("owner_username"));
+        event.setStarttime(new Date(inputRequest.getLong("startTime")));
+        event.setEndtime(new Date(inputRequest.getLong("endTime")));
+        event.setStartdate(new Date(inputRequest.getLong("startTime")));
+        event.setEnddate(new Date(inputRequest.getLong("startTime")));
+        
+        event.setEventCaption(inputRequest.getString("caption"));
+        event.setEventDescription(inputRequest.getString("desc"));
+        event.setEventStyle(inputRequest.getString("event_style"));
+        event.setIsallday(inputRequest.getBoolean("isallday"));
+        event.setForWhom(inputRequest.getString("owner_name"));
 
-        plannerDao.saveNewWordDetails(word);
+        plannerDao.saveEvent(event);
     }
 
     public List<DictWordDetailsBean> getWordOfTheDay(JSONObject inputRequest) {
