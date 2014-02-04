@@ -66,8 +66,8 @@ public class PlannerDaoImpl implements PlannerDao {
     }
 
     @Override
-    public void saveNewWordDetails(DictList word) throws Exception {
-        hibernateTemplate.saveOrUpdate(word);
+    public void saveEvent(AppointmentMst event) throws Exception {
+        hibernateTemplate.saveOrUpdate(event);
     }
 
     @Override

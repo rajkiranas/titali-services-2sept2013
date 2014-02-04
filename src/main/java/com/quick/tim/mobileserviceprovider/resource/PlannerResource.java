@@ -31,7 +31,7 @@ import org.springframework.stereotype.Component;
 public class PlannerResource {
     
     private static final String getEventList="getEventList";    
-    private static final String saveNewWordDetails="saveNewWordDetails";
+    private static final String saveEvent="saveEvent";
     private static final String searchWordList="searchWordList";
     
     @Autowired
@@ -54,22 +54,22 @@ public class PlannerResource {
     }
     
     
-    @Path(saveNewWordDetails)
+    @Path(saveEvent)
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public JSONObject saveNewWordDetails(JSONObject inputRequest) throws JSONException 
+    public JSONObject saveEvent(JSONObject inputRequest) throws JSONException 
     {
         JSONObject response = new JSONObject();
         try 
         {
-            plannerService.saveNewWordDetails(inputRequest);
-            response.put(GlobalConstants.STATUS, "Successfully saved word");
+            plannerService.saveEvent(inputRequest);
+            response.put(GlobalConstants.STATUS, "Successfully saved event");
             
         } catch (Exception e) 
         {
             e.printStackTrace();
-            response.put(GlobalConstants.STATUS, "Could not save word");
+            response.put(GlobalConstants.STATUS, "Could not save event");
         }
         
         return response;
