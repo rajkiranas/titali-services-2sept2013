@@ -47,6 +47,7 @@ public class PlannerDaoImpl implements PlannerDao {
 //        criteria.add(Restrictions.or(Restrictions.eq("fordiv", fordiv),Restrictions.eq("fordiv", null)));
         ProjectionList pl = Projections.projectionList();
         
+        pl.add(Projections.property("appointmentId"), "appointmentId");
         pl.add(Projections.property("ownerName"), "ownerName");
         pl.add(Projections.property("ownerUsername"), "ownerUsername");
         pl.add(Projections.property("starttime"), "starttime");
