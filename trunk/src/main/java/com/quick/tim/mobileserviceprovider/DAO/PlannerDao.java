@@ -22,5 +22,6 @@ public interface PlannerDao {
     public List<AppointmentMstBean> getEventList(JSONObject inputRequest) throws JSONException;    
     public List<DictWordDetailsBean> searchWordList(JSONObject inputRequest) throws JSONException;    
     public void saveEvent(AppointmentMst event) throws Exception;
+    public void deleteEvent(AppointmentMst event) throws Exception;
     public List<DictWordDetailsBean> getWordOfTheDay(JSONObject inputRequest);
 }

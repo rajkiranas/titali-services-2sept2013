@@ -43,12 +43,15 @@ public class PlannerService
     public void saveEvent(JSONObject inputRequest) throws Exception {
         AppointmentMst event = new AppointmentMst();
         
+        long eventIdForEditDeleteBean=inputRequest.getLong("eventIdForEditDeleteBean");
+        if(eventIdForEditDeleteBean!=0)
+        {
+            event.setAppointmentId(eventIdForEditDeleteBean);
+        }
         event.setOwnerName(inputRequest.getString("owner_name"));
         event.setOwnerUsername(inputRequest.getString("owner_username"));
         event.setStarttime(new Date(inputRequest.getLong("startTime")));
-        event.setEndtime(new Date(inputRequest.getLong("endTime")));
-        event.setStartdate(new Date(inputRequest.getLong("startTime")));
-        event.setEnddate(new Date(inputRequest.getLong("startTime")));
+        event.setEndtime(new Date(inputRequest.getLong("endTime")));        
         
         event.setEventCaption(inputRequest.getString("caption"));
         event.setEventDescription(inputRequest.getString("desc"));
@@ -57,6 +60,18 @@ public class PlannerService
         event.setForWhom(inputRequest.getString("for_whom"));
 
         plannerDao.saveEvent(event);
+    }
+    
+    public void deleteEvent(JSONObject inputRequest) throws Exception {
+        AppointmentMst event = new AppointmentMst();
+        
+        long eventIdForEditDeleteBean=inputRequest.getLong("eventIdForEditDeleteBean");
+        if(eventIdForEditDeleteBean!=0)
+        {
+            event.setAppointmentId(eventIdForEditDeleteBean);
+        }
+
+        plannerDao.deleteEvent(event);
     }
 
     public List<DictWordDetailsBean> getWordOfTheDay(JSONObject inputRequest) {
