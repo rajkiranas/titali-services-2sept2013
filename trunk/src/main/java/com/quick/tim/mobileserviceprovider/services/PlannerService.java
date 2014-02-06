@@ -54,7 +54,7 @@ public class PlannerService
         event.setEventDescription(inputRequest.getString("desc"));
         event.setEventStyle(inputRequest.getString("event_style"));
         event.setIsallday(inputRequest.getBoolean("isallday"));
-        event.setForWhom(inputRequest.getString("owner_name"));
+        event.setForWhom(inputRequest.getString("for_whom"));
 
         plannerDao.saveEvent(event);
     }
