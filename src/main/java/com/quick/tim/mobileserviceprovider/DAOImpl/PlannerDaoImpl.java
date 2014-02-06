@@ -70,6 +70,11 @@ public class PlannerDaoImpl implements PlannerDao {
     public void saveEvent(AppointmentMst event) throws Exception {
         hibernateTemplate.saveOrUpdate(event);
     }
+    
+    @Override
+    public void deleteEvent(AppointmentMst event) throws Exception {
+        hibernateTemplate.delete(event);
+    }
 
     @Override
     public List<DictWordDetailsBean> searchWordList(JSONObject inputRequest) throws JSONException 

@@ -16,8 +16,7 @@ public class AppointmentMst  implements java.io.Serializable {
      private long appointmentId;     
      private String ownerName;
      private String ownerUsername;
-     private Date startdate;
-     private Date enddate;
+     
      private Date starttime;
      private Date endtime;
      private String eventDescription;
@@ -33,14 +32,10 @@ public class AppointmentMst  implements java.io.Serializable {
 	
     public AppointmentMst(long appointmentId, Date startdate, Date enddate) {
         this.appointmentId = appointmentId;
-        this.startdate = startdate;
-        this.enddate = enddate;
     }
     public AppointmentMst(long appointmentId, Date startdate, Date enddate, Date starttime, Date endtime, String eventDescription, String eventCaption, String eventStyle, Boolean isallday) {
        this.appointmentId = appointmentId;
        
-       this.startdate = startdate;
-       this.enddate = enddate;
        this.starttime = starttime;
        this.endtime = endtime;
        this.eventDescription = eventDescription;
@@ -61,24 +56,7 @@ public class AppointmentMst  implements java.io.Serializable {
         this.appointmentId = appointmentId;
     }
 
-    @Temporal(TemporalType.DATE)
-    @Column(name="startdate", nullable=false, length=13)
-    public Date getStartdate() {
-        return this.startdate;
-    }
     
-    public void setStartdate(Date startdate) {
-        this.startdate = startdate;
-    }
-    @Temporal(TemporalType.DATE)
-    @Column(name="enddate", nullable=false, length=13)
-    public Date getEnddate() {
-        return this.enddate;
-    }
-    
-    public void setEnddate(Date enddate) {
-        this.enddate = enddate;
-    }
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="starttime", length=15)
     public Date getStarttime() {

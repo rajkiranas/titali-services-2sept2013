@@ -32,6 +32,7 @@ public class PlannerResource {
     
     private static final String getEventList="getEventList";    
     private static final String saveEvent="saveEvent";
+    private static final String deleteEvent="deleteEvent";
     private static final String searchWordList="searchWordList";
     
     @Autowired
@@ -70,6 +71,27 @@ public class PlannerResource {
         {
             e.printStackTrace();
             response.put(GlobalConstants.STATUS, "Could not save event");
+        }
+        
+        return response;
+    }
+    
+    @Path(deleteEvent)
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public JSONObject deleteEvent(JSONObject inputRequest) throws JSONException 
+    {
+        JSONObject response = new JSONObject();
+        try 
+        {
+            plannerService.deleteEvent(inputRequest);
+            response.put(GlobalConstants.STATUS, "Successfully deleted event");
+            
+        } catch (Exception e) 
+        {
+            e.printStackTrace();
+            response.put(GlobalConstants.STATUS, "Could not delete event");
         }
         
         return response;

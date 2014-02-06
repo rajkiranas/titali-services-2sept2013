@@ -992,8 +992,6 @@ CREATE TABLE public.appointment_mst
   appointment_id bigint NOT NULL,
   owner_name character varying(200),
   owner_username character varying(250),
-  startdate date,
-  enddate date,
   starttime timestamp with time zone,
   endtime timestamp with time zone,
   event_description character varying,
