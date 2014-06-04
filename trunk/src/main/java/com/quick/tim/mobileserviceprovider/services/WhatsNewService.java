@@ -82,7 +82,8 @@ public class WhatsNewService
            }
            wn.setTopicintro(topicInro);
            wn.setClassToInvoke(inputRequest.getString("classToInvoke"));
-           
+           String videoPath= inputRequest.getString("video_path");
+           wn.setVideoUrl(videoPath);
            //whatsNewDao.sendWhatsNewNotificationToStudents(wn);
            whoseDoingWhatDao.sendWhosDoingWhatNotificationToStudents(wn);
            

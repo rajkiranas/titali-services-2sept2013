@@ -38,6 +38,7 @@ public class Whoisdoingwhat  implements java.io.Serializable {
      private int uploadId;
      private String topicintro;
      private String classToInvoke;
+     private String videoUrl;
 
     public Whoisdoingwhat() {
     }
@@ -178,6 +179,21 @@ public class Whoisdoingwhat  implements java.io.Serializable {
      */
     public void setClassToInvoke(String classToInvoke) {
         this.classToInvoke = classToInvoke;
+    }
+
+    /**
+     * @return the videoUrl
+     */
+    @Column(name="video_url")
+    public String getVideoUrl() {
+        return videoUrl;
+    }
+
+    /**
+     * @param videoUrl the videoUrl to set
+     */
+    public void setVideoUrl(String videoUrl) {
+        this.videoUrl = videoUrl;
     }
 
 
