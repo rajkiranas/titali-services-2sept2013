@@ -68,6 +68,8 @@ public class WhoseDoingWhatService {
             }
             w.setTopicintro(topicInro);
             w.setClassToInvoke(inputRequest.getString("classToInvoke"));
+            w.setVideoUrl(inputRequest.getString("videoUrl"));
+            
             whoseDoingWhatDao.sendWhosDoingWhatNotificationToStudents(w);
        
     }
