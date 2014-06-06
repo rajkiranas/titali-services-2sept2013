@@ -25,6 +25,7 @@ public class ForumEventDetails  implements java.io.Serializable {
      private byte[] eventImage;
      private Integer parentForumId;
      private String imageFilename;
+     private String videoUrl;
      private Set<ForumEventComments> forumEventCommentses = new HashSet<ForumEventComments>(0);
      private Set<ForumEventLikes> forumEventLikeses = new HashSet<ForumEventLikes>(0);
      
@@ -139,6 +140,21 @@ public class ForumEventDetails  implements java.io.Serializable {
     
     public void setForumEventLikeses(Set<ForumEventLikes> forumEventLikeses) {
         this.forumEventLikeses = forumEventLikeses;
+    }
+
+    /**
+     * @return the videoUrl
+     */
+    @Column(name="video_url")
+    public String getVideoUrl() {
+        return videoUrl;
+    }
+
+    /**
+     * @param videoUrl the videoUrl to set
+     */
+    public void setVideoUrl(String videoUrl) {
+        this.videoUrl = videoUrl;
     }
     /**
      * @return the stringImage

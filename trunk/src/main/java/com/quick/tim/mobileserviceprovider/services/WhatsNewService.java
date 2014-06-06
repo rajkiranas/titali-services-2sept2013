@@ -127,6 +127,11 @@ public class WhatsNewService
            wn.setTopicintro(topicInro);
            wn.setClassToInvoke(inputRequest.getString("classToInvoke"));
            
+           if(inputRequest.getString("videoUrl")!=null && !inputRequest.getString("videoUrl").equals("null"))
+           {
+                wn.setVideoUrl(inputRequest.getString("videoUrl"));
+           }
+           
            whoseDoingWhatDao.sendWhosDoingWhatNotificationToStudents(wn);
            
        } 
