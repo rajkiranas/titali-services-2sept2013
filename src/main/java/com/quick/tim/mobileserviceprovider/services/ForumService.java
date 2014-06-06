@@ -39,7 +39,10 @@ public class ForumService
            List<ForumEventDetailsBean> list = forumDao.getForumEventDetails(inputRequest);
            for(ForumEventDetailsBean bean:list)
            {
-               bean.setStringImage(new String(Base64.encode(bean.getEventImage())));
+               if(bean.getEventImage()!=null)
+               {
+                    bean.setStringImage(new String(Base64.encode(bean.getEventImage())));
+               }
            }
            return list;
        }
@@ -76,10 +79,17 @@ public class ForumService
         event.setEventOwner(inputRequest.getString("owner"));
         event.setEventDesc(inputRequest.getString("event_desc"));
         event.setEventBody(inputRequest.getString("event_body"));
-        String imageStr=inputRequest.getString("image");
-        byte[] arr=Base64.decode(imageStr);
-        event.setEventImage(arr);
-        event.setImageFilename(inputRequest.getString("image_filename"));
+        if(!inputRequest.getString("image").equals("null"))
+        {
+            String imageStr=inputRequest.getString("image");
+            byte[] arr=Base64.decode(imageStr);
+            event.setEventImage(arr);
+            event.setImageFilename(inputRequest.getString("image_filename"));
+        }
+        else
+        {
+            event.setVideoUrl(inputRequest.getString("videoUrl"));
+        }
                 
         forumDao.saveEventDetails(event);
         return event;

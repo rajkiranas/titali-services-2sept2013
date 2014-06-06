@@ -21,6 +21,7 @@ public class ForumEventDetailsBean
      private String stringImage;
      private Integer parentForumId;
      private String imageFileName;
+     private String videoUrl;
      
 
     public int getEventDetailId() {
@@ -99,5 +100,19 @@ public class ForumEventDetailsBean
      */
     public void setStringImage(String stringImage) {
         this.stringImage = stringImage;
+    }
+
+    /**
+     * @return the videoUrl
+     */
+    public String getVideoUrl() {
+        return videoUrl;
+    }
+
+    /**
+     * @param videoUrl the videoUrl to set
+     */
+    public void setVideoUrl(String videoUrl) {
+        this.videoUrl = videoUrl;
     }
 }
