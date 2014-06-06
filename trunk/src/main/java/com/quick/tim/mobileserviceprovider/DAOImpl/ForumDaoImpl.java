@@ -158,6 +158,7 @@ public class ForumDaoImpl implements ForumDao {
         
         pl.add(Projections.property("parentForumId"), "parentForumId");
         pl.add(Projections.property("imageFilename"), "imageFileName");
+        pl.add(Projections.property("videoUrl"), "videoUrl");
         
         criteria.addOrder(Order.desc("eventDate"));
         

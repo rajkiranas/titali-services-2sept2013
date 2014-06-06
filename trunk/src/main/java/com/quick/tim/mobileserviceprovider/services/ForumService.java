@@ -5,14 +5,10 @@
 package com.quick.tim.mobileserviceprovider.services;
 
 import com.quick.tim.mobileserviceprovider.DAO.ForumDao;
-import com.quick.tim.mobileserviceprovider.entity.Whatsnew;
-import com.quick.tim.mobileserviceprovider.DAO.WhatsNewDao;
 import com.quick.tim.mobileserviceprovider.bean.EventCommentsBean;
 import com.quick.tim.mobileserviceprovider.bean.EventLikeBean;
 import com.quick.tim.mobileserviceprovider.bean.ForumEventDetailsBean;
-import com.quick.tim.mobileserviceprovider.bean.MasteParmBean;
 import com.quick.tim.mobileserviceprovider.entity.*;
-import com.quick.tim.mobileserviceprovider.global.GlobalConstants;
 import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 import java.util.Date;
 import java.util.List;
@@ -66,7 +62,10 @@ public class ForumService
            List<ForumEventDetailsBean> list = forumDao.getForumEventById(inputRequest);
            for(ForumEventDetailsBean bean:list)
            {
-               bean.setStringImage(new String(Base64.encode(bean.getEventImage())));
+               if(bean.getEventImage()!=null)
+               {
+                   bean.setStringImage(new String(Base64.encode(bean.getEventImage())));
+               }
            }
 
            return list;
